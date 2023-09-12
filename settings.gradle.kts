@@ -1,4 +1,4 @@
-rootProject.name = "Markdown Editor"
+rootProject.name = "Multimark"
 
 include(":shared")
 include(":desktopApp")
