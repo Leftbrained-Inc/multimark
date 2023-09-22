@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,8 +34,8 @@ fun App() {
                 Image(modifier = Modifier.size(width = 150.dp, height = 150.dp) ,painter = painterResource("MultiMarkLogo.png"), contentDescription = null)
                 Text(text = "Multimark", fontSize = 60.sp)
             }
-            Row(modifier = Modifier.weight(2f).width(800.dp).background(Color(0xFFfed7e2), shape = RoundedCornerShape(40.dp)),verticalAlignment = Alignment.CenterVertically) {
-                androidx.compose.material.OutlinedTextField(value = search.value,onValueChange = { newText -> search.value = newText}, textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal), shape = RoundedCornerShape(25.dp), modifier = Modifier.padding(12.dp).weight(9f).background(Color.White, shape = RoundedCornerShape(25.dp)).border(3.dp, Color.White, shape = RoundedCornerShape(25.dp)),
+            Row(modifier = Modifier.weight(2f).width(800.dp).background(Color(0xFFfed7e2), shape = RoundedCornerShape(40.dp)),verticalAlignment = Alignment.CenterVertically) {//MaterialTheme.colorScheme.primary
+                androidx.compose.material.OutlinedTextField(value = search.value,onValueChange = { newText -> search.value = newText}, textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal), shape = RoundedCornerShape(25.dp), modifier = Modifier.padding(start = 10.dp, top = 4.dp, bottom = 4.dp, end = 40.dp).weight(9f).background(Color.White, shape = RoundedCornerShape(25.dp)).border(3.dp, Color.White, shape = RoundedCornerShape(25.dp)),
                     placeholder = {
                         Text(
                             text = "Search",
@@ -53,7 +54,41 @@ fun App() {
 
                 Image(modifier = Modifier.weight(1f).size(width = 30.dp, height = 30.dp), painter = painterResource("settings.png"), contentDescription = null)
             }
-            Row(modifier = Modifier.weight(11f)){}
+            Column(modifier = Modifier.weight(8f)){
+                androidx.compose.material.Button(
+                    onClick = {},
+                    modifier = Modifier
+                        .width(800.dp)
+                        .height(100.dp)
+                        .padding(top = 40.dp) // Здесь можно указать нужное значение отступа сверху
+                        , shape = (RoundedCornerShape(40.dp)) // Вы можете также задать скругление углов
+                ) {
+                    Text(text = "New note")
+                }
+                androidx.compose.material.OutlinedButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .width(800.dp)
+                        .height(80.dp).background(Color.Transparent)
+                        .padding(top = 20.dp) // Здесь можно указать нужное значение отступа сверху
+                    , shape = (RoundedCornerShape(40.dp))// Вы можете также задать скругление углов
+                ) {
+                    Text(text = "Last viewed", fontWeight = FontWeight.Bold, color = Color.Blue)
+                }
+                androidx.compose.material.OutlinedButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .width(800.dp)
+                        .height(80.dp).background(Color.Transparent)
+                        .padding(top = 20.dp) // Здесь можно указать нужное значение отступа сверху
+                    , shape = (RoundedCornerShape(40.dp))// Вы можете также задать скругление углов
+                ) {
+                    Text(text = "Pinned", fontWeight = FontWeight.Bold, color = Color.Blue)
+                }
+            }
+            Row(modifier = Modifier.weight(3f)) {
+                Text(text = "Crafted with ❤️ in Leftbrained", fontWeight = FontWeight.Bold, color = Color.Black)
+            }
         }
     }
 }
