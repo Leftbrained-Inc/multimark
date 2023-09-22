@@ -1,8 +1,10 @@
+package UI.screen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -25,7 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun App() {
+fun WindowStart() {
     MaterialTheme {
         val search = remember { mutableStateOf("") }
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -57,6 +59,3 @@ fun App() {
         }
     }
 }
-
-
-expect fun getPlatformName(): String
