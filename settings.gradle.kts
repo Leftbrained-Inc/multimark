@@ -1,4 +1,4 @@
-rootProject.name = "Multimark"
+rootProject.name = "multimark"
 
 include(":shared")
 include(":desktopApp")
