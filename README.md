@@ -61,3 +61,7 @@ end legend
 
 ## Дорожная карта
 ![Дорожная карта](images/roadmap.png)
+
+## Контрибьютинг
+
+Последовательность действий и правила представлены в [CONTRIBUTING](etc/CONTRIBUTING.md)
