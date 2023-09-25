@@ -65,4 +65,4 @@ end legend
 
 ## Контрибьютинг
 
-Последовательность действий и правила представлены в [CONTRIBUTING](etc/CONTRIBUTING.md)
+Последовательность действий и правила представлены в [CONTRIBUTING](CONTRIBUTING.md)
