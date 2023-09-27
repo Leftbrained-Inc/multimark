@@ -35,7 +35,11 @@ publishing {
                         name.set("Pankov Vasya")
                         email.set("pank@pank.su")
                     }
-                    // TODO Заплнить всем
+                    developer {
+                        id.set("bulkabuka")
+                        name.set("Sergey Reinn")
+                        email.set("byhelvig@icloud.com")
+                    }
                 }
                 scm {
                     connection = "scm:git:git://github.com/Leftbrained-Inc/multimark.git"
