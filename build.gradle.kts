@@ -3,6 +3,7 @@
 fun allProjects(init: Project.() -> Unit) = configure(allprojects.filter { !it.path.contains("demos") }, init)
 
 
+
 allProjects {
     repositories {
         google()
@@ -11,6 +12,10 @@ allProjects {
     }
 }
 
+tasks.register("publishAndRun") {
+    dependsOn("publishToMavenLocal")
+    dependsOn(":desktop_test:run") // здесь "subProject" - название вашего суб-проекта
+}
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
