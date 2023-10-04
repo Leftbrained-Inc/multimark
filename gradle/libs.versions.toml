@@ -5,6 +5,7 @@ coroutines = "1.7.3"
 maven-publish = "0.25.3"
 kotlinx-datetime = "0.4.0"
 agp = "8.0.2"
+window-size = "0.3.0"
 
 
 [plugins]
@@ -18,4 +19,5 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+window-size = {module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref="window-size"}
 

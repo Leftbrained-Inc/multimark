@@ -14,7 +14,7 @@ allProjects {
 
 tasks.register("publishAndRun") {
     dependsOn("publishToMavenLocal")
-    dependsOn(":desktop_test:run") // здесь "subProject" - название вашего суб-проекта
+    dependsOn(":desktop_test:run")
 }
 
 plugins {
@@ -75,6 +75,9 @@ kotlin{
                 api(compose.material3)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 api(compose.components.resources)
+
+                // addition libs
+                api(libs.window.size)
             }
         }
 
