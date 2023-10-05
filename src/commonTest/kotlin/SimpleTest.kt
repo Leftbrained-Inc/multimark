@@ -19,7 +19,7 @@ class SimpleTest {
     val rule = createComposeRule()
 
     @Test
-    fun myTest(){
+    fun myTest() {
         rule.setContent {
             var text by remember { mutableStateOf("Hello") }
             Text(
@@ -29,7 +29,7 @@ class SimpleTest {
             Button(
                 onClick = { text = "Compose" },
                 modifier = Modifier.testTag("button")
-            ){
+            ) {
                 Text("Click me")
             }
         }
