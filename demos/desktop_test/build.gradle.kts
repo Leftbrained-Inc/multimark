@@ -14,6 +14,10 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
 }
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor(0, "minutes")
+}
+
 
 dependencies {
     // Note, if you develop a library, you should use compose.desktop.common.
