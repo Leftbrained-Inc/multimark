@@ -7,13 +7,9 @@ import core.dsl.elements.template.Element
 
 actual abstract class ConfigurationPlatform actual constructor() : core.dsl.Configuration() {
 
-
     @Composable
     actual open fun render(onCloseRequest: () -> Unit) =
         Window(onCloseRequest) {
             super.render()
-
         }
-
-
 }

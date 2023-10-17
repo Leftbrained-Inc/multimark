@@ -4,8 +4,9 @@ import ui.screen.StartScreen
 
 @Composable
 fun App() {
-    MaterialTheme {
-        StartScreen()
-    }
+
+
+    StartScreen()
+
 }
 

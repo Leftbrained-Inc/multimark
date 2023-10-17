@@ -1,25 +1,32 @@
 package core.dsl
 
 
+import App
 import androidx.compose.foundation.Image
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import core.dsl.elements.Icon
 import core.dsl.elements.template.Element
-import core.dsl.elements.template.RootElement
 
+
+val LocalConfiguration = compositionLocalOf {
+    config {
+    }
+}
 
 @ConfigurationTagMaker
 abstract class Configuration : Element {
-    var icon: @Composable () -> Unit = { Image(painterResource("logo.svg"), null) }
-    val LocalConfiguration = compositionLocalOf { this }
+    var icon: @Composable (modifier: Modifier) -> Unit = { Image(painterResource("logo.svg"), null, modifier = it) }
 
     @Composable
     override fun render() {
-        CompositionLocalProvider(LocalConfiguration provides this) {
-            icon()
+        CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
+            MaterialTheme {
+                App()
+            }
         }
     }
 }
@@ -33,8 +40,8 @@ expect abstract class ConfigurationPlatform() : Configuration {
 
 class ConfigurationImpl : ConfigurationPlatform() {
 
-
-    fun icon(init: @Composable () -> Unit) {
+    var name = "test"
+    fun icon(init: @Composable (modifier: Modifier) -> Unit) {
         icon = init
     }
 

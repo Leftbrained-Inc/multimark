@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import core.dsl.LocalConfiguration
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -57,13 +58,16 @@ fun StartScreen() {
         }
     }
 
+    val config = LocalConfiguration.current
+
+    LaunchedEffect(null){
+        println(config.icon)
+    }
+
+
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(Modifier.weight(7f), verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                modifier = Modifier.size(logoSize),
-                painter = painterResource("logo.svg"),
-                contentDescription = null
-            )
+            config.icon(Modifier.size(logoSize))
             Text(text = "Multimark", fontSize = titleFontSize)
         }
         Row(
