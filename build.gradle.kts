@@ -14,7 +14,7 @@ allProjects {
 
 tasks.register("publishAndRun") {
     dependsOn("publishToMavenLocal")
-    dependsOn(":desktop_test:run") // здесь "subProject" - название вашего суб-проекта
+    dependsOn(":desktop_test:run")
 }
 
 plugins {

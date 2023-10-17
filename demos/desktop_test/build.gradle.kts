@@ -22,7 +22,8 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
 
-    implementation("com.leftbrained.multimark:Multimark:0.0.1")
+    // implementation("com.leftbrained.multimark:Multimark:0.0.1")
+    implementation(project(":"))
 }
 
 compose.desktop {
