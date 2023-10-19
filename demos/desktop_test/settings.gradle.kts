@@ -11,4 +11,6 @@ pluginManagement {
     }
 }
 
+include(":")
+
 rootProject.name = "desktop_test"
