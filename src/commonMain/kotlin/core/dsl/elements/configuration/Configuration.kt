@@ -1,5 +1,4 @@
-package core.dsl
-
+package core.dsl.elements.configuration
 
 import App
 import androidx.compose.foundation.Image
@@ -9,6 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import core.dsl.ConfigurationTagMaker
 import core.dsl.elements.template.Element
 
 
@@ -17,9 +17,17 @@ val LocalConfiguration = compositionLocalOf {
     }
 }
 
+/**
+ * Главный элемент конфигурации, непривязанный к нативной реализации
+ *
+ * [icon] - иконка изображения, которая является compose элементом
+ * [render] - отображение элемента, показывается стартовый экран
+ * @author Панков Вася (pank-su)
+ */
 @ConfigurationTagMaker
 abstract class Configuration : Element {
-    var icon: @Composable (modifier: Modifier) -> Unit = { Image(painterResource("logo.svg"), null, modifier = it) }
+    var icon: @Composable (modifier: Modifier) -> Unit =
+        { Image(painterResource("logo.svg"), null, modifier = it) }
 
     @Composable
     override fun render() {
@@ -30,27 +38,3 @@ abstract class Configuration : Element {
         }
     }
 }
-
-expect abstract class ConfigurationPlatform() : Configuration {
-
-
-    @Composable
-    open fun render(onCloseRequest: () -> Unit)
-}
-
-class ConfigurationImpl : ConfigurationPlatform() {
-
-    var name = "test"
-    fun icon(init: @Composable (modifier: Modifier) -> Unit) {
-        icon = init
-    }
-
-}
-
-
-fun config(init: ConfigurationImpl.() -> Unit): ConfigurationImpl {
-    val config = ConfigurationImpl()
-    config.init()
-    return config
-}
-

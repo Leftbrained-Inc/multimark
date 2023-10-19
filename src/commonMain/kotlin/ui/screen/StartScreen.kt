@@ -18,9 +18,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.dsl.LocalConfiguration
+import core.dsl.elements.configuration.LocalConfiguration
 
 
+///
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun StartScreen() {
@@ -60,7 +61,7 @@ fun StartScreen() {
 
     val config = LocalConfiguration.current
 
-    LaunchedEffect(null){
+    LaunchedEffect(null) {
         println(config.icon)
     }
 

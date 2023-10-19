@@ -1,11 +1,9 @@
-package core.dsl
+package core.dsl.elements.configuration
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import core.dsl.elements.template.Element
 
-actual abstract class ConfigurationPlatform actual constructor() : core.dsl.Configuration() {
+actual abstract class ConfigurationPlatform actual constructor() : Configuration() {
 
     @Composable
     actual open fun render(onCloseRequest: () -> Unit) =
