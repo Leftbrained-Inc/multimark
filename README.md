@@ -57,7 +57,6 @@ end legend
 ![Диаграмма структуры проекта в PlantUML](images/structure.jpg)
 
 <figcaption>Диаграмма структуры проекта в PlantUML</figcaption>
-
 <br/>
 <br/>
 
