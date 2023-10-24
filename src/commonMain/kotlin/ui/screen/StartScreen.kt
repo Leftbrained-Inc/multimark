@@ -66,23 +66,24 @@ fun StartScreen() {
     }
 
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(Modifier.weight(7f), verticalAlignment = Alignment.CenterVertically) {
             config.icon(Modifier.size(logoSize))
+            Spacer(Modifier.width(24.dp))
             Text(text = "Multimark", fontSize = titleFontSize)
         }
         Row(
             modifier = Modifier.weight(2f).width(800.dp)
-                .background(Color(0xFFfed7e2), shape = RoundedCornerShape(40.dp)),
+                .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp)),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(value = search.value,
                 onValueChange = { newText -> search.value = newText },
                 textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal),
-                shape = RoundedCornerShape(25.dp),
+                shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.padding(start = 10.dp, top = 4.dp, bottom = 4.dp, end = 40.dp).weight(9f)
-                    .background(Color.White, shape = RoundedCornerShape(25.dp))
-                    .border(3.dp, Color.White, shape = RoundedCornerShape(25.dp)),
+                    .background(Color.White, shape = RoundedCornerShape(20.dp))
+                    .border(3.dp, Color.White, shape = RoundedCornerShape(20.dp)),
                 placeholder = {
                     Text(
                         text = "Search",
@@ -94,7 +95,7 @@ fun StartScreen() {
                     Icon(
                         painter = painterResource("search.svg"),
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(48.dp)
                     )
                 }
             )
