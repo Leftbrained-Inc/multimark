@@ -78,7 +78,6 @@ kotlin {
 
                 // addition libs
                 api(libs.window.size)
-                implementation("com.materialkolor:material-kolor:1.2.7")
             }
         }
 
