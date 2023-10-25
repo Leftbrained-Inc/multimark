@@ -1,4 +1,4 @@
-rootProject.name = "multimark"
+rootProject.name = "Multimark"
 
 
 // include(":shared")
