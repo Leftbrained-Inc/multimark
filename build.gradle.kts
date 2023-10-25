@@ -64,6 +64,7 @@ allProjects {
     }
 }
 
+val exposedVersion: String by project
 
 kotlin {
     jvm("desktop")
@@ -78,9 +79,25 @@ kotlin {
 
                 // addition libs
                 api(libs.window.size)
+                implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-crypt:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+
+                implementation("org.jetbrains.exposed:exposed-jodatime:$exposedVersion")
+                // or
+                implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+                // or
+                implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
+
+                implementation("org.jetbrains.exposed:exposed-json:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-money:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-spring-boot-starter:$exposedVersion")
                 api(libs.appyx)
             }
         }
+
+        val exposedVersion: String by project
 
         val desktopMain by getting {
             dependencies {

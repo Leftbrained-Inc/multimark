@@ -3,6 +3,7 @@ package core.dsl.elements.configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -40,13 +41,13 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
         }) {
             CompositionLocalProvider(LocalConfiguration provides this@ConfigurationPlatform as ConfigurationImpl) {
                 val config = LocalConfiguration.current
-                config.theme{
+                config.theme {
                     DesktopNodeHost(
                         windowState = windowState,
                         onBackPressedEvents = events.receiveAsFlow().mapNotNull {
                             if (it is Events.OnBackPressed) Unit else null
                         }
-                    ) {buildContext ->
+                    ) { buildContext ->
                         RootNode(buildContext)
                     }
                 }
