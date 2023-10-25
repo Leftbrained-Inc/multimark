@@ -1,14 +1,15 @@
 package core.dsl.elements.configuration
 
-import App
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import com.bumble.appyx.navigation.modality.BuildContext
+import com.bumble.appyx.navigation.node.Node
 import core.dsl.ConfigurationTagMaker
 import core.dsl.elements.template.Element
+import navigation.RootNode
 import ui.theme.MultimarkAppTheme
 
 
@@ -32,15 +33,6 @@ abstract class Configuration : Element {
     internal var theme: @Composable (content: @Composable () -> Unit) -> Unit = {
         MultimarkAppTheme {
             it()
-        }
-    }
-
-    @Composable
-    override fun render() {
-        CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
-            theme {
-                App()
-            }
         }
     }
 }

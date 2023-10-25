@@ -78,6 +78,7 @@ kotlin {
 
                 // addition libs
                 api(libs.window.size)
+                api(libs.appyx)
             }
         }
 
