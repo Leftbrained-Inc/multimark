@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.dsl.elements.configuration.LocalConfiguration
+import ui.components.LogoTitle
+import ui.components.SearchBar
 
 
 ///
@@ -67,44 +69,8 @@ fun StartScreen() {
 
 
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Row(Modifier.weight(7f), verticalAlignment = Alignment.CenterVertically) {
-            config.icon(Modifier.size(logoSize))
-            Text(text = "Multimark", fontSize = titleFontSize)
-        }
-        Row(
-            modifier = Modifier.weight(2f).width(800.dp)
-                .background(Color(0xFFfed7e2), shape = RoundedCornerShape(40.dp)),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedTextField(value = search.value,
-                onValueChange = { newText -> search.value = newText },
-                textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal),
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.padding(start = 10.dp, top = 4.dp, bottom = 4.dp, end = 40.dp).weight(9f)
-                    .background(Color.White, shape = RoundedCornerShape(25.dp))
-                    .border(3.dp, Color.White, shape = RoundedCornerShape(25.dp)),
-                placeholder = {
-                    Text(
-                        text = "Search",
-                        color = Color(0xFF2F0F1C),
-                        fontSize = 20.sp
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource("search.svg"),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-            )
-
-            Image(
-                modifier = Modifier.weight(1f).size(width = 30.dp, height = 30.dp),
-                painter = painterResource("settings.svg"),
-                contentDescription = null
-            )
-        }
+        LogoTitle(Modifier.weight(7f))
+        SearchBar(Modifier.weight(2f))
         Column(modifier = Modifier.weight(8f)) {
             Button(
                 onClick = {},
