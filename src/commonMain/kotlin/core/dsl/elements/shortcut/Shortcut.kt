@@ -1,6 +1,5 @@
-package core.dsl.elements.configuration
+package core.dsl.elements.shortcut
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.input.key.*
 
 data class Shortcut(val condition: (KeyEvent) -> Boolean, val action: () -> Unit)
@@ -81,6 +80,10 @@ val tableShortcut = Shortcut({ it.key == Key.T && it.isMetaPressed && it.type ==
     println("Table used")
 }
 
-val shorts = listOf(tableShortcut, bulletedListShortcut, numberedlistShortcut,
+val shorts = listOf(
+    tableShortcut, bulletedListShortcut, numberedlistShortcut,
     codeBlockShortcut, headingShortcut, quoteShortcut, codeShortcut, formulaShortcut, mediaShortcut, linkShortcut,
-    highlightShortcut, strikethroughShortcut, underlineShortcut, boldShortcut, italicShortcut)
+    highlightShortcut, strikethroughShortcut, underlineShortcut, boldShortcut, italicShortcut
+)
+
+// TODO Написать тесты
