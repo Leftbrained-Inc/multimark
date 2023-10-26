@@ -23,6 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Элемент поисковой строки
+ * @param modifier установка размеров
+ * @author Белоцерковский Марат (MIAPROT)
+ */
 @Composable
 fun SearchBar(modifier: Modifier){
     val search = remember { mutableStateOf("") }

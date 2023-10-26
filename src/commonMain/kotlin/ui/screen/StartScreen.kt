@@ -23,7 +23,10 @@ import ui.components.LogoTitle
 import ui.components.SearchBar
 
 
-///
+/**
+ * Стартовый экран
+ * @author Марат Белоцерковский(MIAPROT)
+ */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun StartScreen() {

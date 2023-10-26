@@ -13,6 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.dsl.elements.configuration.LocalConfiguration
 
+/**
+ * Элемент логотипа
+ * @param modifier установка размеров
+ * @author Белоцерковский Марат (MIAPROT)
+ */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LogoTitle(modifier: Modifier){
