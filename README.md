@@ -21,7 +21,7 @@
 ```mermaid
 graph TD
     subgraph startup["Native Startup"]
-        subgraph desktopApp["desktopApp"]
+        subgraph desktopApp["demos/desktop_test"]
         fileA("build.gradle.kts")
         fileB("main.kt")
         fileA --> fileB
@@ -34,19 +34,18 @@ graph TD
         folderE("ui")
         folderF("resources")
         folderG("models")
-        mainDesktop("main.desktop.kts")
-        folderD --> mainDesktop
-        folderE --> mainDesktop
-        folderF --> mainDesktop
-        folderG --> mainDesktop
+        dsl("DSL + Configuration")
+        folderD --> dsl
+        folderE --> dsl
+        folderF --> dsl
+        folderG --> dsl
         end
 
         subgraph desktop["desktopMain"]
-        fileApp("App.kt")
+            mainDesktop("main.desktop.kts")
         end
-        desktop --> common
+        desktop -->|Native functions| common 
     end
-    legend("В commonMain - код который работает на всех системах. \n При этом для каждой системы одни и те же функции можно \n реализовать по разному в своих файлах Shared.")
 
     Shared --> startup
 ```
