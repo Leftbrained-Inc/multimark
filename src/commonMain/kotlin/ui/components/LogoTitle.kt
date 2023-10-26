@@ -20,7 +20,7 @@ import core.dsl.elements.configuration.LocalConfiguration
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun LogoTitle(modifier: Modifier){
+fun LogoTitle(modifier: Modifier) {
 
 
     val windowSizeClass = calculateWindowSizeClass()
@@ -49,7 +49,7 @@ fun LogoTitle(modifier: Modifier){
 
 
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        config.icon(androidx.compose.ui.Modifier.size(logoSize))
+        config.icon(Modifier.size(logoSize))
         Text(text = "Multimark", fontSize = titleFontSize)
     }
 }

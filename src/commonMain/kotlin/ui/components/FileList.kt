@@ -44,9 +44,9 @@ fun FileList(cardList: List<FileDTO>): Unit {
         items(cardList.size) {
             val card = cardList[it]
             Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
-                Column() {
+                Column {
                     Image(
-                        modifier = androidx.compose.ui.Modifier.size(docSize),
+                        modifier = Modifier.size(docSize),
                         painter = painterResource("doc.svg"),
                         contentDescription = null
                     )

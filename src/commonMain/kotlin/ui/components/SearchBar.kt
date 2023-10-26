@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
  * @author Белоцерковский Марат (MIAPROT)
  */
 @Composable
-fun SearchBar(modifier: Modifier){
+fun SearchBar(modifier: Modifier) {
     val search = remember { mutableStateOf("") }
     Row(
         modifier = modifier.width(800.dp)

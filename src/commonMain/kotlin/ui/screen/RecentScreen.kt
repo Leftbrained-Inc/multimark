@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.dsl.elements.configuration.LocalConfiguration
 import models.FileDTO
 import ui.components.FileList
 import ui.components.LogoTitle
@@ -27,7 +26,6 @@ import java.util.*
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun RecentScreen() {
-    val search = remember { mutableStateOf("") }
     val windowSizeClass = calculateWindowSizeClass()
     var secondaryTitleFontSize by remember {
         mutableStateOf(30.sp)
@@ -38,8 +36,6 @@ fun RecentScreen() {
     val cardList = remember {
         mutableStateListOf<FileDTO>(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
     }
-    val config = LocalConfiguration.current
-
     // Изменение шрифта при изменении экрана
     LaunchedEffect(windowSizeClass) {
         secondaryTitleFontSize = when (windowSizeClass.widthSizeClass) {
@@ -58,7 +54,10 @@ fun RecentScreen() {
 
     Box(Modifier.fillMaxSize()) {
 
-        Column(modifier = Modifier.widthIn(200.dp, 800.dp).align(Alignment.TopCenter), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.widthIn(200.dp, 800.dp).align(Alignment.TopCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             LogoTitle(Modifier.weight(7f))
             SearchBar(Modifier.weight(2f))
             Column(modifier = Modifier.weight(2f)) {
@@ -67,7 +66,7 @@ fun RecentScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    androidx.compose.material3.Text(
+                    Text(
                         "Last Viewed",
                         fontSize = secondaryTitleFontSize,
                         fontWeight = FontWeight.Normal,
