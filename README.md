@@ -18,47 +18,37 @@
 
 > Обновляется по мере разработки
 
-```plantuml
-@startuml
-package "Native Startup"{
-folder desktopApp{
-[build.gradle.kts] --> [main.kt]
-}
-}
-folder "Shared"{
-folder commonMain {
-[main.desktop.kt]
-folder core
-folder ui
-folder resources
-folder models
+```mermaid
+graph TD
+    subgraph startup["Native Startup"]
+        subgraph desktopApp["demos/desktop_test"]
+        fileA("build.gradle.kts")
+        fileB("main.kt")
+        fileA --> fileB
+        end
+    end
 
-     core --> [main.desktop.kt]
-     ui --> [main.desktop.kt]
-     resources --> [main.desktop.kt]
-     models --> [main.desktop.kt]
-}
-folder desktopMain{
-[App.kt]
-}
-desktopMain --> commonMain :  осуществляет
-}
+    subgraph Shared
+        subgraph common["commonMain"]
+        folderD("core")
+        folderE("ui")
+        folderF("resources")
+        folderG("models")
+        dsl("DSL + Configuration")
+        folderD --> dsl
+        folderE --> dsl
+        folderF --> dsl
+        folderG --> dsl
+        end
 
-Shared --> "Native Startup"
+        subgraph desktop["desktopMain"]
+            mainDesktop("main.desktop.kts")
+        end
+        desktop -->|Native functions| common 
+    end
 
-legend
-В commonMain - код который работает на всех системах.
-При этом для каждой системы можно одни и теже
-функции реализовать по разному в своих файлах Shared.
-end legend
-@enduml
+    Shared --> startup
 ```
-
-![Диаграмма структуры проекта в PlantUML](images/structure.jpg)
-
-<figcaption>Диаграмма структуры проекта в PlantUML</figcaption>
-<br/>
-<br/>
 
 ## Дорожная карта
 
@@ -67,3 +57,29 @@ end legend
 ## Контрибьютинг
 
 Последовательность действий и правила представлены в [CONTRIBUTING](CONTRIBUTING.md)
+
+## User Flow
+
+```mermaid
+graph TD
+  A[Начало] --> B[Открытие редактора Markdown]
+  B --> C[Создание нового файла]
+  B --> D[Открытие существующего файла]
+  C --> E[Редактирование файла]
+  E --> F[Сохранение файла]
+  F --> G[Выбор действия]
+  G --> E
+  G --> H[Закрытие редактора Markdown]
+  D --> E
+  E --> F
+  G --> I[Открытие главного меню]
+  I --> J[Открытие настроек]
+  J --> K[Изменение настроек]
+  K --> J
+  J --> I
+  E --> L[Открытие меню документа]
+  L --> M[Открытие настроек]
+  M --> N[Изменение настроек]
+  N --> M
+  M --> L
+```
