@@ -6,6 +6,7 @@ maven-publish = "0.25.3"
 kotlinx-datetime = "0.4.0"
 agp = "8.0.2"
 window-size = "0.3.0"
+appyx-version = "2.0.0-alpha09"
 
 
 [plugins]
@@ -20,4 +21,4 @@ kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-cor
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "window-size" }
-
+appyx = {module="com.bumble.appyx:appyx-navigation", version.ref = "appyx-version"}

@@ -42,6 +42,11 @@ fun main(){
                 }
             }
         }
+        keymap {
+            keymap = "GNOME"
+            meta = Key.L
+        }
     }
 }
 ```
+

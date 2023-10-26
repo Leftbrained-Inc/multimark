@@ -1,9 +1,10 @@
 import androidx.compose.runtime.Composable
-import ui.screen.RecentScreen
+import androidx.compose.runtime.mutableStateOf
+import ui.screen.LaunchScreen
 import ui.screen.StartScreen
 
 @Composable
 fun App() {
-    RecentScreen()
+    LaunchScreen()
 }
 
