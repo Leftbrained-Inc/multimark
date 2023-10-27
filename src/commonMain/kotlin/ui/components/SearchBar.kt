@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,10 +17,7 @@ import androidx.compose.ui.unit.dp
 /**
  * Элемент поисковой строки
  * @param modifier установка размеров
- *
  * @author Белоцерковский Марат (MIAPROT)
- * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
  */
 @Composable
 fun SearchBar(modifier: Modifier) {
@@ -29,7 +27,7 @@ fun SearchBar(modifier: Modifier) {
             .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp)).padding(24.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Button(onClick = {}, Modifier.width(120.dp).height(40.dp)) {
+        Button(onClick = {}, Modifier.weight(3f).fillMaxSize().height(50.dp)) {
             Text(text = "New note", style = MaterialTheme.typography.labelLarge)
         }
         OutlinedTextField(value = search.value,
@@ -56,12 +54,11 @@ fun SearchBar(modifier: Modifier) {
                 )
             }
         )
-        IconButton(onClick = {}) {
-            Icon(
-                modifier = Modifier.weight(1f).size(36.dp),
-                painter = painterResource("settings.svg"),
-                contentDescription = null
-            )
-        }
+
+        Image(
+            modifier = Modifier.weight(1f).size(36.dp),
+            painter = painterResource("settings.svg"),
+            contentDescription = null
+        )
     }
 }

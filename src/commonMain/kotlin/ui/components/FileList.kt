@@ -19,15 +19,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import models.FileDTO
+import javax.swing.border.Border
 
 
 /**
  * Компонент списка файлов
  * @param cardList Передаваемый список файлов
- * @param modifier Установка размеров
- *
- * @author Марат Белоцерковский (MIAPROT)
- * @author Сергей Рейнн (bulkabuka)
+ * @author Марат Белоцерковский (MIAPROT), Сергей Рейнн (bulkabuka)
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -44,7 +42,7 @@ fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
             else -> 10.dp
         }
     }
-    LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
+    LazyVerticalGrid(modifier = Modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
         items(cardList.size) {
             val card = cardList[it]
             Card(
