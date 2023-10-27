@@ -17,13 +17,14 @@ import core.dsl.elements.configuration.LocalConfiguration
 /**
  * Элемент логотипа
  * @param modifier Установка размеров
- * @author Белоцерковский Марат (MIAPROT), Сергей Рейнн (bulkabuka)
+ *
+ * @author Белоцерковский Марат (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Панков Вася (pank-su)
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LogoTitle(modifier: Modifier) {
-
-
     val windowSizeClass = calculateWindowSizeClass()
     val config = LocalConfiguration.current
     var logoSize by remember {
@@ -39,7 +40,11 @@ fun LogoTitle(modifier: Modifier) {
         }
     }
 
-    Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(
+        modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
+    ) {
         config.icon(Modifier.size(logoSize))
         Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
     }
