@@ -1,7 +1,9 @@
-package core.dsl.elements.configuration
+package core.dsl.configuration
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import core.configuration.Configuration
+import core.configuration.ConfigurationImpl
 
 /**
  * Builder конфигурации
