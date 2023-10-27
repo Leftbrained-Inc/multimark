@@ -1,5 +1,6 @@
-package navigation
+package core.db
 
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -9,14 +10,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
  * @author Сергей Рейнн (bulkabuka)
  */
 class Db {
-    object Pinned : Table() {
-        val id = integer("id").autoIncrement()
+    object Pinned : IntIdTable() {
         val filePath = varchar("file_path", 255)
         val fileName = varchar("file_name", 255)
     }
 
     init {
-        val conn = Database.connect("jdbc:sqlite:main.db", "org.sqlite.JDBC")
+        Database.connect("jdbc:sqlite:main.db", "org.sqlite.JDBC")
 
         transaction {
             SchemaUtils.create(Pinned)
