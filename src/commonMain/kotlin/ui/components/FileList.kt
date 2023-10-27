@@ -42,7 +42,7 @@ fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
             else -> 10.dp
         }
     }
-    LazyVerticalGrid(modifier = Modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
+    LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
         items(cardList.size) {
             val card = cardList[it]
             Card(

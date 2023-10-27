@@ -27,7 +27,7 @@ fun SearchBar(modifier: Modifier) {
             .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp)).padding(24.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Button(onClick = {}, Modifier.weight(3f).fillMaxSize().height(50.dp)) {
+        Button(onClick = {}, Modifier.width(120.dp).height(40.dp)) {
             Text(text = "New note", style = MaterialTheme.typography.labelLarge)
         }
         OutlinedTextField(value = search.value,
@@ -54,11 +54,12 @@ fun SearchBar(modifier: Modifier) {
                 )
             }
         )
-
-        Image(
-            modifier = Modifier.weight(1f).size(36.dp),
-            painter = painterResource("settings.svg"),
-            contentDescription = null
-        )
+        IconButton(onClick = {}){
+            Icon(
+                modifier = Modifier.weight(1f).size(36.dp),
+                painter = painterResource("settings.svg"),
+                contentDescription = null
+            )
+        }
     }
 }
