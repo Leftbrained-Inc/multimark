@@ -1,9 +1,7 @@
 package ui.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -12,40 +10,46 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import core.dsl.elements.configuration.LocalConfiguration
+import androidx.compose.ui.unit.sp
+import core.configuration.LocalConfiguration
 
 /**
  * Элемент логотипа
- * @param modifier Установка размеров
- *
+ * @param modifier установка размеров
  * @author Белоцерковский Марат (MIAPROT)
- * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LogoTitle(modifier: Modifier) {
+
+
     val windowSizeClass = calculateWindowSizeClass()
     val config = LocalConfiguration.current
-    var logoSize by remember {
-        mutableStateOf(48.dp)
+    var titleFontSize by remember {
+        mutableStateOf(30.sp)
     }
-
+    var logoSize by remember {
+        mutableStateOf(150.dp)
+    }
     LaunchedEffect(windowSizeClass) {
+
+        titleFontSize = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 30.sp
+            WindowWidthSizeClass.Medium -> 40.sp
+            WindowWidthSizeClass.Expanded -> 60.sp
+            else -> 10.sp
+        }
         logoSize = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 48.dp
-            WindowWidthSizeClass.Medium -> 64.dp
-            WindowWidthSizeClass.Expanded -> 72.dp
-            else -> 24.dp
+            WindowWidthSizeClass.Compact -> 100.dp
+            WindowWidthSizeClass.Medium -> 125.dp
+            WindowWidthSizeClass.Expanded -> 150.dp
+            else -> 10.dp
         }
     }
 
-    Row(
-        modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
-    ) {
+
+    Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         config.icon(Modifier.size(logoSize))
-        Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+        Text(text = "Multimark", fontSize = titleFontSize)
     }
 }

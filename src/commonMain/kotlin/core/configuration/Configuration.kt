@@ -1,22 +1,27 @@
-package core.dsl.elements.configuration
+package core.configuration
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import core.configuration.window.Window
 import core.dsl.ConfigurationTagMaker
-import core.dsl.elements.template.Element
+import core.dsl.configuration.window.WindowBuilder
 import ui.theme.MultimarkAppTheme
 
 
 /**
  * Главный элемент конфигурации, непривязанный к нативной реализации
- * @property icon Изображение, которое является Compose-элементом
- * @property theme Тема приложения
+ *
+ *
+ * @property icon иконка изображения, которая является compose элементом
+ * @property theme тема приложения
+ * @property window информация об окне
+ *
  * @author Панков Вася (pank-su)
  */
 @ConfigurationTagMaker
-abstract class Configuration : Element {
+abstract class Configuration {
     var icon: @Composable (modifier: Modifier) -> Unit =
         { Image(painterResource("logo.svg"), null, modifier = it) }
 
@@ -25,4 +30,6 @@ abstract class Configuration : Element {
             it()
         }
     }
+
+    var window: Window = WindowBuilder().build()
 }
