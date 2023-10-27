@@ -8,12 +8,10 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import core.dsl.elements.configuration.ConfigurationImpl
 import core.dsl.elements.configuration.LocalConfiguration
-import ui.screen.StartScreen
-
+import ui.screen.LaunchScreen
 
 /**
  * Основной компонент навигации
- *
  * @author Панков Вася (pank-su)
  */
 class RootNode(
@@ -24,11 +22,10 @@ class RootNode(
 
     /**
      * Отображение экрана
-     *
      * @author Панков Вася (pank-su)
      */
     @Composable
     override fun View(modifier: Modifier) {
-        StartScreen()
+        LaunchScreen()
     }
 }

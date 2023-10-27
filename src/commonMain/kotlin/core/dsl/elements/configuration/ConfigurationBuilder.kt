@@ -16,7 +16,6 @@ class ConfigurationBuilder : Configuration() {
 
     /**
      * Установка иконки
-     *
      * ```kotlin
      * icon {
      *   Image(painterResource("Good Tick.svg"), null, modifier = it)
