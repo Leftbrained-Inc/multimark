@@ -1,6 +1,5 @@
 package ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +16,10 @@ import androidx.compose.ui.unit.dp
 /**
  * Элемент поисковой строки
  * @param modifier установка размеров
+ *
  * @author Белоцерковский Марат (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Панков Вася (pank-su)
  */
 @Composable
 fun SearchBar(modifier: Modifier) {
@@ -54,7 +56,7 @@ fun SearchBar(modifier: Modifier) {
                 )
             }
         )
-        IconButton(onClick = {}){
+        IconButton(onClick = {}) {
             Icon(
                 modifier = Modifier.weight(1f).size(36.dp),
                 painter = painterResource("settings.svg"),

@@ -13,17 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.dsl.elements.configuration.LocalConfiguration
 import models.FileDTO
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
 import java.util.*
 
+/**
+ * Стартовый экран
+ *
+ * @author Белоцерковский Марат (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Панков Вася (pank-su)
+ */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LaunchScreen() {
-    val config = LocalConfiguration.current
     val windowSizeClass = calculateWindowSizeClass()
     var basicFont by remember {
         mutableStateOf(30.sp)

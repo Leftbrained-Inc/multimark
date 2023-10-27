@@ -19,13 +19,15 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import models.FileDTO
-import javax.swing.border.Border
 
 
 /**
  * Компонент списка файлов
  * @param cardList Передаваемый список файлов
- * @author Марат Белоцерковский (MIAPROT), Сергей Рейнн (bulkabuka)
+ * @param modifier Установка размеров
+ *
+ * @author Марат Белоцерковский (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
