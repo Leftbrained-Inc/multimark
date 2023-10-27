@@ -5,10 +5,17 @@ import core.dsl.configuration.config
 
 fun main() {
     application {
+        val painter = painterResource("Good Tick.svg")
         config {
             icon {
                 Image(painterResource("Good Tick.svg"), null, modifier = it)
             }
+
+            window {
+                icon = painter
+                title = "Test"
+            }
         }.render(::exitApplication)
+
     }
 }

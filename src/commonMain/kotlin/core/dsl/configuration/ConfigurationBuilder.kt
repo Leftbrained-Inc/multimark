@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
+import core.dsl.configuration.window.WindowBuilder
 
 /**
  * Builder конфигурации
@@ -13,8 +14,6 @@ import core.configuration.ConfigurationImpl
  * @author Панков Вася (pank-su)
  */
 class ConfigurationBuilder : Configuration() {
-
-    // TODO сделать переменные приватными
 
     /**
      * Установка иконки
@@ -28,15 +27,20 @@ class ConfigurationBuilder : Configuration() {
     fun icon(init: @Composable (modifier: Modifier) -> Unit) {
         this.icon = init
     }
+    
+    fun window(init: WindowBuilder.() -> Unit){
+        val builder = WindowBuilder()
+        builder.init()
+        this.window = builder.build()
+    }
 
     /**
      * Создание [ConfigurationImpl] на основе данных
      */
     internal fun build(): ConfigurationImpl {
         val configImpl = ConfigurationImpl()
-
-        return configImpl.apply {
-            this.icon = this@ConfigurationBuilder.icon
-        }
+        configImpl.icon = icon
+        configImpl.window = window
+        return configImpl
     }
 }

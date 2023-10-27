@@ -3,6 +3,7 @@ package core.configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -41,6 +42,8 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
         val windowState = rememberWindowState(size = DpSize(480.dp, 658.dp))
         val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
 
+        val configuration = this
+
         Window(onCloseRequest, onKeyEvent = { keyEvent ->
             shorts.forEach {
                 if (it.condition(keyEvent)) {
@@ -49,8 +52,8 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
                 }
             }
             false
-        }) {
-            CompositionLocalProvider(LocalConfiguration provides this@ConfigurationPlatform as ConfigurationImpl) {
+        }, icon = this.window.icon as Painter, title = this.window.title) {
+            CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
                 val config = LocalConfiguration.current
                 config.theme {
                     DesktopNodeHost(

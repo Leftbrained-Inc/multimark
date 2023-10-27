@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import core.configuration.window.Window
 import core.dsl.ConfigurationTagMaker
+import core.dsl.configuration.window.WindowBuilder
 import ui.theme.MultimarkAppTheme
 
 
@@ -27,4 +29,6 @@ abstract class Configuration {
             it()
         }
     }
+
+    var window: Window = WindowBuilder().build()
 }
