@@ -6,8 +6,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import core.dsl.elements.configuration.ConfigurationImpl
-import core.dsl.elements.configuration.LocalConfiguration
 import ui.screen.LaunchScreen
 
 /**
