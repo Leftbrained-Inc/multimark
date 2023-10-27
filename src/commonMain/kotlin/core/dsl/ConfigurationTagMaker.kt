@@ -2,4 +2,4 @@ package core.dsl
 
 
 @DslMarker
-annotation class ConfigurationTagMaker()
+annotation class ConfigurationTagMaker

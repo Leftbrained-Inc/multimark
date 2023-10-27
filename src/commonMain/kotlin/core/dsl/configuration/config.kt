@@ -1,4 +1,6 @@
-package core.dsl.elements.configuration
+package core.dsl.configuration
+
+import core.configuration.ConfigurationImpl
 
 /**
  * DSL конфигурации

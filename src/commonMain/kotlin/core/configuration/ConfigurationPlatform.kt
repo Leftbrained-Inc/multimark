@@ -1,4 +1,4 @@
-package core.dsl.elements.configuration
+package core.configuration
 
 import androidx.compose.runtime.Composable
 

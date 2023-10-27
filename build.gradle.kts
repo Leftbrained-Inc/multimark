@@ -1,5 +1,3 @@
-@file:Suppress("OPT_IN_USAGE")
-
 fun allProjects(init: Project.() -> Unit) = configure(allprojects.filter { !it.path.contains("demos") }, init)
 
 
