@@ -1,4 +1,4 @@
-package core.dsl.elements.shortcut
+package core.shortcut
 
 import androidx.compose.ui.input.key.*
 
@@ -35,10 +35,11 @@ val linkShortcut = Shortcut({ it.key == Key.L && it.isMetaPressed && it.type == 
     println("Link used")
 }
 
-val mediaShortcut = Shortcut({ it.key == Key.M && it.isMetaPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
-    // Добавить картинку или видео
-    println("Media used")
-}
+val mediaShortcut =
+    Shortcut({ it.key == Key.M && it.isMetaPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
+        // Добавить картинку или видео
+        println("Media used")
+    }
 
 val formulaShortcut = Shortcut({ it.key == Key.E && it.isMetaPressed && it.type == KeyEventType.KeyDown }) {
     // Создать формулу
@@ -50,20 +51,30 @@ val codeShortcut = Shortcut({ it.key == Key.C && it.isMetaPressed && it.type == 
     println("Code used")
 }
 
-val quoteShortcut = Shortcut({ it.key == Key.Q && it.isMetaPressed && it.type == KeyEventType.KeyDown  }) {
+val quoteShortcut = Shortcut({ it.key == Key.Q && it.isMetaPressed && it.type == KeyEventType.KeyDown }) {
     // Создать блок цитаты
     println("Quote used")
 }
 
-val headingShortcut = Shortcut({ it.isMetaPressed && it.key in listOf(Key.Button1, Key.Button2, Key.Button3, Key.Button4, Key.Button5, Key.Button6) && it.key == Key.N && it.type == KeyEventType.KeyDown }) {
+val headingShortcut = Shortcut({
+    it.isMetaPressed && it.key in listOf(
+        Key.Button1,
+        Key.Button2,
+        Key.Button3,
+        Key.Button4,
+        Key.Button5,
+        Key.Button6
+    ) && it.key == Key.N && it.type == KeyEventType.KeyDown
+}) {
     // Создать заголовок выбранного уровня
     println("Heading used")
 }
 
-val codeBlockShortcut = Shortcut({ it.key == Key.C && it.isMetaPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
-    // Создать многострочный блок кода с подсветкой кода
-    println("Codeblock used")
-}
+val codeBlockShortcut =
+    Shortcut({ it.key == Key.C && it.isMetaPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
+        // Создать многострочный блок кода с подсветкой кода
+        println("Codeblock used")
+    }
 
 val numberedlistShortcut = Shortcut({ it.key == Key.N && it.isMetaPressed && it.type == KeyEventType.KeyDown }) {
     // Создать нумерованный список
