@@ -11,11 +11,8 @@ import ui.theme.MultimarkAppTheme
 
 /**
  * Главный элемент конфигурации, непривязанный к нативной реализации
- *
- *
- * @property icon иконка изображения, которая является compose элементом
- * @property theme тема приложения
- *
+ * @property icon Изображение, которое является Compose-элементом
+ * @property theme Тема приложения
  * @author Панков Вася (pank-su)
  */
 @ConfigurationTagMaker

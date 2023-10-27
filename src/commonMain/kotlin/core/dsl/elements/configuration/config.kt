@@ -2,7 +2,6 @@ package core.dsl.elements.configuration
 
 /**
  * DSL конфигурации
- *
  * @author Панков Вася (pank-su)
  */
 fun config(init: ConfigurationBuilder.() -> Unit): ConfigurationImpl {

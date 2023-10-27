@@ -16,6 +16,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import navigation.RootNode
+import java.awt.Dimension
 
 sealed class Events {
     object OnBackPressed : Events()
@@ -38,15 +39,16 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
             }
             false
         }) {
+            window.minimumSize = Dimension(800, 600)
             CompositionLocalProvider(LocalConfiguration provides this@ConfigurationPlatform as ConfigurationImpl) {
                 val config = LocalConfiguration.current
-                config.theme{
+                config.theme {
                     DesktopNodeHost(
                         windowState = windowState,
                         onBackPressedEvents = events.receiveAsFlow().mapNotNull {
                             if (it is Events.OnBackPressed) Unit else null
                         }
-                    ) {buildContext ->
+                    ) { buildContext ->
                         RootNode(buildContext)
                     }
                 }
