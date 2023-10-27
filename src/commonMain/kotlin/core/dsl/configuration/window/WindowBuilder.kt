@@ -1,5 +1,8 @@
 package core.dsl.configuration.window
 
-class WindowBuilder: WindowBuilderPlatform() {
-
-}
+/**
+ * Мультплатформенный WindowBuilder, для сборки окна
+ *
+ * @author Панков Вася (pank-su)
+ */
+class WindowBuilder: WindowBuilderPlatform()

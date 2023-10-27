@@ -16,6 +16,7 @@ import ui.theme.MultimarkAppTheme
  *
  * @property icon иконка изображения, которая является compose элементом
  * @property theme тема приложения
+ * @property window информация об окне
  *
  * @author Панков Вася (pank-su)
  */

@@ -16,8 +16,8 @@ import java.io.File
 /**
  * Реализация WindowBuilderPlatform
  *
- * @property icon
- * @property title
+ * @property icon иконка окна
+ * @property title название окна
  *
  * @author Панков Вася (pank-su)
  */
@@ -26,6 +26,9 @@ actual abstract class WindowBuilderPlatform {
     var icon: Painter = useResource("logo.svg"){loadSvgPainter(it, Density(100f)) }
     var title: String = "Multimark"
 
+    /**
+     * Создание окна на основе данных
+     */
     actual open fun build(): Window {
         return Window(icon, title)
     }

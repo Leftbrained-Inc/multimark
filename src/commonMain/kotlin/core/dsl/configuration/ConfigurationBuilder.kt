@@ -27,7 +27,20 @@ class ConfigurationBuilder : Configuration() {
     fun icon(init: @Composable (modifier: Modifier) -> Unit) {
         this.icon = init
     }
-    
+
+    /**
+     * Установка настроек окна (иконки и названия)
+     *
+     * ```kotlin
+     * val painter = painterResource("Good Tick.svg")
+     * config {
+     *      window {
+     *          icon = painter
+     *          title = "Simple title"
+     *      }
+     * }
+     * ```
+     */
     fun window(init: WindowBuilder.() -> Unit){
         val builder = WindowBuilder()
         builder.init()
@@ -35,7 +48,9 @@ class ConfigurationBuilder : Configuration() {
     }
 
     /**
-     * Создание [ConfigurationImpl] на основе данных
+     * Создание [ConfigurationImpl] на основе полученных данных
+     *
+     * @return ConfigurationImpl - мультплатформенная реализация конфигурации
      */
     internal fun build(): ConfigurationImpl {
         val configImpl = ConfigurationImpl()

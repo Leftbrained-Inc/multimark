@@ -5,9 +5,12 @@ import core.dsl.ConfigurationTagMaker
 /**
  * Реализация Window
  *
- * @property icon
- * @property title
+ * На разных платформах будут разные значения
+ *
+ * @property icon иконка
+ * @property title название
+ *
+ * @author Панков Вася (pank-su)
  */
 @ConfigurationTagMaker
-class Window(var icon: Any, var title: String) {
-}
+data class Window(var icon: Any, var title: String)
