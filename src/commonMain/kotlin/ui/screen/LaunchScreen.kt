@@ -1,19 +1,15 @@
 package ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,30 +50,28 @@ fun LaunchScreen() {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-
-
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
-            Modifier.fillMaxSize().align(Alignment.TopCenter)
-                .background(MaterialTheme.colorScheme.background),
+            Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            Column(
-                Modifier.padding(24.dp).fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(48.dp, alignment = Alignment.CenterVertically)
-            ) {
-                LogoTitle(Modifier.fillMaxWidth())
-                SearchBar(Modifier.height(100.dp))
-                // Список недавно просмотренных
-                Box(modifier = Modifier.weight(6f, false), contentAlignment = Alignment.Center) {
-                    Text(
-                        "Last Viewed",
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier.fillMaxSize().padding(bottom = 24.dp)
-                    )
-                    FileList(cardList, modifier = Modifier.padding(top = 24.dp))
-                }
+
+            LogoTitle(Modifier.fillMaxWidth())
+            SearchBar(Modifier.height(100.dp))
+            // Список недавно просмотренных
+            Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "Last Viewed",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+                FileList(cardList, modifier = Modifier.padding(top = 24.dp))
             }
         }
+        Text(
+            "Crafted with ❤\uFE0F in Leftbrained",
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp),
+            fontWeight = FontWeight(500),
+        )
     }
+
 }
