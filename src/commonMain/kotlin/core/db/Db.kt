@@ -52,12 +52,12 @@ class PinnedFileDao {
      * @param filePath Путь к файлу
      * @author Сергей Рейнн (bulkabuka)
      */
-    fun insert(fileName: String, filePath: String) {
-        transaction {
-            Pinned.insert {
+    fun insert(fileName: String, filePath: String): Int {
+        return transaction {
+           Pinned.insertAndGetId {
                 it[Pinned.fileName] = fileName
                 it[Pinned.filePath] = filePath
-            }
+            }.value
         }
     }
 
