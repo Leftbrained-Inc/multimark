@@ -12,9 +12,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 class Db {
 
     companion object {
-
         val connect by lazy { Database.connect("jdbc:sqlite:main.db", "org.sqlite.JDBC") }
-
     }
 
 
@@ -29,60 +27,3 @@ class Db {
 
 }
 
-class PinnedFileDao {
-
-    object Pinned : IntIdTable() {
-        val filePath = varchar("file_path", 255)
-        val fileName = varchar("file_name", 255)
-    }
-
-    init {
-        val connection = Db.connect
-    }
-
-    fun select(): List<ResultRow> {
-        return transaction {
-            Pinned.selectAll().toList()
-        }
-    }
-
-    /**
-     * Добавление нового закрепленного файла
-     * @param fileName Имя файла
-     * @param filePath Путь к файлу
-     * @author Сергей Рейнн (bulkabuka)
-     */
-    fun insert(fileName: String, filePath: String): Int {
-        return transaction {
-           Pinned.insertAndGetId {
-                it[Pinned.fileName] = fileName
-                it[Pinned.filePath] = filePath
-            }.value
-        }
-    }
-
-    /** Обновление закрепленного файла по его id
-     * @param id Идентификатор закрепленного файла
-     * @param fileName Новое имя файла
-     * @param filePath Новый путь к файлу
-     * @author Сергей Рейнн (bulkabuka)
-     */
-    fun update(id: Int, fileName: String, filePath: String) {
-        transaction {
-            Pinned.update({ Pinned.id eq id }) {
-                it[Pinned.fileName] = fileName
-                it[Pinned.filePath] = filePath
-            }
-        }
-    }
-
-    /** Удаление информации о закрепленном файле по id
-     * @param id Идентификатор закрепленного файла, который нужно удалить из базы данных
-     * @author Сергей Рейнн (bulkabuka)
-     */
-    fun delete(id: Int) {
-        transaction {
-            Pinned.deleteWhere { Pinned.id eq id }
-        }
-    }
-}
