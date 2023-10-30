@@ -64,8 +64,6 @@ allProjects {
     }
 }
 
-val exposedVersion: String by project
-
 kotlin {
     jvm("desktop")
     sourceSets {
@@ -77,8 +75,10 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 api(compose.components.resources)
 
-                // addition libs
+                // window size
                 api(libs.window.size)
+
+                // exposed
                 api(libs.exposed.core)
                 api(libs.exposed.crypt)
                 api(libs.exposed.dao)
@@ -87,6 +87,8 @@ kotlin {
                 api(libs.exposed.json)
                 api(libs.exposed.money)
                 api(libs.sqlite.jdbc)
+
+                // navigation
                 api(libs.appyx)
             }
         }
