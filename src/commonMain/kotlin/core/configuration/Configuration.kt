@@ -17,7 +17,7 @@ import ui.theme.MultimarkAppTheme
  * @property logo иконка изображения, которая является compose элементом
  * @property theme тема приложения
  * @property window информация об окне
- * @property scale информация о scale gui
+ * @property scale информация о начальном масштабе интерфейсе (1f = 100 %, 1.5f = 250 %)
  *
  * @author Панков Вася (pank-su)
  */

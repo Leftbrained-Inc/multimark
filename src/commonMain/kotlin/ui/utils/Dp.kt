@@ -3,7 +3,7 @@ package ui.utils
 import androidx.compose.ui.unit.Dp
 
 /**
- * dp with scale
+ * dp, который изменяется в зависимости от установленного масшатаба интерефейса в [Scale.scale]
  *
  * @author Панков Вася (pank-su)
  */
@@ -12,7 +12,7 @@ inline val Int.dp: Dp
     get() = Dp(value = this.toFloat() * Scale.scale)
 
 /**
- * dp withoutScale
+ * Стандартный dp, которому без разницы на установленный масштаб интерфейса в [Scale.scale]
  *
  * @author Панков Вася (pank-su)
  */

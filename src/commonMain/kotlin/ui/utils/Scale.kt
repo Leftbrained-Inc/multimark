@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 /**
- * Cтатический класc для получения текущего scale UI
+ * Cтатический класc для получения текущего масштаба интерфейса
  *
  * @author Панков Вася (pank-su)
  */
