@@ -84,13 +84,3 @@ fun ConfigurationBuilder.keyMap(init: GlobalKeyMap.() -> Unit) {
     this.keyMap = globalKeyMap
 }
 
-/**
- * Добавление keyMap при сборке
- *
- * @author Панков Вася (pank-su)
- */
-fun ConfigurationBuilder.build(): ConfigurationImpl {
-    val configuration = this.build()
-    configuration.keyMap = this.keyMap
-    return configuration
-}

@@ -9,6 +9,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import com.bumble.appyx.navigation.integration.DesktopNodeHost
 import core.extensions.keyMap
+import core.extensions.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
