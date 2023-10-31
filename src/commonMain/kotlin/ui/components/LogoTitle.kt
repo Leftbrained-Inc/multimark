@@ -45,7 +45,7 @@ fun LogoTitle(modifier: Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
     ) {
-        config.icon(Modifier.size(logoSize))
+        config.logo(Modifier.size(logoSize))
         Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
     }
 }
