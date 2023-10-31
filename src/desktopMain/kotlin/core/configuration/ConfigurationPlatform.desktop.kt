@@ -1,5 +1,6 @@
 package core.configuration
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
@@ -43,6 +44,7 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
         val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
 
         val configuration = this
+
         CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
             Window(onCloseRequest, onKeyEvent = { keyEvent ->
                 configuration.keyMap.shorts.forEach {
@@ -62,15 +64,16 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
                     Scale.scale = config.scale
                 }
 
-
-                config.theme {
-                    DesktopNodeHost(
-                        windowState = windowState,
-                        onBackPressedEvents = events.receiveAsFlow().mapNotNull {
-                            if (it is Events.OnBackPressed) Unit else null
+                AnimatedContent(Scale.scale) {
+                    config.theme {
+                        DesktopNodeHost(
+                            windowState = windowState,
+                            onBackPressedEvents = events.receiveAsFlow().mapNotNull {
+                                if (it is Events.OnBackPressed) Unit else null
+                            }
+                        ) { buildContext ->
+                            RootNode(buildContext)
                         }
-                    ) { buildContext ->
-                        RootNode(buildContext)
                     }
                 }
 

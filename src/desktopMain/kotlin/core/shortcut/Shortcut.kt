@@ -7,8 +7,9 @@ import ui.utils.Scale
  * @param condition Условие, при котором будет вызвана [action]
  * @param action Действие, которое будет выполнено при выполнении [condition]
  * @author Сергей Рейнн (bulkabuka)
+ * @author Панков Вася (pank-su)
  */
-data class Shortcut(val condition: (KeyEvent) -> Boolean, val action: () -> Unit)
+data class Shortcut(var condition: (KeyEvent) -> Boolean, val action: () -> Unit)
 
 
 val italicShortcut = Shortcut({ it.key == Key.I && it.isAltPressed && it.type == KeyEventType.KeyDown }) {

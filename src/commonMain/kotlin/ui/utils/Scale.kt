@@ -1,5 +1,9 @@
 package ui.utils
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 /**
  * Cтатический класc для получения текущего scale UI
  *
@@ -7,6 +11,6 @@ package ui.utils
  */
 class Scale{
     companion object{
-        var scale = 1.0f
+        var scale by mutableStateOf(1.0f)
     }
 }
