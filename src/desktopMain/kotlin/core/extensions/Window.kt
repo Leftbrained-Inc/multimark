@@ -11,12 +11,22 @@ import core.dsl.configuration.ConfigurationBuilder
 
 private var window = Window()
 
+/**
+ * Настройки окна
+ * @property icon иконка
+ * @property title названия окна
+ * @author Панков Вася (pank-su)
+ */
 @ConfigurationTagMaker
 data class Window(
     var icon: Painter = useResource("logo.svg") { loadSvgPainter(it, Density(100f)) },
     var title: String = "MultiMark"
 )
 
+/**
+ * Добавление переменной для конфигурации
+ * @author Панков Вася (pank-su)
+ */
 var Configuration.window: Window
     get() = core.extensions.window
     set(value) {
@@ -35,6 +45,7 @@ var Configuration.window: Window
  *      }
  * }
  * ```
+ * @author Панков Вася (pank-su)
  */
 fun ConfigurationBuilder.window(init: Window.() -> Unit) {
     val window = Window()

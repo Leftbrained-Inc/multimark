@@ -4,7 +4,7 @@ import core.configuration.ConfigurationImpl
 import core.dsl.configuration.ConfigurationBuilder
 
 /**
- * Добавление необходимых компонентов при сборке
+ * Добавление нативных дополнений при сборке
  *
  * @author Панков Вася (pank-su)
  */
