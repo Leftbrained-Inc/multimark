@@ -24,8 +24,8 @@ class ConfigurationBuilder : Configuration() {
      * }
      * ```
      */
-    fun icon(init: @Composable (modifier: Modifier) -> Unit) {
-        this.icon = init
+    fun logo(init: @Composable (modifier: Modifier) -> Unit) {
+        this.logo = init
     }
 
     /**
@@ -54,7 +54,7 @@ class ConfigurationBuilder : Configuration() {
      */
     internal fun build(): ConfigurationImpl {
         val configImpl = ConfigurationImpl()
-        configImpl.icon = icon
+        configImpl.logo = logo
         configImpl.window = window
         return configImpl
     }
