@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import com.bumble.appyx.navigation.integration.DesktopNodeHost
-import core.dsl.elements.shortcut.shorts
+import core.extensions.keyMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -43,17 +43,18 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
         val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
 
         val configuration = this
-
-        Window(onCloseRequest, onKeyEvent = { keyEvent ->
-            shorts.forEach {
-                if (it.condition(keyEvent)) {
-                    it.action()
-                    return@Window true
+        CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
+            Window(onCloseRequest, onKeyEvent = { keyEvent ->
+                configuration.keyMap.shorts.forEach {
+                    if (it.condition(keyEvent)) {
+                        it.action()
+                        return@Window true
+                    }
                 }
-            }
-            false
-        }, icon = this.window.icon as Painter, title = this.window.title) {
-            CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
+
+                false
+            }, icon = this.window.icon as Painter, title = this.window.title) {
+
                 val config = LocalConfiguration.current
 
                 // TODO вынести ненативные компоненты

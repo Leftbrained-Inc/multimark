@@ -14,7 +14,7 @@ import ui.theme.MultimarkAppTheme
  * Главный элемент конфигурации, непривязанный к нативной реализации
  *
  *
- * @property icon иконка изображения, которая является compose элементом
+ * @property logo иконка изображения, которая является compose элементом
  * @property theme тема приложения
  * @property window информация об окне
  * @property scale информация о scale gui
@@ -23,7 +23,7 @@ import ui.theme.MultimarkAppTheme
  */
 @ConfigurationTagMaker
 abstract class Configuration {
-    var icon: @Composable (modifier: Modifier) -> Unit =
+    var logo: @Composable (modifier: Modifier) -> Unit =
         { Image(painterResource("logo.svg"), null, modifier = it) }
 
     var theme: @Composable (content: @Composable () -> Unit) -> Unit = {
