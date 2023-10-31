@@ -56,6 +56,7 @@ class ConfigurationBuilder : Configuration() {
         val configImpl = ConfigurationImpl()
         configImpl.icon = icon
         configImpl.window = window
+        configImpl.scale = scale
         return configImpl
     }
 }

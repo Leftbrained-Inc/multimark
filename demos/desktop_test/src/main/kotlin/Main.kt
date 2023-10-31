@@ -11,6 +11,8 @@ fun main() {
                 Image(painterResource("Good Tick.svg"), null, modifier = it)
             }
 
+            scale = 1f
+
             window {
                 icon = painter
                 title = "Test"

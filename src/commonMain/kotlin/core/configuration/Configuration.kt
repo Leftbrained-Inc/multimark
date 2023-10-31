@@ -17,6 +17,7 @@ import ui.theme.MultimarkAppTheme
  * @property icon иконка изображения, которая является compose элементом
  * @property theme тема приложения
  * @property window информация об окне
+ * @property scale информация о scale gui
  *
  * @author Панков Вася (pank-su)
  */
@@ -32,4 +33,13 @@ abstract class Configuration {
     }
 
     var window: Window = WindowBuilder().build()
+
+    private var _scale: Float = 1.0f
+
+    var scale
+        set(value) {
+
+            _scale = value
+        }
+        get() = _scale
 }

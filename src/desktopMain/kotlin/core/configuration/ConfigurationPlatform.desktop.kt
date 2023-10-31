@@ -1,8 +1,6 @@
 package core.configuration
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -17,11 +15,13 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import navigation.RootNode
+import ui.utils.Scale
 
 
 sealed class Events {
     object OnBackPressed : Events()
 }
+
 
 /**
  * Нативная реализация
@@ -55,6 +55,13 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
         }, icon = this.window.icon as Painter, title = this.window.title) {
             CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
                 val config = LocalConfiguration.current
+
+                // TODO вынести ненативные компоненты
+                LaunchedEffect(config.scale) {
+                    Scale.scale = config.scale
+                }
+
+
                 config.theme {
                     DesktopNodeHost(
                         windowState = windowState,
@@ -65,6 +72,7 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
                         RootNode(buildContext)
                     }
                 }
+
             }
         }
     }

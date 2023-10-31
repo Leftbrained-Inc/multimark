@@ -11,12 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import core.configuration.LocalConfiguration
 import models.FileDTO
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
+import ui.utils.dp
 import java.util.*
 
 /**
@@ -29,6 +30,7 @@ import java.util.*
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LaunchScreen() {
+    val config = LocalConfiguration.current
     val windowSizeClass = calculateWindowSizeClass()
     var basicFont by remember {
         mutableStateOf(30.sp)
@@ -60,7 +62,6 @@ fun LaunchScreen() {
             Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-
             LogoTitle(Modifier.fillMaxWidth())
             SearchBar(Modifier.height(100.dp))
             // Список недавно просмотренных

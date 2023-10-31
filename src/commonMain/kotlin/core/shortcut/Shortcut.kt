@@ -1,6 +1,7 @@
 package core.dsl.elements.shortcut
 
 import androidx.compose.ui.input.key.*
+import ui.utils.Scale
 
 /** Обработка горячих клавиш
  * @param condition Условие, при котором будет вызвана [action]
@@ -42,9 +43,9 @@ val linkShortcut = Shortcut({ it.key == Key.L && it.isAltPressed && it.type == K
 
 val mediaShortcut =
     Shortcut({ it.key == Key.M && it.isAltPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
-    // Добавить картинку или видео
-    println("Media used")
-}
+        // Добавить картинку или видео
+        println("Media used")
+    }
 
 val formulaShortcut = Shortcut({ it.key == Key.E && it.isAltPressed && it.type == KeyEventType.KeyDown }) {
     // Создать формулу
@@ -68,9 +69,9 @@ val headingShortcut = Shortcut({ it.isAltPressed && it.key == Key.H && it.type =
 
 val codeBlockShortcut =
     Shortcut({ it.key == Key.C && it.isAltPressed && it.isShiftPressed && it.type == KeyEventType.KeyDown }) {
-    // Создать многострочный блок кода с подсветкой кода
-    println("Codeblock used")
-}
+        // Создать многострочный блок кода с подсветкой кода
+        println("Codeblock used")
+    }
 
 val numberedlistShortcut = Shortcut({ it.key == Key.N && it.isAltPressed && it.type == KeyEventType.KeyDown }) {
     // Создать нумерованный список
@@ -87,9 +88,19 @@ val tableShortcut = Shortcut({ it.key == Key.T && it.isAltPressed && it.type == 
     println("Table used")
 }
 
+val zoomShortcutSub = Shortcut({ it.isCtrlPressed && it.key == Key.Minus }) {
+    Scale.scale -= 0.1f
+}
+
+val zoomShortcutAdd = Shortcut({ it.isCtrlPressed && it.key == Key.Equals }) {
+    Scale.scale += 0.1f
+}
+
+
 // Список из всех горячих клавиш
 val shorts = listOf(
     tableShortcut, bulletedListShortcut, numberedlistShortcut,
     codeBlockShortcut, headingShortcut, quoteShortcut, codeShortcut, formulaShortcut, mediaShortcut, linkShortcut,
-    highlightShortcut, strikethroughShortcut, underlineShortcut, boldShortcut, italicShortcut
+    highlightShortcut, strikethroughShortcut, underlineShortcut, boldShortcut, italicShortcut,
+    zoomShortcutAdd, zoomShortcutSub
 )

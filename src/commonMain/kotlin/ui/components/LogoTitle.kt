@@ -11,8 +11,8 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import core.configuration.LocalConfiguration
+import ui.utils.dp
 
 /**
  * Элемент логотипа
