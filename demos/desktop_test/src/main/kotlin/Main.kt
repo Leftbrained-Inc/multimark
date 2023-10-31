@@ -8,6 +8,7 @@ import core.dsl.configuration.config
 import core.dsl.elements.shortcut.Shortcut
 import core.extensions.KeyMap
 import core.extensions.keyMap
+import core.extensions.window
 
 fun main() {
     application {
