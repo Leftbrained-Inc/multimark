@@ -39,6 +39,10 @@ abstract class Configuration {
     var scale
         set(value) {
 
+            if (value < 0.5f) {
+                _scale = 0.5f
+                return
+            }
             _scale = value
         }
         get() = _scale
