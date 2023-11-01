@@ -1,5 +1,3 @@
-@file:Suppress("OPT_IN_USAGE")
-
 fun allProjects(init: Project.() -> Unit) = configure(allprojects.filter { !it.path.contains("demos") }, init)
 
 
@@ -64,7 +62,6 @@ allProjects {
     }
 }
 
-
 kotlin {
     jvm("desktop")
     sourceSets {
@@ -76,11 +73,25 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 api(compose.components.resources)
 
-                // addition libs
+                // window size
                 api(libs.window.size)
+
+                // exposed
+                api(libs.exposed.core)
+                api(libs.exposed.crypt)
+                api(libs.exposed.dao)
+                api(libs.exposed.jdbc)
+                api(libs.exposed.kotlin.datetime)
+                api(libs.exposed.json)
+                api(libs.exposed.money)
+                api(libs.sqlite.jdbc)
+
+                // navigation
                 api(libs.appyx)
             }
         }
+
+        val exposedVersion: String by project
 
         val desktopMain by getting {
             dependencies {

@@ -1,14 +1,16 @@
-package core.dsl.elements.configuration
+package core.configuration
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import com.bumble.appyx.navigation.integration.DesktopNodeHost
-import core.dsl.elements.shortcut.shorts
+import core.extensions.keyMap
+import core.extensions.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,40 +19,57 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import navigation.RootNode
 
+
 sealed class Events {
     object OnBackPressed : Events()
 }
 
-actual abstract class ConfigurationPlatform actual constructor() : Configuration() {
-
+/**
+ * Нативная реализация
+ *
+ * @author Панков Вася (pank-su)
+ */
+actual abstract class ConfigurationPlatform actual constructor() : core.configuration.Configuration() {
+    /**
+     * Отображение экрана и навигации
+     *
+     * @param onCloseRequest передаётся request на закрытие приложения
+     *
+     * @author Панков Вася (pank-su)
+     */
     @Composable
     actual open fun render(onCloseRequest: () -> Unit) {
         val events: Channel<Events> = Channel()
         val windowState = rememberWindowState(size = DpSize(480.dp, 658.dp))
         val eventScope = remember { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
 
-        Window(onCloseRequest, onKeyEvent = { keyEvent ->
-            shorts.forEach {
-                if (it.condition(keyEvent)) {
-                    it.action()
-                    return@Window true
+        val configuration = this
+        CompositionLocalProvider(LocalConfiguration provides configuration as ConfigurationImpl) {
+            Window(onCloseRequest, onKeyEvent = { keyEvent ->
+                configuration.keyMap.shorts.forEach {
+                    if (it.condition(keyEvent)) {
+                        it.action()
+                        return@Window true
+                    }
                 }
-            }
-            false
-        }) {
-            CompositionLocalProvider(LocalConfiguration provides this@ConfigurationPlatform as ConfigurationImpl) {
+
+                false
+            }, icon = this.window.icon as Painter, title = this.window.title) {
+
                 val config = LocalConfiguration.current
-                config.theme{
+                config.theme {
                     DesktopNodeHost(
                         windowState = windowState,
                         onBackPressedEvents = events.receiveAsFlow().mapNotNull {
                             if (it is Events.OnBackPressed) Unit else null
                         }
-                    ) {buildContext ->
+                    ) { buildContext ->
                         RootNode(buildContext)
                     }
                 }
             }
         }
     }
+
+
 }

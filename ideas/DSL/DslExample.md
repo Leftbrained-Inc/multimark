@@ -25,21 +25,9 @@ fun main(){
                 
             }
         }
-        startScreen = StartScreen.Menu
-        menuScreen{
-            MenuScreen{
-                buttons{
-                    
-                }
-            }
-        }
-        recentScreen{
-            RecentScreen{
-                recentSettings{
-                    recentFilter{
-                        file.contains(".md")
-                    }
-                }
+        launchScreen{
+            filesMode = FilesMode.Both
+            filter{
             }
         }
         keymap {

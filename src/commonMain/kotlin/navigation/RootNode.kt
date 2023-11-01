@@ -6,16 +6,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import core.dsl.elements.configuration.ConfigurationImpl
-import core.dsl.elements.configuration.LocalConfiguration
-import ui.components.NavBar
 import ui.screen.LaunchScreen
-import ui.screen.StartScreen
-
 
 /**
  * Основной компонент навигации
- *
  * @author Панков Вася (pank-su)
  */
 class RootNode(
@@ -26,7 +20,6 @@ class RootNode(
 
     /**
      * Отображение экрана
-     *
      * @author Панков Вася (pank-su)
      */
     @Composable

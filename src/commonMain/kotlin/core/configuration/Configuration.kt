@@ -1,11 +1,10 @@
-package core.dsl.elements.configuration
+package core.configuration
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import core.dsl.ConfigurationTagMaker
-import core.dsl.elements.template.Element
 import ui.theme.MultimarkAppTheme
 
 
@@ -13,14 +12,15 @@ import ui.theme.MultimarkAppTheme
  * Главный элемент конфигурации, непривязанный к нативной реализации
  *
  *
- * @property icon иконка изображения, которая является compose элементом
+ * @property logo иконка изображения, которая является compose элементом
  * @property theme тема приложения
+ * @property window информация об окне
  *
  * @author Панков Вася (pank-su)
  */
 @ConfigurationTagMaker
-abstract class Configuration : Element {
-    var icon: @Composable (modifier: Modifier) -> Unit =
+abstract class Configuration {
+    var logo: @Composable (modifier: Modifier) -> Unit =
         { Image(painterResource("logo.svg"), null, modifier = it) }
 
     var theme: @Composable (content: @Composable () -> Unit) -> Unit = {

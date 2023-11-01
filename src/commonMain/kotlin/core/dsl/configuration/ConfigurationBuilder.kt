@@ -1,7 +1,9 @@
-package core.dsl.elements.configuration
+package core.dsl.configuration
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import core.configuration.Configuration
+import core.configuration.ConfigurationImpl
 
 /**
  * Builder конфигурации
@@ -12,8 +14,6 @@ import androidx.compose.ui.Modifier
  */
 class ConfigurationBuilder : Configuration() {
 
-    // TODO сделать переменные приватными
-
     /**
      * Установка иконки
      *
@@ -23,18 +23,20 @@ class ConfigurationBuilder : Configuration() {
      * }
      * ```
      */
-    fun icon(init: @Composable (modifier: Modifier) -> Unit) {
-        this.icon = init
+    fun logo(init: @Composable (modifier: Modifier) -> Unit) {
+        this.logo = init
     }
 
+
+
     /**
-     * Создание [ConfigurationImpl] на основе данных
+     * Создание [ConfigurationImpl] на основе полученных данных
+     *
+     * @return ConfigurationImpl - мультплатформенная реализация конфигурации
      */
     internal fun build(): ConfigurationImpl {
         val configImpl = ConfigurationImpl()
-
-        return configImpl.apply {
-            this.icon = this@ConfigurationBuilder.icon
-        }
+        configImpl.logo = logo
+        return configImpl
     }
 }
