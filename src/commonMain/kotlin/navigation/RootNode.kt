@@ -8,6 +8,8 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import core.dsl.elements.configuration.ConfigurationImpl
 import core.dsl.elements.configuration.LocalConfiguration
+import ui.components.NavBar
+import ui.screen.LaunchScreen
 import ui.screen.StartScreen
 
 
@@ -29,6 +31,6 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        StartScreen()
+        NavBar()
     }
 }
