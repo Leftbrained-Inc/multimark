@@ -29,6 +29,7 @@ import ui.theme.md_theme_light_primaryContainer
  * @param directory путь к файлу
  */
 @Composable
+//TODO Заменить параметр по умолчанию
 fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
     val pathList = directory.split("\\")
     val file = pathList.last()
@@ -72,7 +73,6 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                 ) {
                     OutlinedTextField(value = search.value,
                         onValueChange = { newText -> search.value = newText },
-                        textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal),
                         shape = RoundedCornerShape(25.dp),
                         modifier = Modifier.padding(start = 10.dp, top = 4.dp, bottom = 4.dp, end = 40.dp).weight(9f)
                             .background(Color.White, shape = RoundedCornerShape(25.dp))
@@ -80,7 +80,6 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                         placeholder = {
                             Text(
                                 text = "Search",
-                                color = Color(0xFF2F0F1C),
                                 fontSize = 20.sp
                             )
                         },

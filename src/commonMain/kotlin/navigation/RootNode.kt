@@ -31,6 +31,6 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        NavBar()
+        LaunchScreen()
     }
 }
