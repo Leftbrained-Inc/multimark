@@ -6,6 +6,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
+import ui.components.BonsaiExample
 import ui.screen.LaunchScreen
 
 /**
@@ -24,6 +25,6 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        LaunchScreen()
+        BonsaiExample()
     }
 }
