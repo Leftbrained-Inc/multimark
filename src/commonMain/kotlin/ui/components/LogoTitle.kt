@@ -24,19 +24,19 @@ import core.configuration.LocalConfiguration
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun LogoTitle(modifier: Modifier) {
+fun LogoTitle(modifier: Modifier, showTitle: Boolean) {
     val windowSizeClass = calculateWindowSizeClass()
     val config = LocalConfiguration.current
     var logoSize by remember {
-        mutableStateOf(48.dp)
+        mutableStateOf(64.dp)
     }
 
     LaunchedEffect(windowSizeClass) {
         logoSize = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 48.dp
-            WindowWidthSizeClass.Medium -> 64.dp
-            WindowWidthSizeClass.Expanded -> 72.dp
-            else -> 24.dp
+            WindowWidthSizeClass.Compact -> 64.dp
+            WindowWidthSizeClass.Medium -> 72.dp
+            WindowWidthSizeClass.Expanded -> 86.dp
+            else -> 64.dp
         }
     }
 
@@ -46,6 +46,8 @@ fun LogoTitle(modifier: Modifier) {
         horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
     ) {
         config.logo(Modifier.size(logoSize))
-        Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+        if (showTitle) {
+            Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+        }
     }
 }

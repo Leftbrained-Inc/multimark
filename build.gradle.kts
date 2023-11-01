@@ -85,6 +85,7 @@ kotlin {
                 api(libs.exposed.json)
                 api(libs.exposed.money)
                 api(libs.sqlite.jdbc)
+                implementation("org.jetbrains:markdown:0.5.0")
 
                 // navigation
                 api(libs.appyx)

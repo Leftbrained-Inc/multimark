@@ -20,12 +20,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import models.FileDTO
 
-
 /**
  * Компонент списка файлов
+ *
  * @param cardList Передаваемый список файлов
  * @param modifier Установка размеров
- *
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  */
