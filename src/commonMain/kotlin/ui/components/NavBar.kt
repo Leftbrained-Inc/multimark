@@ -6,9 +6,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,17 +22,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.theme.MultimarkAppTheme
 import ui.theme.md_theme_light_primaryContainer
-import javax.swing.text.Style
 
+/**
+ * Элемент navbar
+ * @author Белоцерковский Марат(MIAPROT)
+ * @param directory путь к файлу
+ */
 @Composable
-fun NavBar(directory:String = "D:\\Battle.net\\Battle.net.13521\\audio") {
+fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
     val pathList = directory.split("\\")
     val file = pathList.last()
     val search = remember { mutableStateOf("") }
 
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val width = this.maxWidth
-        LaunchedEffect(width){
+        LaunchedEffect(width) {
             println(width)
         }
         Row(
@@ -58,7 +64,7 @@ fun NavBar(directory:String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                 Text(text = file, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal))
 
             }
-            if(width > 900.dp) {
+            if (width > 900.dp) {
                 Row(
                     modifier = Modifier.weight(6f).fillMaxHeight()
                         .background(Color(0xFFfed7e2), shape = RoundedCornerShape(25.dp)),
