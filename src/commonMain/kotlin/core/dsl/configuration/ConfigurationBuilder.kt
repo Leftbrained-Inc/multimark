@@ -28,7 +28,6 @@ class ConfigurationBuilder : Configuration() {
     }
 
 
-
     /**
      * Создание [ConfigurationImpl] на основе полученных данных
      *
@@ -38,6 +37,7 @@ class ConfigurationBuilder : Configuration() {
         val configImpl = ConfigurationImpl()
         configImpl.logo = logo
         configImpl.scale = scale
+        configImpl.fontScale = fontScale
         return configImpl
     }
 }

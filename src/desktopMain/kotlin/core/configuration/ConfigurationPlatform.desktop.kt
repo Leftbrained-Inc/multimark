@@ -56,13 +56,14 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
                 }
 
                 false
-            }, icon = this.window.icon as Painter, title = this.window.title) {
+            }, icon = this.window.icon, title = this.window.title) {
 
                 val config = LocalConfiguration.current
 
                 // TODO вынести ненативные компоненты
                 LaunchedEffect(config.scale) {
                     Scale.scale = config.scale
+                    Scale.fontScale = config.fontScale
                 }
 
                 AnimatedContent(Scale.scale) {

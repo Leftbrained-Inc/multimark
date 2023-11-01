@@ -4,7 +4,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import ui.utils.Scale
 
 private val DarkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
@@ -75,13 +76,36 @@ fun MultimarkAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true, content: @Composable () -> Unit
 ) {
+    var type by remember { mutableStateOf(Typography) }
     val colorScheme = when {
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+    // Жёстко нахордкодил fontScaling
+    LaunchedEffect(Scale.fontScale) {
+        val newType = type.copy(
+            displayLarge = type.displayLarge.copy(fontSize = type.displayLarge.fontSize * Scale.fontScale),
+            displayMedium = type.displayMedium.copy(fontSize = type.displayMedium.fontSize * Scale.fontScale),
+            displaySmall = type.displaySmall.copy(fontSize = type.displaySmall.fontSize * Scale.fontScale),
+            headlineLarge = type.headlineLarge.copy(fontSize = type.headlineLarge.fontSize * Scale.fontScale),
+            headlineMedium = type.headlineMedium.copy(fontSize = type.headlineMedium.fontSize * Scale.fontScale),
+            headlineSmall = type.headlineSmall.copy(fontSize = type.headlineSmall.fontSize * Scale.fontScale),
+            titleLarge = type.titleLarge.copy(fontSize = type.titleLarge.fontSize * Scale.fontScale),
+            titleMedium = type.titleMedium.copy(fontSize = type.titleMedium.fontSize * Scale.fontScale),
+            titleSmall = type.titleSmall.copy(fontSize = type.titleSmall.fontSize * Scale.fontScale),
+            bodyLarge = type.bodyLarge.copy(fontSize = type.bodyLarge.fontSize * Scale.fontScale),
+            bodyMedium = type.bodyMedium.copy(fontSize = type.bodyMedium.fontSize * Scale.fontScale),
+            bodySmall = type.bodySmall.copy(fontSize = type.bodySmall.fontSize * Scale.fontScale),
+            labelLarge = type.labelLarge.copy(fontSize = type.labelLarge.fontSize * Scale.fontScale),
+            labelMedium = type.labelMedium.copy(fontSize = type.labelMedium.fontSize * Scale.fontScale),
+            labelSmall = type.labelSmall.copy(fontSize = type.labelSmall.fontSize * Scale.fontScale),
+        )
+        type = newType
+    }
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = type,
         content = content
     )
 }

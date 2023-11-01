@@ -14,8 +14,8 @@ import ui.theme.MultimarkAppTheme
  *
  * @property logo иконка изображения, которая является compose элементом
  * @property theme тема приложения
- * @property window информация об окне
  * @property scale информация о начальном масштабе интерфейсе (1f = 100 %, 1.5f = 250 %)
+ * @property fontScale информация о начальном масштабе шрифта интерфейса (1f = 100 %, 1.5f = 250 %)
  *
  * @author Панков Вася (pank-su)
  */
@@ -31,6 +31,10 @@ abstract class Configuration {
     }
 
     private var _scale: Float = 1.0f
+    private var _fontScale: Float = 1.0f
+
+    // Масштабирование шрифта зависит от масштаба интерфейса
+    var fontScaleDependOfScale = true
 
     var scale
         set(value) {
@@ -42,4 +46,15 @@ abstract class Configuration {
             _scale = value
         }
         get() = _scale
+
+    var fontScale
+        set(value) {
+
+            if (value < 0.5f) {
+                _fontScale = 0.5f
+                return
+            }
+            _fontScale = value
+        }
+        get() = if (!fontScaleDependOfScale) _fontScale else _fontScale * _scale
 }

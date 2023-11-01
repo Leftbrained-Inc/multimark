@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
  */
 class Scale{
     companion object{
-        var scale by mutableStateOf(1.0f)
+        var scale by mutableStateOf(1f)
+        var fontScale by mutableStateOf(1f)
     }
 }

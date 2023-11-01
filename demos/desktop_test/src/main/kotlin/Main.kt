@@ -20,6 +20,7 @@ fun main() {
             }
 
             scale = 1f
+            fontScale = 1f
 
             window {
                 icon = painter

@@ -2,6 +2,7 @@ package ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -35,12 +36,13 @@ fun SearchBar(modifier: Modifier) {
         OutlinedTextField(value = search.value,
             onValueChange = { newText -> search.value = newText },
             textStyle = MaterialTheme.typography.bodyMedium,
-            shape = RoundedCornerShape(99.dp),
+            shape = CircleShape,
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = MaterialTheme.colorScheme.onTertiary,
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                 focusedContainerColor = MaterialTheme.colorScheme.onTertiary
             ),
+            singleLine = true,
             modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
             placeholder = {
                 Text(
