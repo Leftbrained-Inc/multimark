@@ -11,8 +11,8 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import core.configuration.LocalConfiguration
+import ui.utils.dp
 
 /**
  * Элемент логотипа
@@ -24,19 +24,19 @@ import core.configuration.LocalConfiguration
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun LogoTitle(modifier: Modifier) {
+fun LogoTitle(modifier: Modifier, showTitle: Boolean) {
     val windowSizeClass = calculateWindowSizeClass()
     val config = LocalConfiguration.current
     var logoSize by remember {
-        mutableStateOf(48.dp)
+        mutableStateOf(64.dp)
     }
 
     LaunchedEffect(windowSizeClass) {
         logoSize = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 48.dp
-            WindowWidthSizeClass.Medium -> 64.dp
-            WindowWidthSizeClass.Expanded -> 72.dp
-            else -> 24.dp
+            WindowWidthSizeClass.Compact -> 64.dp
+            WindowWidthSizeClass.Medium -> 72.dp
+            WindowWidthSizeClass.Expanded -> 86.dp
+            else -> 64.dp
         }
     }
 
@@ -45,7 +45,9 @@ fun LogoTitle(modifier: Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
     ) {
-        config.icon(Modifier.size(logoSize))
-        Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+        config.logo(Modifier.size(logoSize))
+        if (showTitle) {
+            Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+        }
     }
 }
