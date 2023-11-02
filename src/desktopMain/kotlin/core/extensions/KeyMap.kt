@@ -50,12 +50,12 @@ class GlobalKeyMap : KeyMap {
     var testShortcut = Shortcut({ metaKey(it) && it.key == Key.K }) { println("Worked") }
 
     // Горячая клавиша для приблежения
-    val zoomShortcutAdd = Shortcut({ metaKey(it) && it.key == Key.Equals }) {
+    var zoomShortcutAdd = Shortcut({ metaKey(it) && it.key == Key.Equals }) {
         Scale.scale += 0.1f
     }
 
     // Горячая клавиша для отдаления
-    val zoomShortcutSub =
+    var zoomShortcutSub =
         Shortcut({ metaKey(it) && it.key == Key.Minus }) { if (Scale.scale > 0.5) {
             Scale.scale -= 0.1f
         } }
