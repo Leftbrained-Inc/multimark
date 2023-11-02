@@ -12,6 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 
+/**
+ * Поле ввода Markdown-текста
+ * @param textStyle Стиль текста
+ * @author Сергей Рейнн (bulkabuka)
+ */
 @Composable
 fun MarkdownField(textStyle: TextStyle) {
     val field = remember { mutableStateOf("Hello, **world**!") }
