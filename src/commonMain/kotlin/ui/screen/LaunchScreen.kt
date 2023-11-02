@@ -4,19 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
 import models.FileDTO
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
+import ui.utils.dp
 import java.util.*
 
 /**
@@ -26,35 +23,11 @@ import java.util.*
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LaunchScreen() {
-    val windowSizeClass = calculateWindowSizeClass()
-    var basicFont by remember {
-        mutableStateOf(30.sp)
-    }
-    var logoSize by remember {
-        mutableStateOf(72.dp)
-    }
     val cardList = remember {
         mutableStateListOf(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
     }
-
-    LaunchedEffect(windowSizeClass) {
-        basicFont = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 16.sp
-            WindowWidthSizeClass.Medium -> 18.sp
-            WindowWidthSizeClass.Expanded -> 20.sp
-            else -> 10.sp
-        }
-        logoSize = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 48.dp
-            WindowWidthSizeClass.Medium -> 64.dp
-            WindowWidthSizeClass.Expanded -> 72.dp
-            else -> 10.dp
-        }
-    }
-
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
             Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
@@ -78,5 +51,4 @@ fun LaunchScreen() {
             fontWeight = FontWeight(500),
         )
     }
-
 }

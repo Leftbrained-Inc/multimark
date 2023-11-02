@@ -5,9 +5,10 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.isAltPressed
 import androidx.compose.ui.input.key.key
 import core.configuration.Configuration
-import core.configuration.ConfigurationImpl
 import core.dsl.configuration.ConfigurationBuilder
 import core.dsl.elements.shortcut.Shortcut
+import core.extensions.KeyMap.Companion.metaKey
+import ui.utils.Scale
 
 
 private var globalKeyMap = GlobalKeyMap()
@@ -45,9 +46,22 @@ interface KeyMap {
  */
 class GlobalKeyMap : KeyMap {
 
-    var testShortcut = Shortcut({ KeyMap.metaKey(it) && it.key == Key.K }) { println("Worked") }
+    // Тестовая горячая клавиша
+    var testShortcut = Shortcut({ metaKey(it) && it.key == Key.K }) { println("Worked") }
+
+    // Горячая клавиша для приблежения
+    var zoomShortcutAdd = Shortcut({ metaKey(it) && it.key == Key.Equals }) {
+        Scale.scale += 0.1f
+    }
+
+    // Горячая клавиша для отдаления
+    var zoomShortcutSub =
+        Shortcut({ metaKey(it) && it.key == Key.Minus }) { if (Scale.scale > 0.5) {
+            Scale.scale -= 0.1f
+        } }
+
     override fun getAllShorts(): List<Shortcut> {
-        return listOf(testShortcut)
+        return listOf(testShortcut, zoomShortcutAdd, zoomShortcutSub)
     }
 }
 
