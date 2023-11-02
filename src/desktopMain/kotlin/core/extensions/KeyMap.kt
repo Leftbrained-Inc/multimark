@@ -52,14 +52,12 @@ class GlobalKeyMap : KeyMap {
     // Горячая клавиша для приблежения
     val zoomShortcutAdd = Shortcut({ metaKey(it) && it.key == Key.Equals }) {
         Scale.scale += 0.1f
-        Scale.fontScale += 0.1f
     }
 
     // Горячая клавиша для отдаления
     val zoomShortcutSub =
         Shortcut({ metaKey(it) && it.key == Key.Minus }) { if (Scale.scale > 0.5) {
             Scale.scale -= 0.1f
-            Scale.fontScale -= 0.1f
         } }
 
     override fun getAllShorts(): List<Shortcut> {

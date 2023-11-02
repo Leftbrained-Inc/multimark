@@ -1,8 +1,6 @@
 import androidx.compose.foundation.Image
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.isAltPressed
 import androidx.compose.ui.input.key.isCtrlPressed
-import androidx.compose.ui.input.key.key
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.application
 import core.dsl.configuration.config

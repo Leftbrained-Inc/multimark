@@ -83,23 +83,24 @@ fun MultimarkAppTheme(
     }
 
     // Жёстко нахордкодил fontScaling
-    LaunchedEffect(Scale.fontScale) {
+    LaunchedEffect(Scale.scale) {
+        val fontScaleWithScale = Scale.scale * Scale.fontScale
         val newType = type.copy(
-            displayLarge = type.displayLarge.copy(fontSize = type.displayLarge.fontSize * Scale.fontScale),
-            displayMedium = type.displayMedium.copy(fontSize = type.displayMedium.fontSize * Scale.fontScale),
-            displaySmall = type.displaySmall.copy(fontSize = type.displaySmall.fontSize * Scale.fontScale),
-            headlineLarge = type.headlineLarge.copy(fontSize = type.headlineLarge.fontSize * Scale.fontScale),
-            headlineMedium = type.headlineMedium.copy(fontSize = type.headlineMedium.fontSize * Scale.fontScale),
-            headlineSmall = type.headlineSmall.copy(fontSize = type.headlineSmall.fontSize * Scale.fontScale),
-            titleLarge = type.titleLarge.copy(fontSize = type.titleLarge.fontSize * Scale.fontScale),
-            titleMedium = type.titleMedium.copy(fontSize = type.titleMedium.fontSize * Scale.fontScale),
-            titleSmall = type.titleSmall.copy(fontSize = type.titleSmall.fontSize * Scale.fontScale),
-            bodyLarge = type.bodyLarge.copy(fontSize = type.bodyLarge.fontSize * Scale.fontScale),
-            bodyMedium = type.bodyMedium.copy(fontSize = type.bodyMedium.fontSize * Scale.fontScale),
-            bodySmall = type.bodySmall.copy(fontSize = type.bodySmall.fontSize * Scale.fontScale),
-            labelLarge = type.labelLarge.copy(fontSize = type.labelLarge.fontSize * Scale.fontScale),
-            labelMedium = type.labelMedium.copy(fontSize = type.labelMedium.fontSize * Scale.fontScale),
-            labelSmall = type.labelSmall.copy(fontSize = type.labelSmall.fontSize * Scale.fontScale),
+            displayLarge = Typography.displayLarge.copy(fontSize = Typography.displayLarge.fontSize * fontScaleWithScale),
+            displayMedium = Typography.displayMedium.copy(fontSize = Typography.displayMedium.fontSize * fontScaleWithScale),
+            displaySmall = Typography.displaySmall.copy(fontSize = Typography.displaySmall.fontSize * fontScaleWithScale),
+            headlineLarge = Typography.headlineLarge.copy(fontSize = Typography.headlineLarge.fontSize * fontScaleWithScale),
+            headlineMedium = Typography.headlineMedium.copy(fontSize = Typography.headlineMedium.fontSize * fontScaleWithScale),
+            headlineSmall = Typography.headlineSmall.copy(fontSize = Typography.headlineSmall.fontSize * fontScaleWithScale),
+            titleLarge = Typography.titleLarge.copy(fontSize = Typography.titleLarge.fontSize * fontScaleWithScale),
+            titleMedium = Typography.titleMedium.copy(fontSize = Typography.titleMedium.fontSize * fontScaleWithScale),
+            titleSmall = Typography.titleSmall.copy(fontSize = Typography.titleSmall.fontSize * fontScaleWithScale),
+            bodyLarge = Typography.bodyLarge.copy(fontSize = Typography.bodyLarge.fontSize * fontScaleWithScale),
+            bodyMedium = Typography.bodyMedium.copy(fontSize = Typography.bodyMedium.fontSize * fontScaleWithScale),
+            bodySmall = Typography.bodySmall.copy(fontSize = Typography.bodySmall.fontSize * fontScaleWithScale),
+            labelLarge = Typography.labelLarge.copy(fontSize = Typography.labelLarge.fontSize * fontScaleWithScale),
+            labelMedium = Typography.labelMedium.copy(fontSize = Typography.labelMedium.fontSize * fontScaleWithScale),
+            labelSmall = Typography.labelSmall.copy(fontSize = Typography.labelSmall.fontSize * fontScaleWithScale),
         )
         type = newType
     }

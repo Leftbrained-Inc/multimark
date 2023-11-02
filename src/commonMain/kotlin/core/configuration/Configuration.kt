@@ -33,9 +33,6 @@ abstract class Configuration {
     private var _scale: Float = 1.0f
     private var _fontScale: Float = 1.0f
 
-    // Масштабирование шрифта зависит от масштаба интерфейса
-    var fontScaleDependOfScale = true
-
     var scale
         set(value) {
 
@@ -56,5 +53,5 @@ abstract class Configuration {
             }
             _fontScale = value
         }
-        get() = if (!fontScaleDependOfScale) _fontScale else _fontScale * _scale
+        get() = _fontScale
 }
