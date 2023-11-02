@@ -65,7 +65,7 @@ allProjects {
 kotlin {
     jvm("desktop")
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(compose.runtime)
                 api(compose.foundation)
@@ -85,21 +85,18 @@ kotlin {
                 api(libs.exposed.json)
                 api(libs.exposed.money)
                 api(libs.sqlite.jdbc)
-                implementation("org.jetbrains:markdown:0.5.0")
-
+                api(libs.markdown.parser)
                 // navigation
                 api(libs.appyx)
             }
         }
 
-        val exposedVersion: String by project
-
-        val desktopMain by getting {
+        jvmMain {
             dependencies {
                 implementation(compose.desktop.common)
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(compose.desktop.uiTestJUnit4)
                 implementation(compose.desktop.currentOs)
