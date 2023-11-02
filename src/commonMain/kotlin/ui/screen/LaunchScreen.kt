@@ -33,7 +33,8 @@ fun LaunchScreen() {
             Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            LogoTitle(Modifier.fillMaxWidth())
+
+            LogoTitle(Modifier.fillMaxWidth(), true)
             SearchBar(Modifier.height(100.dp))
             // Список недавно просмотренных
             Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
