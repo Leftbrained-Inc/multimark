@@ -88,6 +88,7 @@ kotlin {
                 api(libs.markdown.parser)
                 // navigation
                 api(libs.appyx)
+                api(libs.file.picker)
             }
         }
 

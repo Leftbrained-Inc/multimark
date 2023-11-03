@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import ui.utils.dp
 
 /**
@@ -24,14 +23,22 @@ import ui.utils.dp
  */
 @Composable
 fun SearchBar(modifier: Modifier) {
+    var showPicker by remember { mutableStateOf(false) }
     val search = remember { mutableStateOf("") }
     Row(
         modifier = modifier.fillMaxWidth().heightIn(min = 70.dp, max = 80.dp).shadow(4.dp, RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp)).padding(24.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Button(onClick = {}, Modifier.width(120.dp).height(40.dp)) {
-            Text(text = "New note", style = MaterialTheme.typography.labelLarge)
+        Button(onClick = {
+            showPicker = !showPicker
+        }, Modifier.width(120.dp).height(40.dp)) {
+            Text(text = "Open note", style = MaterialTheme.typography.labelLarge)
+        }
+        if (showPicker) {
+            FilePicker(true, fileExtensions = listOf("md")) {
+                showPicker = false
+            }
         }
         OutlinedTextField(value = search.value,
             onValueChange = { newText -> search.value = newText },

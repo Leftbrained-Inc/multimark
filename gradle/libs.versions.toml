@@ -10,7 +10,7 @@ appyx-version = "2.0.0-alpha09"
 exposed-version = "0.44.0"
 sqlite-jdbc-version = "3.30.1"
 markdown-parser-version = "0.5.0"
-
+file-picker-version = "2.1.0"
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -34,3 +34,4 @@ exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "e
 exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed-version" }
 sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite-jdbc-version" }
 markdown-parser = { module = "org.jetbrains:markdown", version.ref = "markdown-parser-version" }
+file-picker = { module = "com.darkrockstudios:mpfilepicker", version.ref = "file-picker-version" }
