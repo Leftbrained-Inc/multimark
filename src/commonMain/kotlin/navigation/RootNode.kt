@@ -23,6 +23,6 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        Tree()
+        LaunchScreen()
     }
 }
