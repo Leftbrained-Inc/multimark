@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import ui.components.BonsaiExample
+import ui.components.Tree
 import ui.screen.LaunchScreen
 
 /**
@@ -23,6 +23,6 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        BonsaiExample()
+        Tree()
     }
 }
