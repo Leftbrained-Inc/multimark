@@ -88,6 +88,9 @@ kotlin {
                 api(libs.markdown.parser)
                 // navigation
                 api(libs.appyx)
+                implementation("cafe.adriel.bonsai:bonsai-core:1.2.0")
+                implementation("cafe.adriel.bonsai:bonsai-file-system:1.2.0")
+                implementation("cafe.adriel.bonsai:bonsai-json:1.2.0")
             }
         }
 
