@@ -2,11 +2,16 @@ package ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 
 import models.FileDTO
@@ -28,14 +33,33 @@ fun LaunchScreen() {
     val cardList = remember {
         mutableStateListOf(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
     }
+    var search by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
             Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-
             LogoTitle(Modifier.fillMaxWidth(), true)
-            SearchBar(Modifier.height(100.dp))
+            Row(
+                modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp)).padding(24.dp),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                Button(onClick = {}, Modifier.width(120.dp).height(40.dp)) {
+                    Text(text = "New note", style = MaterialTheme.typography.labelLarge)
+                }
+                SearchBar(value = search,
+                    onValueChange = { newText -> search = newText },
+                    modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
+                )
+                IconButton(onClick = {}) {
+                    Icon(
+                        modifier = Modifier.weight(1f).size(36.dp),
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null
+                    )
+                }
+            }
             // Список недавно просмотренных
             Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(

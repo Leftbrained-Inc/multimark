@@ -5,6 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -49,13 +55,13 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Icon(painter = painterResource("folder.svg"), null)
+                Icon(Icons.Outlined.Folder, null)
                 Text(
                     text = pathList.subList(0, pathList.lastIndex).joinToString("  |  "),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(text = "  |  ", style = MaterialTheme.typography.bodyLarge)
-                Icon(painter = painterResource("book.svg"), null)
+                Icon(Icons.Default.Book, null)
                 Text(text = file, style = MaterialTheme.typography.bodyLarge)
 
             }
@@ -84,21 +90,18 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                         },
                         trailingIcon = {
                             Icon(
-                                painter = painterResource("search.svg"),
+                                Icons.Default.Search,
                                 contentDescription = "Search loupe",
                                 modifier = Modifier.size(48.dp)
                             )
                         }
                     )
-                    Image(
-                        modifier = Modifier.size(30.dp),
-                        painter = painterResource("settings.svg"),
-                        contentDescription = "Settings gear"
+                    Image(Icons.Default.Settings,
+                        contentDescription = "Settings gear", modifier = Modifier.size(30.dp),
                     )
                     Image(
-                        modifier = Modifier.size(30.dp),
-                        painter = painterResource("palette.svg"),
-                        contentDescription = "Preview customization palette"
+                        Icons.Default.Palette,
+                        contentDescription = "Preview customization palette", modifier = Modifier.size(30.dp),
                     )
                 }
             }
@@ -109,7 +112,7 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
 
 @Preview
 @Composable
-fun previewNavBar() {
+fun PreviewNavBar() {
     MultimarkAppTheme {
         Surface(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             NavBar()
