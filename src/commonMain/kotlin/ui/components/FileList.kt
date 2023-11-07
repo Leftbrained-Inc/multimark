@@ -8,15 +8,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.painterResource
 import models.FileDTO
 import ui.utils.dp
 
@@ -27,22 +25,10 @@ import ui.utils.dp
  * @param modifier Установка размеров
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
+ * @author Панков Вася (pank-su)
  */
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
-    val windowSizeClass = calculateWindowSizeClass()
-    var docSize by remember {
-        mutableStateOf(30.dp)
-    }
-    LaunchedEffect(windowSizeClass) {
-        docSize = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 12.dp
-            WindowWidthSizeClass.Medium -> 24.dp
-            WindowWidthSizeClass.Expanded -> 30.dp
-            else -> 10.dp
-        }
-    }
     LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
         items(cardList.size) {
             val card = cardList[it]
@@ -54,9 +40,8 @@ fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
             ) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Image(
-                        modifier = Modifier.size(docSize),
-                        painter = painterResource("doc.svg"),
-                        contentDescription = null
+                        Icons.Outlined.Description,
+                        contentDescription = null, modifier = Modifier.size(30.dp),
                     )
                     Text(text = card.name, style = MaterialTheme.typography.titleMedium)
                     Text(
