@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ui.theme.MultimarkAppTheme
 
@@ -96,7 +95,8 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                             )
                         }
                     )
-                    Image(Icons.Default.Settings,
+                    Image(
+                        Icons.Default.Settings,
                         contentDescription = "Settings gear", modifier = Modifier.size(30.dp),
                     )
                     Image(
