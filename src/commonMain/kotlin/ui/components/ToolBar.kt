@@ -32,11 +32,8 @@ fun ToolBar(
         ToolBarItem(Icons.Default.Menu) { println("Test") }
     )
 ) {
-
-
     Row(
         modifier = Modifier
-            .padding(56.dp)
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
             .horizontalScroll(rememberScrollState())
     ) {
