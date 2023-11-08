@@ -27,10 +27,11 @@ data class ToolBarItem(val icon: ImageVector, val onClick: () -> Unit)
  * @author Челноков Алексей (Shizik-tech)
  */
 @Composable
-fun ToolBar(icons: List<ToolBarItem> = listOf(
-    ToolBarItem(Icons.Default.Menu){ println("Test")}
-)) {
-
+fun ToolBar(
+    icons: List<ToolBarItem> = listOf(
+        ToolBarItem(Icons.Default.Menu) { println("Test") }
+    )
+) {
 
 
     Row(
@@ -40,17 +41,9 @@ fun ToolBar(icons: List<ToolBarItem> = listOf(
             .horizontalScroll(rememberScrollState())
     ) {
         icons.forEach { toolBarItem ->
-            IconButton(onClick = { toolBarItem.onClick()}) {
+            IconButton(onClick = { toolBarItem.onClick() }) {
                 Icon(toolBarItem.icon, contentDescription = null)
             }
         }
     }
 }
-
-
-
-
-
-
-
-
