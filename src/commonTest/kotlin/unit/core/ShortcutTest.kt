@@ -1,9 +1,7 @@
 package unit.core
 
-import androidx.compose.ui.graphics.Color
 import core.dsl.elements.shortcut.shorts
 import org.junit.Test
-import ui.utils.hex
 
 /** Модульные тесты для горячих клавиш
  * @author Сергей Рейнн (bulkabuka)
@@ -13,7 +11,6 @@ class ShortcutTest {
     /// Тест вызова действия для каждого сочетания
     @Test
     fun invocationTest() {
-        println(Color.Blue.value.hex)
         shorts.forEach { it.action() }
     }
 
