@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import models.FileDTO
 import ui.components.FileList
 import ui.components.LogoTitle
@@ -27,6 +28,7 @@ import java.util.*
  */
 @Composable
 fun LaunchScreen() {
+    var showPicker by remember { mutableStateOf(false) }
     val cardList = remember {
         mutableStateListOf(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
     }
@@ -43,8 +45,13 @@ fun LaunchScreen() {
                     .padding(24.dp),
                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                Button(onClick = {}, Modifier.width(120.dp).height(40.dp)) {
-                    Text(text = "New note", style = MaterialTheme.typography.labelLarge)
+                Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
+                    Text(text = "Open", style = MaterialTheme.typography.labelLarge)
+                }
+                if (showPicker) {
+                    FilePicker(true, fileExtensions = listOf("md")) {
+                        showPicker = false
+                    }
                 }
                 SearchBar(
                     value = search,
