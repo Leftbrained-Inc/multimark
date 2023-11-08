@@ -5,11 +5,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.TextFieldColorsWithIcons
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,15 +14,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 /**
+ * Элемент ToolBar
+ * @property icon Иконка кнопки
+ * @property onClick Действие при нажатии
+ * @author Челноков Алексей (Shizik-tech)
+ */
+data class ToolBarItem(val icon: ImageVector, val onClick: () -> Unit)
+
+/**
  * ToolBar
+ * @param icons Список иконок и действий при нажатии оных
  * @author Челноков Алексей (Shizik-tech)
  */
 @Composable
-fun ToolBar(icons: List<ImageVector> = listOf(
-    Icons.Default.Add,
-    Icons.Default.Menu,
-    Icons.Default.List,
-    Icons.Default.AccountBox
+fun ToolBar(icons: List<ToolBarItem> = listOf(
+    ToolBarItem(Icons.Default.Menu){ println("Test")}
 )) {
 
 
@@ -37,9 +39,9 @@ fun ToolBar(icons: List<ImageVector> = listOf(
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
             .horizontalScroll(rememberScrollState())
     ) {
-        icons.forEach { icon ->
-            IconButton(onClick = { /* Handle click here */ }) {
-                Icon(icon, contentDescription = null)
+        icons.forEach { toolBarItem ->
+            IconButton(onClick = { toolBarItem.onClick()}) {
+                Icon(toolBarItem.icon, contentDescription = null)
             }
         }
     }
