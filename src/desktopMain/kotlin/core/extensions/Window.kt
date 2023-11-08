@@ -1,6 +1,5 @@
 package core.extensions
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.useResource
@@ -20,7 +19,7 @@ private var window = Window()
 @ConfigurationTagMaker
 data class Window(
     var icon: Painter = useResource("logo.svg") { loadSvgPainter(it, Density(100f)) },
-    var title: String = "MultiMark"
+    var title: String = "Multimark"
 )
 
 /**
