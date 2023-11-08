@@ -10,11 +10,6 @@ allProjects {
     }
 }
 
-tasks.register("publishAndRun") {
-    dependsOn("publishToMavenLocal")
-    dependsOn(":desktop_test:run")
-}
-
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.maven.publish)
@@ -75,7 +70,7 @@ kotlin {
                 api(compose.components.resources)
 
                 // window size
-                api(libs.window.size)
+                // api(libs.window.size)
 
                 // exposed
                 api(libs.exposed.core)

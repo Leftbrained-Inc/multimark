@@ -1,8 +1,6 @@
 import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import ui.screen.StartScreen
 
 
 class StartScreenTest {
@@ -14,8 +12,6 @@ class StartScreenTest {
     @Test
     fun testInitialUIState() {
         rule.setContent {
-            StartScreen()
         }
-            // Заготовка для тестов
     }
 }

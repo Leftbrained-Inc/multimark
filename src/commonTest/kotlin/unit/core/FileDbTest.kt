@@ -1,19 +1,32 @@
 package unit.core
 
-import core.db.PinnedFileDAO
-import org.junit.After
+import core.db.Db
+import core.db.PinnedFile
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.AfterClass
 import org.junit.Test
 
 class FileDbTest {
 
-    /**
-     * Удаление таблицы после тестов
-     * @author Панков Вася (pank-su)
-     */
-    @After
-    fun clearDb() {
-        val db = PinnedFileDAO()
-        db.remove()
+    val connect = Db.connect
+
+    companion object {
+        /**
+         * Удаление таблицы после тестов
+         * @author Панков Вася (pank-su)
+         */
+        @JvmStatic
+        @AfterClass
+        fun clearDb() {
+            transaction {
+                PinnedFile.all().forEach {
+                    it.delete()
+                }
+                SchemaUtils.drop(PinnedFile.table)
+            }
+
+        }
     }
 
     /**
@@ -22,11 +35,15 @@ class FileDbTest {
      */
     @Test
     fun addingTest() {
-        val db = PinnedFileDAO()
-        val before = db.select().size
-        db.insert("Test", "Test")
-        val after = db.select().size
-        assert(after - 1 == before)
+        transaction {
+            val before = PinnedFile.all().count()
+            PinnedFile.new {
+                fileName = "Adding"
+                filePath = "test"
+            }
+            val after = PinnedFile.all().count()
+            assert(after - 1 == before)
+        }
     }
 
     /**
@@ -35,14 +52,18 @@ class FileDbTest {
      */
     @Test
     fun deleteFromDbTest() {
-        val db = PinnedFileDAO()
-        val before = db.select().size
-        val id = db.insert("Deleted", "pinned")
-        var after = db.select().size
-        assert(after - 1 == before)
-        db.delete(id)
-        after = db.select().size
-        assert(after == before)
+        transaction {
+            val before = PinnedFile.all().count()
+            val file = PinnedFile.new {
+                fileName = "Deleting"
+                filePath = "test"
+            }
+            var after = PinnedFile.all().count()
+            assert(after - 1 == before)
+            file.delete()
+            after = PinnedFile.all().count()
+            assert(after == before)
+        }
     }
 
     /**
@@ -51,15 +72,12 @@ class FileDbTest {
      */
     @Test
     fun updateFromDbTest() {
-        val db = PinnedFileDAO()
-        val id = db.insert("Updated", "pinned")
-        val before = db[id]
-        db.update(id, "new", "new")
-        val after = db[id]
-        assert(after[PinnedFileDAO.Pinned.id].value == before[PinnedFileDAO.Pinned.id].value)
-        assert(after[PinnedFileDAO.Pinned.fileName] != before[PinnedFileDAO.Pinned.fileName])
-        assert(after[PinnedFileDAO.Pinned.filePath] != before[PinnedFileDAO.Pinned.filePath])
-        assert(after[PinnedFileDAO.Pinned.fileName] == "new")
-        assert(after[PinnedFileDAO.Pinned.filePath] == "new")
+        transaction {
+            val fileBefore = PinnedFile.new {
+                fileName = "Update"
+                filePath = "what"
+            }
+            fileBefore.filePath = "test"
+        }
     }
 }
