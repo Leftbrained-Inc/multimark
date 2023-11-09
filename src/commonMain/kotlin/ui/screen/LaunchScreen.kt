@@ -11,8 +11,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.push
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+import kotlinx.io.InternalIoApi
+import kotlinx.io.buffered
+import kotlinx.io.files.Path
+import kotlinx.io.files.SystemFileSystem
 import models.FileDTO
+import navigation.NavTarget
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
@@ -26,8 +33,9 @@ import java.util.*
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
+@OptIn(InternalIoApi::class)
 @Composable
-fun LaunchScreen() {
+fun LaunchScreen(backStack: BackStack<NavTarget>) {
     var showPicker by remember { mutableStateOf(false) }
     val cardList = remember {
         mutableStateListOf(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
@@ -49,7 +57,11 @@ fun LaunchScreen() {
                     Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                 }
                 if (showPicker) {
-                    FilePicker(true, fileExtensions = listOf("md")) {
+                    FilePicker(true, fileExtensions = listOf("md")) { file ->
+                        if (file != null) {
+                            val f = SystemFileSystem.source(Path(file.path))
+                            backStack.push(NavTarget.FileView(f.buffered()))
+                        }
                         showPicker = false
                     }
                 }
@@ -58,7 +70,9 @@ fun LaunchScreen() {
                     onValueChange = { newText -> search = newText },
                     modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
                 )
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    backStack.push(NavTarget.SettingsScreen)
+                }) {
                     Icon(
                         modifier = Modifier.weight(1f).size(36.dp),
                         imageVector = Icons.Default.Settings,

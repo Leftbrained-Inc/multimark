@@ -62,29 +62,36 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material3)
-                api(compose.materialIconsExtended)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                api(compose.components.resources)
-
-                // window size
-                // api(libs.window.size)
+                implementation(compose.components.resources)
 
                 // exposed
-                api(libs.exposed.core)
-                api(libs.exposed.crypt)
-                api(libs.exposed.dao)
-                api(libs.exposed.jdbc)
-                api(libs.exposed.kotlin.datetime)
-                api(libs.exposed.json)
-                api(libs.exposed.money)
-                api(libs.sqlite.jdbc)
-                api(libs.markdown.parser)
+                implementation(libs.exposed.core)
+                implementation(libs.exposed.crypt)
+                implementation(libs.exposed.dao)
+                implementation(libs.exposed.jdbc)
+                implementation(libs.exposed.kotlin.datetime)
+                implementation(libs.exposed.json)
+                implementation(libs.exposed.money)
+                implementation(libs.sqlite.jdbc)
+                implementation(libs.markdown.parser)
+
                 // navigation
-                api(libs.appyx)
-                api(libs.file.picker)
+                implementation(libs.appyx.navigation)
+                implementation(libs.appyx.interactions)
+                api(libs.appyx.backstack)
+
+                // koin
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+
+                // other libs
+                implementation(libs.file.picker)
+                implementation(libs.kotlinx.io)
             }
         }
 

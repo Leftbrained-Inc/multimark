@@ -1,11 +1,15 @@
 package core.configuration
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import core.dsl.ConfigurationTagMaker
 import ui.theme.MultimarkAppTheme
+import ui.utils.Scale
 
 
 /**
@@ -54,4 +58,24 @@ abstract class Configuration {
             _fontScale = value
         }
         get() = _fontScale
+
+    @Composable
+    internal fun content(nativeContent: @Composable (@Composable (@Composable () -> Unit) -> Unit) -> Unit) {
+        CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
+            val config = LocalConfiguration.current
+
+            nativeContent{ content ->
+                LaunchedEffect(config.scale) {
+                    Scale.scale = config.scale
+                    Scale.fontScale = config.fontScale
+                }
+                AnimatedContent(Scale.scale) {
+                    config.theme {
+                        content()
+                    }
+                }
+            }
+
+        }
+    }
 }
