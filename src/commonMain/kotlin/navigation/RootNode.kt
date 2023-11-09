@@ -1,10 +1,19 @@
 package navigation
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStackModel
+import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
+import com.bumble.appyx.navigation.composable.AppyxComponent
 import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
-import ui.components.Tree
+import com.bumble.appyx.navigation.node.ParentNode
+import com.bumble.appyx.navigation.node.node
+import ui.screen.FileView
 import ui.screen.LaunchScreen
 
 /**
@@ -12,10 +21,18 @@ import ui.screen.LaunchScreen
  * @author Панков Вася (pank-su)
  */
 class RootNode(
-    buildContext: BuildContext
-) : Node(
+    buildContext: BuildContext,
+    private val backStack: BackStack<NavTarget> = BackStack(
+        model = BackStackModel(
+            initialTarget = NavTarget.LaunchScreen,
+            savedStateMap = buildContext.savedStateMap,
+        ),
+        visualisation = { BackStackFader(it) }
+    )
+) : ParentNode<NavTarget>(
+    appyxComponent = backStack,
     buildContext = buildContext
-){
+) {
 
     /**
      * Отображение экрана
@@ -23,6 +40,27 @@ class RootNode(
      */
     @Composable
     override fun View(modifier: Modifier) {
-        LaunchScreen()
+        Surface(modifier, color = MaterialTheme.colorScheme.background) {
+            AppyxComponent(backStack)
+        }
     }
+
+    /**
+     * Сопоставление путей к экранам
+     * @author Панков Вася (pank-su)
+     */
+    override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
+        when (interactionTarget) {
+            NavTarget.LaunchScreen -> node(buildContext) {
+                LaunchScreen(backStack)
+            }
+
+            NavTarget.FileView -> node(buildContext) {
+                FileView()
+            }
+
+            NavTarget.SettingsScreen -> node(buildContext) {
+                Text("Настройки")
+            }
+        }
 }

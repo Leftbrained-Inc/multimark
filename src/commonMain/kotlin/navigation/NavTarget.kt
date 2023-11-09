@@ -10,6 +10,12 @@ import com.bumble.appyx.utils.multiplatform.Parcelize
  */
 sealed class NavTarget : Parcelable {
     @Parcelize
-    object Child1 : NavTarget()
+    object FileView : NavTarget()
+
+    @Parcelize
+    object LaunchScreen : NavTarget()
+
+    @Parcelize
+    object SettingsScreen: NavTarget()
 
 }

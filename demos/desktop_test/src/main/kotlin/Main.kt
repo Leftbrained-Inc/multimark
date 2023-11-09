@@ -12,7 +12,6 @@ import core.extensions.keyMap
 import core.extensions.window
 
 fun main() {
-
     config {
         logo {
             Image(painterResource("Good Tick.svg"), null, modifier = it)
@@ -25,6 +24,7 @@ fun main() {
             icon = useResource("Good Tick.svg") { loadSvgPainter(it, Density(100f)) }
             title = "Test"
         }
+
         keyMap {
             KeyMap.metaKey = { it.isCtrlPressed }
             testShortcut = Shortcut({ keyEvent -> keyEvent.isAltPressed }) {
@@ -32,5 +32,4 @@ fun main() {
             }
         }
     }
-
 }

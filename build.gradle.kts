@@ -81,7 +81,9 @@ kotlin {
                 implementation(libs.markdown.parser)
 
                 // navigation
-                implementation(libs.appyx)
+                implementation(libs.appyx.navigation)
+                implementation(libs.appyx.interactions)
+                api(libs.appyx.backstack)
 
                 // koin
                 implementation(libs.koin.core)
