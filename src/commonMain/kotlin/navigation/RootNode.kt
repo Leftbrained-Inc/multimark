@@ -55,8 +55,8 @@ class RootNode(
                 LaunchScreen(backStack)
             }
 
-            NavTarget.FileView -> node(buildContext) {
-                FileView()
+            is NavTarget.FileView -> node(buildContext) {
+                FileView(interactionTarget.file)
             }
 
             NavTarget.SettingsScreen -> node(buildContext) {

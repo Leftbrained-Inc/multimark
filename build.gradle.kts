@@ -91,6 +91,7 @@ kotlin {
 
                 // other libs
                 implementation(libs.file.picker)
+                implementation(libs.kotlinx.io)
             }
         }
 
