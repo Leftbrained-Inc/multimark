@@ -8,12 +8,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,15 +32,12 @@ import ui.theme.MultimarkAppTheme
 @Composable
 //TODO Заменить параметр по умолчанию
 fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
-    val pathList = directory.split("\\")
+    val pathList = directory.split("\\", "/")
     val file = pathList.last()
     val search = remember { mutableStateOf("") }
 
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val width = this.maxWidth
-        LaunchedEffect(width) {
-            println(width)
-        }
         Row(
             modifier = Modifier.height(80.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
@@ -71,30 +69,7 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                         .padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    OutlinedTextField(value = search.value,
-                        onValueChange = { newText -> search.value = newText },
-                        textStyle = MaterialTheme.typography.bodyMedium,
-                        shape = RoundedCornerShape(99.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.onTertiary,
-                            focusedBorderColor = MaterialTheme.colorScheme.tertiary,
-                            focusedContainerColor = MaterialTheme.colorScheme.onTertiary
-                        ),
-                        modifier = Modifier.height(50.dp),
-                        placeholder = {
-                            Text(
-                                text = "Search",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        },
-                        trailingIcon = {
-                            Icon(
-                                Icons.Default.Search,
-                                contentDescription = "Search loupe",
-                                modifier = Modifier.size(48.dp)
-                            )
-                        }
-                    )
+                    SearchBar(search.value, { search.value = it }, Modifier.weight(4f))
                     Image(
                         Icons.Default.Settings,
                         contentDescription = "Settings gear", modifier = Modifier.size(30.dp),

@@ -1,7 +1,14 @@
 package core.extensions
 
 import androidx.compose.runtime.Composable
-import javax.swing.text.html.HTMLEditorKit
 
 @Composable
-expect fun MarkdownPreview(html: String, editorKit: HTMLEditorKit)
+expect fun MarkdownPreview(html: String)
+
+/**
+ * Конвертация Markdown в HTML
+ * @param markdown Исходный текст
+ * @return HTML-текст
+ * @author Сергей Рейнн (bulkabuka)
+ */
+expect fun markdownToHtml(markdown: String): String

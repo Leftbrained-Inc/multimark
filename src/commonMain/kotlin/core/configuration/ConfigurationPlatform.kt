@@ -6,7 +6,6 @@ package core.configuration
  */
 expect abstract class ConfigurationPlatform() : Configuration {
 
-
     /**
      * Абстракция для desktop
      * @author Панков Вася (pank-su)

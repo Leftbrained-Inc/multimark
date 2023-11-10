@@ -5,7 +5,6 @@ import core.dsl.configuration.ConfigurationBuilder
 
 /**
  * Добавление нативных дополнений при сборке
- *
  * @author Панков Вася (pank-su)
  */
 fun ConfigurationBuilder.build(): ConfigurationImpl {

@@ -15,6 +15,7 @@ import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import ui.screen.FileView
 import ui.screen.LaunchScreen
+import ui.screen.MainScreen
 
 /**
  * Основной компонент навигации
@@ -61,6 +62,10 @@ class RootNode(
 
             NavTarget.SettingsScreen -> node(buildContext) {
                 Text("Настройки")
+            }
+
+            NavTarget.MainScreen -> node(buildContext) {
+                MainScreen()
             }
         }
 }

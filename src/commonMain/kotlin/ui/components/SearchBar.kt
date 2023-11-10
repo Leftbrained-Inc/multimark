@@ -11,13 +11,13 @@ import ui.utils.dp
 
 /**
  * Элемент поисковой строки
- * @param modifier установка размеров
- *
+ * @param modifier Установка размеров
+ * @param value Значение поисковой строки
+ * @param onValueChange Действие при изменинии значения
  * @author Белоцерковский Марат (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
-// .weight(9f)
 @Composable
 fun SearchBar(value: String, onValueChange: (String) -> Unit, modifier: Modifier) {
     OutlinedTextField(value = value,

@@ -7,6 +7,11 @@ import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
 
+/**
+ * Экран, показывающий содержимое файла
+ * @param path Путь к файлу
+ * @author Сергей Рейнн (bulkabuka)
+ */
 @Composable
 fun FileView(path: Path) {
     val content = SystemFileSystem.source(path).buffered().readString()

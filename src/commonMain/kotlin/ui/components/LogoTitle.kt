@@ -14,7 +14,7 @@ import ui.utils.dp
 /**
  * Элемент логотипа
  * @param modifier Установка размеров
- *
+ * @param showTitle Отображение названия
  * @author Белоцерковский Марат (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)

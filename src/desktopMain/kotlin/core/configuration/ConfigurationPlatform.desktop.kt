@@ -25,7 +25,6 @@ sealed class Events {
 
 /**
  * Нативная реализация
- *
  * @author Панков Вася (pank-su)
  */
 actual abstract class ConfigurationPlatform actual constructor() : core.configuration.Configuration() {

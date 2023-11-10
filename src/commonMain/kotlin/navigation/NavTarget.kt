@@ -19,4 +19,6 @@ sealed class NavTarget : Parcelable {
     @Parcelize
     object SettingsScreen : NavTarget()
 
+    @Parcelize
+    object MainScreen : NavTarget()
 }

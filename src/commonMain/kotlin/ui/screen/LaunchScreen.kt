@@ -26,7 +26,7 @@ import viewmodel.FilesViewModel
 
 /**
  * Стартовый экран
- *
+ * @param backStack Стек навигации
  * @author Белоцерковский Марат (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
@@ -69,7 +69,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
                 )
                 IconButton(onClick = {
-                    backStack.push(NavTarget.SettingsScreen)
+                    backStack.push(NavTarget.MainScreen)
                 }) {
                     Icon(
                         modifier = Modifier.weight(1f).size(36.dp),

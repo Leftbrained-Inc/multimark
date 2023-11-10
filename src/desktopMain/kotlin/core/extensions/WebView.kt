@@ -1,5 +1,6 @@
 package core.extensions
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -22,21 +23,28 @@ import javax.swing.text.html.HTMLEditorKit
  * @return HTML-текст
  * @author Сергей Рейнн (bulkabuka)
  */
-fun markdownToHtml(markdown: String): String {
+actual fun markdownToHtml(markdown: String): String {
     val flavour = GFMFlavourDescriptor()
     val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
     return HtmlGenerator(markdown, parsedTree, flavour).generateHtml()
 }
 
+/**
+ * Предпросмотр Markdown
+ * @param html HTML-текст
+ * @see markdownToHtml
+ * @author Сергей Рейнн (bulkabuka)
+ */
 @Composable
-actual fun MarkdownPreview(html: String, editorKit: HTMLEditorKit) {
+actual fun MarkdownPreview(html: String) {
+    val editorKit = HTMLEditorKit()
     val jEditorPane = JEditorPane()
     val doc: Document = editorKit.createDefaultDocument()
-    val scrollPane = JScrollPane(jEditorPane)
     jEditorPane.setEditorKit(editorKit)
     jEditorPane.setDocument(doc)
     jEditorPane.text = html.trimIndent()
     jEditorPane.isEditable = false
+    val scrollPane = JScrollPane(jEditorPane)
     scrollPane.size = Dimension(300, 400)
     scrollPane.isVisible = true
 
@@ -48,8 +56,9 @@ actual fun MarkdownPreview(html: String, editorKit: HTMLEditorKit) {
     )
 }
 
+@Preview
 @Composable
-fun PreviewPreview() {
+fun MarkdownPreviewPreview() {
     val editorKit = HTMLEditorKit()
     editorKit.styleSheet.addRule(
         "" +
@@ -70,7 +79,7 @@ fun PreviewPreview() {
                 |
                 |> New paragraph 
             """.trimMargin()
-                ), editorKit
+                )
             )
         }
 

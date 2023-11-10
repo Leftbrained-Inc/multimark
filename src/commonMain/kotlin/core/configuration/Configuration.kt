@@ -16,13 +16,10 @@ import ui.utils.Scale
 
 /**
  * Главный элемент конфигурации, непривязанный к нативной реализации
- *
- *
  * @property logo иконка изображения, которая является compose элементом
  * @property theme тема приложения
  * @property scale информация о начальном масштабе интерфейсе (1f = 100 %, 1.5f = 250 %)
  * @property fontScale информация о начальном масштабе шрифта интерфейса (1f = 100 %, 1.5f = 250 %)
- *
  * @author Панков Вася (pank-su)
  */
 @ConfigurationTagMaker
@@ -61,6 +58,11 @@ abstract class Configuration {
         }
         get() = _fontScale
 
+    /**
+     * Функция запуска приложения с нативными и ненативными компонентами, инициализирующая конфигурацию
+     * @param nativeContent нативный контент
+     * @author Панков Вася (pank-su)
+     */
     @Composable
     internal fun content(nativeContent: @Composable (@Composable (@Composable () -> Unit) -> Unit) -> Unit) {
         CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
