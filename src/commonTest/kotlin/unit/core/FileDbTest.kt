@@ -2,6 +2,10 @@ package unit.core
 
 import core.db.Db
 import core.db.PinnedFile
+import core.db.RecentFile
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.AfterClass
@@ -24,6 +28,7 @@ class FileDbTest {
                     it.delete()
                 }
                 SchemaUtils.drop(PinnedFile.table)
+                SchemaUtils.drop(RecentFile.table)
             }
 
         }
@@ -38,8 +43,10 @@ class FileDbTest {
         transaction {
             val before = PinnedFile.all().count()
             PinnedFile.new {
-                fileName = "Adding"
-                filePath = "test"
+                file = RecentFile.new {
+                    fileName = "Adding"
+                    filePath = "test"
+                }
             }
             val after = PinnedFile.all().count()
             assert(after - 1 == before)
@@ -55,8 +62,10 @@ class FileDbTest {
         transaction {
             val before = PinnedFile.all().count()
             val file = PinnedFile.new {
-                fileName = "Deleting"
-                filePath = "test"
+                file = RecentFile.new {
+                    fileName = "Deleting"
+                    filePath = "test"
+                }
             }
             var after = PinnedFile.all().count()
             assert(after - 1 == before)
@@ -73,11 +82,14 @@ class FileDbTest {
     @Test
     fun updateFromDbTest() {
         transaction {
-            val fileBefore = PinnedFile.new {
-                fileName = "Update"
-                filePath = "what"
+            val file = PinnedFile.new {
+                file = RecentFile.new {
+                    fileName = "Deleting"
+                    filePath = "test"
+                }
+                dateAdding = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
             }
-            fileBefore.filePath = "test"
+            file.file.filePath = "test"
         }
     }
 }

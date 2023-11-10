@@ -15,23 +15,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import models.FileDTO
+import core.db.RecentFile
 import ui.utils.dp
 
 /**
  * Компонент списка файлов
  *
- * @param cardList Передаваемый список файлов
+ * @param fileList Передаваемый список файлов
  * @param modifier Установка размеров
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
 @Composable
-fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
+fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
     LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
-        items(cardList.size) {
-            val card = cardList[it]
+        items(fileList.size) {
+            val file = fileList[it]
             Card(
                 Modifier.padding(end = 10.dp, bottom = 10.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(12.dp))
                     .border(
@@ -43,9 +43,9 @@ fun FileList(cardList: List<FileDTO>, modifier: Modifier) {
                         Icons.Outlined.Description,
                         contentDescription = null, modifier = Modifier.size(30.dp),
                     )
-                    Text(text = card.name, style = MaterialTheme.typography.titleMedium)
+                    Text(text = file.fileName, style = MaterialTheme.typography.titleMedium)
                     Text(
-                        text = card.date.toString(),
+                        text = file.dateOfApplication.toString(),
                         modifier = Modifier.padding(top = 8.dp),
                         style = MaterialTheme.typography.labelSmall
                     )

@@ -16,13 +16,13 @@ import com.bumble.appyx.components.backstack.operation.push
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import kotlinx.io.InternalIoApi
 import kotlinx.io.files.Path
-import models.FileDTO
 import navigation.NavTarget
+import org.koin.compose.rememberKoinInject
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
 import ui.utils.dp
-import java.util.*
+import viewmodel.FilesViewModel
 
 /**
  * Стартовый экран
@@ -34,10 +34,9 @@ import java.util.*
 @OptIn(InternalIoApi::class)
 @Composable
 fun LaunchScreen(backStack: BackStack<NavTarget>) {
+    val viewModel: FilesViewModel = rememberKoinInject()
     var showPicker by remember { mutableStateOf(false) }
-    val cardList = remember {
-        mutableStateListOf(FileDTO("Test1", Date()), FileDTO("Test 2", Date()))
-    }
+    val files by viewModel.recentFiles.collectAsState(listOf())
     var search by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
@@ -57,7 +56,9 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 if (showPicker) {
                     FilePicker(true, fileExtensions = listOf("md")) { file ->
                         if (file != null) {
-                            backStack.push(NavTarget.FileView(Path(file.path)))
+                            val path = Path(file.path)
+                            viewModel.addRecentFile(path)
+                            backStack.push(NavTarget.FileView(path))
                         }
                         showPicker = false
                     }
@@ -83,7 +84,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     "Last Viewed",
                     style = MaterialTheme.typography.headlineMedium,
                 )
-                FileList(cardList, modifier = Modifier.padding(top = 24.dp))
+                FileList(files, modifier = Modifier.padding(top = 24.dp))
             }
         }
         Text(
