@@ -2,8 +2,13 @@ package viewmodel
 
 import core.db.Db
 import core.db.RecentFile
+import core.db.RecentFiles
 import kotlinx.coroutines.flow.flow
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.io.files.Path
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
 /**
@@ -20,10 +25,15 @@ class FilesViewModel {
 
     fun addRecentFile(path: Path) {
         transaction {
-            RecentFile.new {
-                fileName = path.name
-                filePath = path.toString()
-            }
+            val file = RecentFile.find(RecentFiles.filePath eq path.toString())
+
+            if (file.empty())
+                RecentFile.new {
+                    fileName = path.name
+                    filePath = path.toString()
+                }
+            else
+                file.first().dateOfApplication = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         }
     }
 }

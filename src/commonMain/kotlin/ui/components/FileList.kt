@@ -29,7 +29,7 @@ import ui.utils.dp
  */
 @Composable
 fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
-    LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 128.dp)) {
+    LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(minSize = 200.dp)) {
         items(fileList.size) {
             val file = fileList[it]
             Card(

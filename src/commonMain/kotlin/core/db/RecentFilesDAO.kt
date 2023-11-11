@@ -15,7 +15,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
  * @author Панков Вася (pank-su)
  */
 object RecentFiles : IntIdTable() {
-    val filePath = text("file_path")
+    val filePath = text("file_path").uniqueIndex()
     val fileName = text("file_name")
     val dateOfApplication =
         datetime("date_of_application").default(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()))

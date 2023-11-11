@@ -8,8 +8,8 @@ import androidx.compose.ui.unit.Density
 import core.dsl.configuration.config
 import core.dsl.elements.shortcut.Shortcut
 import core.extensions.KeyMap
-import core.extensions.keyMap
 import core.extensions.window
+import core.shortcut.keyMap
 
 fun main() {
     config {
