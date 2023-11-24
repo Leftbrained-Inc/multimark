@@ -19,7 +19,7 @@ import ui.components.Tree
 
 /**
  * Экран редактирования Markdown-файла
- * @property text текст файла
+ * @property text Текст файла
  * @author Сергей Рейнн (bulkabuka)
  */
 @Composable
