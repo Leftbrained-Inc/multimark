@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
             🎉🎉🎉Произошло слияние: ${{ github.event.pull_request.title }}
-          video: .github/workflows/content/meme.mp4
+          video: '.github/workflows/content/meme.mp4'
       - if: ${{ !contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
         name: send telegram message on push
         uses: appleboy/telegram-action@master
