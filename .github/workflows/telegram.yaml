@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/gradle.yml
   message:
     steps:
