@@ -9,9 +9,11 @@ on:
       - closed
 
 jobs:
-  build & message:
-    uses: ./.github/workflows/gradle.yml
-    runs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: tests
+        uses: ./.github/workflows/gradle.yml
       - if: ${{ success() }}
         name: send telegram message on push
         uses: appleboy/telegram-action@master
