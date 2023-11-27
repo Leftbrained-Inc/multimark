@@ -23,6 +23,7 @@ jobs:
         with:
           to: ${{ secrets.GROUP_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
           message: |
             🎉🎉🎉Произошло слияние: ${{ github.event.pull_request.title }}
             ```
