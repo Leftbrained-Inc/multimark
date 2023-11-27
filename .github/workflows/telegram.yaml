@@ -10,9 +10,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/gradle.yml
   message:
+    runs-on: ubuntu-latest
     steps:
       - if: ${{ success() }}
         name: send telegram message on push
