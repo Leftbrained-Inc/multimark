@@ -16,7 +16,16 @@ jobs:
     if: ${{ always() }}
     needs: build
     steps:
-      - if: ${{ !contains(needs.*.result, 'failure') }}
+      - if: ${{ github.event.pull_request.merged == 'true' }}
+        name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            🎉🎉🎉Произошло слияние: ${{ github.event.pull_request.title }}
+          photo: https://i.gifer.com/9NM.gif
+      - if: ${{ !contains(needs.*.result, 'failure') && github.event.pull_request.merged == 'false' }}
         name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
@@ -29,7 +38,7 @@ jobs:
             Тестики: ✅
 
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
-      - if: ${{ contains(needs.*.result, 'failure') }}
+      - if: ${{ contains(needs.*.result, 'failure') && github.event.pull_request.merged == 'false' }}
         name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
