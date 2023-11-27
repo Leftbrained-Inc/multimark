@@ -1,23 +1,44 @@
 name: telegram message
 
 on:
-  pull_request_target:
+  pull_request:
+    branches: [ "master" ]
     types:
       - opened
       - reopened
-jobs:
+      - closed
 
+jobs:
   build:
-    name: Build
+    uses: ./.github/workflows/gradle.yml
+  message:
+    name: Send message
     runs-on: ubuntu-latest
     steps:
-      - name: send telegram message on push
+      - if: ${{ always() && contains(needs.*.result, 'failure') }}
+        name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.GROUP_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            ${{ github.actor }} сделал пулл реквестик:
+            ${{ github.actor }} создал пулл реквестик:
             ${{ github.event.pull_request.title }}
-
+            
+            Тестики: ❌
+            
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+      - if: ${{ always() && !contains(needs.*.result, 'failure') }}
+        name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал пулл реквестик:
+            ${{ github.event.pull_request.title }}
+            
+            Тестики: ✅
+            
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+        
