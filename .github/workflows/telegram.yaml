@@ -13,6 +13,7 @@ jobs:
     uses: ./.github/workflows/gradle.yml
   message:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - if: ${{ success() }}
         name: send telegram message on push
@@ -24,7 +25,7 @@ jobs:
             ${{ github.actor }} создал пулл реквестик:
             ${{ github.event.pull_request.title }}
 
-            Тестики: ❌
+            Тестики: ✅
 
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
       - if: ${{ failure() }}
@@ -37,7 +38,7 @@ jobs:
             ${{ github.actor }} создал пулл реквестик:
             ${{ github.event.pull_request.title }}
 
-            Тестики: ✅
+            Тестики: ❌
 
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
 
