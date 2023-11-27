@@ -1,23 +1,55 @@
 name: telegram message
 
 on:
-  pull_request_target:
+  pull_request:
+    branches: [ "master" ]
     types:
       - opened
       - reopened
-jobs:
+      - closed
 
+jobs:
   build:
-    name: Build
+    uses: ./.github/workflows/gradle.yml
+  message:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: build
     steps:
-      - name: send telegram message on push
+      - if: ${{ github.event.pull_request.merged }}
+        name: send telegram message on push
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.GROUP_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            ${{ github.actor }} сделал пулл реквестик:
+            🎉🎉🎉Произошло слияние: ${{ github.event.pull_request.title }}
+          video: .github/workflows/content/meme.mp4
+      - if: ${{ !contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
+        name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал пулл реквестик:
             ${{ github.event.pull_request.title }}
 
+            Тестики: ✅
+
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+      - if: ${{ contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
+        name: send telegram message on push
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал пулл реквестик:
+            ${{ github.event.pull_request.title }}
+
+            Тестики: ❌
+
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+
+        
