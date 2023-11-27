@@ -11,9 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    uses: ./.github/workflows/gradle.yml
     steps:
-      - name: tests
-        uses: ./.github/workflows/gradle.yml
       - if: ${{ success() }}
         name: send telegram message on push
         uses: appleboy/telegram-action@master
