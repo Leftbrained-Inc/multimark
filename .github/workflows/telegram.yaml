@@ -44,7 +44,7 @@ jobs:
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
   message:
     runs-on: ubuntu-latest
-    if: ${{ always() && (github.event.action == 'opened' || github.event.pull_request.merged) && github.actor != 'renovate[bot]' && github.event.pull_request.user.login != 'renovate[bot]' }}
+    if: ${{ always() && (github.event.action == 'opened' || github.event.pull_request.merged) && !(startsWith(github.event.pull_request.head.ref, 'dependabot/') || startsWith(github.event.pull_request.head.ref, 'renovate/')) }}
     needs: build
     steps:
       - if: ${{ github.event.pull_request.merged }}
