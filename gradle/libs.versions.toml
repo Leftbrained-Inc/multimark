@@ -12,7 +12,7 @@ sqlite-jdbc-version = "3.44.1.0"
 markdown-parser-version = "0.5.0"
 file-picker-version = "3.0.0"
 koin = "3.5.0"
-koin-compose = "1.0.4"
+koin-compose = "1.1.0"
 kotlinx-io = "0.3.0"
 
 [plugins]
