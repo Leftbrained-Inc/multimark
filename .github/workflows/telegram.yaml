@@ -14,11 +14,11 @@ jobs:
     uses: ./.github/workflows/gradle.yml
   message:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ always() && (github.event.action != 'closed' || github.event.pull_request.merged) }}
     needs: build
     steps:
       - if: ${{ github.event.pull_request.merged }}
-        name: send telegram message on push
+        name: send merged
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.GROUP_ID }}
@@ -43,7 +43,7 @@ jobs:
             ```
           photo: ./content/meme.jpg
       - if: ${{ !contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
-        name: send telegram message on push
+        name: send if correct
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.GROUP_ID }}
@@ -56,7 +56,7 @@ jobs:
 
             Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
       - if: ${{ contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
-        name: send telegram message on push
+        name: send if incorrect
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.GROUP_ID }}
