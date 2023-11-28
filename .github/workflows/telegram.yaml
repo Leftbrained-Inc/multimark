@@ -22,6 +22,8 @@ jobs:
         if: ${{ !contains(needs.*.result, 'failure') }}
         uses: appleboy/telegram-action@master
         with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
             ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
             
@@ -34,6 +36,8 @@ jobs:
         if: ${{ contains(needs.*.result, 'failure') }}
         uses: appleboy/telegram-action@master
         with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
             ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
 
