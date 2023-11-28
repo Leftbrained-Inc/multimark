@@ -1,0 +1,102 @@
+name: telegram message
+
+on:
+  pull_request:
+    branches: [ "master" ]
+    types:
+      - opened
+      - reopened
+      - closed
+      - synchronize
+
+jobs:
+  build:
+    if: ${{ !github.event.pull_request.merged }}
+    uses: ./.github/workflows/gradle.yml
+  messageOnUpdate:
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.event.action == 'synchronize'}}
+    needs: build
+    steps:
+      - name: send message
+        if: ${{ !contains(needs.*.result, 'failure') }}
+        uses: appleboy/telegram-action@master
+        with:
+          message: |
+            ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
+            
+            Последний коммит: ${{ github.event.commits[0].message }}
+            
+            Тестики: ✅
+            
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+      - name: send message
+        if: ${{ contains(needs.*.result, 'failure') }}
+        uses: appleboy/telegram-action@master
+        with:
+          message: |
+            ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
+
+            Последний коммит: ${{ github.event.commits[0].message }}
+
+            Тестики: ❌
+
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+  message:
+    runs-on: ubuntu-latest
+    if: ${{ always() && (github.event.action == 'opened' || github.event.pull_request.merged) && !(startsWith(github.event.pull_request.head.ref, 'dependabot/') || startsWith(github.event.pull_request.head.ref, 'renovate/')) }}
+    needs: build
+    steps:
+      - if: ${{ github.event.pull_request.merged }}
+        name: send merged
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          format: markdown
+          message: |
+            🎉🎉🎉Произошло слияние: ${{ github.event.pull_request.title }}
+            ```
+            ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
+            ⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇
+            ⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀
+            ⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀
+            ⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀
+            ⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀
+            ```
+          photo: ./content/meme.jpg
+      - if: ${{ !contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
+        name: send if correct
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал пулл реквестик:
+            ${{ github.event.pull_request.title }}
+
+            Тестики: ✅
+
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+      - if: ${{ contains(needs.*.result, 'failure') && !github.event.pull_request.merged }}
+        name: send if incorrect
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            ${{ github.actor }} создал пулл реквестик:
+            ${{ github.event.pull_request.title }}
+
+            Тестики: ❌
+
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+
+        
