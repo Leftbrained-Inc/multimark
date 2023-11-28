@@ -7,14 +7,44 @@ on:
       - opened
       - reopened
       - closed
+      - synchronize
 
 jobs:
   build:
     if: ${{ !github.event.pull_request.merged }}
     uses: ./.github/workflows/gradle.yml
+  messageOnUpdate:
+    runs-on: ubuntu-latest
+    if: ${{ always() && github.event.action == 'synchronize'}}
+    needs: build
+    steps:
+      - name: send message
+        if: ${{ !contains(needs.*.result, 'failure') }}
+        uses: appleboy/telegram-action@master
+        with:
+          message: |
+            ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
+            
+            Последний коммит: ${{ github.event.commits[0].message }}
+            
+            Тестики: ✅
+            
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
+      - name: send message
+        if: ${{ contains(needs.*.result, 'failure') }}
+        uses: appleboy/telegram-action@master
+        with:
+          message: |
+            ${{ github.actor }} обновил пулл реквестик: ${{ github.event.pull_request.title }}
+
+            Последний коммит: ${{ github.event.commits[0].message }}
+
+            Тестики: ❌
+
+            Ссылочка: https://github.com/${{ github.repository }}/pull/${{ github.event.number }}
   message:
     runs-on: ubuntu-latest
-    if: ${{ always() && (github.event.action != 'closed' || github.event.pull_request.merged) }}
+    if: ${{ always() && (github.event.action == 'opened' || github.event.pull_request.merged) && github.actor != 'renovate[bot]' }}
     needs: build
     steps:
       - if: ${{ github.event.pull_request.merged }}
