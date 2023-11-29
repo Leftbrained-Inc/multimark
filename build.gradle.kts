@@ -7,6 +7,8 @@ allProjects {
         google()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev/")
         mavenCentral()
+        // Desktop target has to add this repo
+        maven("https://jogamp.org/deployment/maven")
     }
 }
 
@@ -92,12 +94,17 @@ kotlin {
                 // other libs
                 implementation(libs.file.picker)
                 implementation(libs.kotlinx.io)
+
+                implementation(libs.kotlinx.coroutines.core)
+
+                api("io.github.kevinnzou:compose-webview-multiplatform:1.7.4")
             }
         }
 
-        jvmMain {
+        val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation(libs.kotlinx.coroutines.swing)
             }
         }
         commonTest {

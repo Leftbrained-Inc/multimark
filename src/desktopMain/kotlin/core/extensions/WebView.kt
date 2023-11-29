@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.SwingPanel
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
@@ -29,6 +30,9 @@ actual fun markdownToHtml(markdown: String): String {
     return HtmlGenerator(markdown, parsedTree, flavour).generateHtml()
 }
 
+//@Composable
+//fun remember
+
 /**
  * Предпросмотр Markdown
  * @param html HTML-текст
@@ -42,17 +46,26 @@ actual fun MarkdownPreview(html: String) {
     val doc: Document = editorKit.createDefaultDocument()
     jEditorPane.setEditorKit(editorKit)
     jEditorPane.setDocument(doc)
-    jEditorPane.text = html.trimIndent()
     jEditorPane.isEditable = false
+
+    LaunchedEffect(html){
+
+        jEditorPane.text = html.trimIndent()
+        jEditorPane.updateUI()
+    }
+
     val scrollPane = JScrollPane(jEditorPane)
     scrollPane.size = Dimension(300, 400)
     scrollPane.isVisible = true
 
+
     SwingPanel(
         factory = {
             val panel = JPanel()
-            panel.add(scrollPane)
-        }
+            panel.add(jEditorPane)
+
+        },
+        update = {jEditorPane.text = html.trimIndent()}
     )
 }
 

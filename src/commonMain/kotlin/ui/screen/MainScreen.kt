@@ -6,16 +6,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import core.extensions.MarkdownPreview
-import core.extensions.markdownToHtml
+import com.multiplatform.webview.web.*
+import dev.datlag.kcef.KCEF
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import models.TreeDTO
 import ui.components.MarkdownField
 import ui.components.NavBar
 import ui.components.Tree
+import java.io.File
+import kotlin.math.max
 
 /**
  * Экран редактирования Markdown-файла
@@ -60,11 +65,53 @@ fun MainScreen() {
                     )
                 }
                 Column(Modifier.background(Color.White, shape = RoundedCornerShape(10.dp))) {
-                    val html by remember { derivedStateOf { markdownToHtml(text) } }
-                    LaunchedEffect(html) {
-                        println(html)
+                    // TODO перенести в натив
+
+                    var restartRequired by remember { mutableStateOf(false) }
+                    var downloading by remember { mutableStateOf(0F) }
+                    var initialized by remember { mutableStateOf(false) }
+
+                    LaunchedEffect(Unit) {
+                        withContext(Dispatchers.IO) {
+                            KCEF.init(builder = {
+                                installDir(File("kcef-bundle"))
+                                progress {
+                                    onDownloading {
+                                        downloading = max(it, 0F)
+                                    }
+                                    onInitialized {
+                                        initialized = true
+                                    }
+                                }
+                                settings {
+                                    cachePath = File("cache").absolutePath
+                                }
+                            }, onError = {
+                                it?.printStackTrace()
+                            }, onRestartRequired = {
+                                restartRequired = true
+                            })
+                        }
                     }
-                    MarkdownPreview(html)
+                    val state = rememberWebViewState("https://github.com/Leftbrained-Inc/multimark")
+
+
+                    if (restartRequired) {
+                        Text(text = "Restart required.")
+                    } else {
+                        if (initialized) {
+                            WebView(state, modifier = Modifier.fillMaxSize())
+                        } else {
+                            Text(text = "Downloading $downloading%")
+                        }
+                    }
+
+                    DisposableEffect(Unit) {
+                        onDispose {
+                            KCEF.disposeBlocking()
+                        }
+                    }
+
                 }
             }
         }

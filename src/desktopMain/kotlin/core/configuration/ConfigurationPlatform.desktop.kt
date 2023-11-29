@@ -35,7 +35,6 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
      */
     actual open fun render() {
         application {
-
             val windowState = rememberWindowState(size = DpSize(480.dp, 658.dp))
             content {
                 val configuration = LocalConfiguration.current
