@@ -42,7 +42,7 @@ graph TD
         end
 
         subgraph desktop["desktopMain"]
-            mainDesktop("main.desktop.kts")
+            mainDesktop("Implementation of native functions")
         end
         desktop -->|Native functions| common 
     end
