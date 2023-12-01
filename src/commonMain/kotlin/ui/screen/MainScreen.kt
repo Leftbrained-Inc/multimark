@@ -10,8 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import core.extensions.MarkdownPreview
-import core.extensions.markdownToHtml
+import com.multiplatform.webview.web.rememberWebViewState
+import core.extensions.WebView
 import models.TreeDTO
 import ui.components.MarkdownField
 import ui.components.NavBar
@@ -60,11 +60,9 @@ fun MainScreen() {
                     )
                 }
                 Column(Modifier.background(Color.White, shape = RoundedCornerShape(10.dp))) {
-                    val html by remember { derivedStateOf { markdownToHtml(text) } }
-                    LaunchedEffect(html) {
-                        println(html)
-                    }
-                    MarkdownPreview(html)
+                    val state = rememberWebViewState("https://github.com/Leftbrained-Inc/multimark")
+
+                    WebView(state)
                 }
             }
         }

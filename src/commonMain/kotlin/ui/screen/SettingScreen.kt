@@ -43,7 +43,7 @@ fun SettingScreen(
             }
         }
         Column(
-            Modifier.weight(2f).background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(16.dp))
+            Modifier.background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(16.dp))
                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp)).fillMaxHeight()
                 .padding(16.dp)
         ) {

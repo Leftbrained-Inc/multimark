@@ -13,10 +13,9 @@ import com.bumble.appyx.navigation.modality.BuildContext
 import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
-import models.SettingSectionDTO
 import ui.screen.FileView
+import ui.screen.LaunchScreen
 import ui.screen.MainScreen
-import ui.screen.SettingScreen
 
 /**
  * Основной компонент навигации
@@ -55,7 +54,8 @@ class RootNode(
         when (interactionTarget) {
             NavTarget.LaunchScreen -> node(buildContext) {
                 var selected by remember { mutableStateOf(1) }
-                SettingScreen(
+                LaunchScreen(backStack)
+                /*SettingScreen(
                     listOf(
                         SettingSectionDTO(mutableStateOf(false), "General", { _, _ -> }, { Text("One") }),
                         SettingSectionDTO(mutableStateOf(true), "Second", { _, _ -> }, { Text("Two") }),
@@ -63,7 +63,7 @@ class RootNode(
                     ), selected
                 ) {
                     selected = it
-                }
+                }*/
             }
 
             is NavTarget.FileView -> node(buildContext) {
