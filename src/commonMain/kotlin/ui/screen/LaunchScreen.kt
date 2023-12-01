@@ -14,15 +14,16 @@ import androidx.compose.ui.text.font.FontWeight
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.operation.push
 import com.darkrockstudios.libraries.mpfilepicker.FilePicker
-import kotlinx.io.InternalIoApi
+import core.configuration.LocalConfiguration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.io.files.Path
 import navigation.NavTarget
-import org.koin.compose.rememberKoinInject
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
 import ui.utils.dp
-import viewmodel.FilesViewModel
 
 /**
  * Стартовый экран
@@ -31,12 +32,12 @@ import viewmodel.FilesViewModel
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
-@OptIn(InternalIoApi::class)
 @Composable
 fun LaunchScreen(backStack: BackStack<NavTarget>) {
-    val viewModel: FilesViewModel = rememberKoinInject()
+    //val viewModel: FilesViewModel = rememberKoinInject()
     var showPicker by remember { mutableStateOf(false) }
-    val files by viewModel.recentFiles.collectAsState(listOf())
+    val launchScreen = LocalConfiguration.current.launchScreen
+    val files by launchScreen.recentFiles.collectAsState(listOf())
     var search by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
@@ -57,7 +58,9 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     FilePicker(true, fileExtensions = listOf("md")) { file ->
                         if (file != null) {
                             val path = Path(file.path)
-                            viewModel.addRecentFile(path)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                launchScreen.addRecentFile(path)
+                            }
                             backStack.push(NavTarget.FileView(path))
                         }
                         showPicker = false

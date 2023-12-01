@@ -5,6 +5,7 @@ import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.Density
+import core.configuration.FilesMode
 import core.dsl.configuration.config
 import core.dsl.elements.shortcut.Shortcut
 import core.extensions.KeyMap
@@ -29,6 +30,13 @@ fun main() {
             KeyMap.metaKey = { it.isCtrlPressed }
             testShortcut = Shortcut({ keyEvent -> keyEvent.isAltPressed }) {
                 println("Test")
+            }
+        }
+
+        launchScreen {
+            filesMode = FilesMode.Both
+            filter {
+                true
             }
         }
     }

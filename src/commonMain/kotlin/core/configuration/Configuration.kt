@@ -33,6 +33,8 @@ abstract class Configuration {
         }
     }
 
+    var launchScreen: LaunchScreen = LaunchScreen()
+
     var name: String = "Multimark"
 
     private var _scale: Float = 1.0f

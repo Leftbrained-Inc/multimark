@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
+import core.configuration.LaunchScreen
 
 /**
  * Builder конфигурации
@@ -25,6 +26,12 @@ class ConfigurationBuilder : Configuration() {
      */
     fun logo(init: @Composable (modifier: Modifier) -> Unit) {
         this.logo = init
+    }
+
+    fun launchScreen(launchScreenConfiguration: LaunchScreen.() -> Unit) {
+        val launchScreen = LaunchScreen()
+        launchScreen.launchScreenConfiguration()
+        this.launchScreen = launchScreen
     }
 
 
