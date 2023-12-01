@@ -1,4 +1,0 @@
-package viewmodel
-
-class FilesViewModel {
-}

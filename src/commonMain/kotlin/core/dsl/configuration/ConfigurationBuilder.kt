@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
+import core.configuration.LaunchScreen
 
 /**
  * Builder конфигурации
@@ -27,6 +28,12 @@ class ConfigurationBuilder : Configuration() {
         this.logo = init
     }
 
+    fun launchScreen(launchScreenConfiguration: LaunchScreen.() -> Unit) {
+        val launchScreen = LaunchScreen()
+        launchScreen.launchScreenConfiguration()
+        this.launchScreen = launchScreen
+    }
+
 
     /**
      * Создание [ConfigurationImpl] на основе полученных данных
@@ -38,6 +45,8 @@ class ConfigurationBuilder : Configuration() {
         configImpl.logo = logo
         configImpl.scale = scale
         configImpl.fontScale = fontScale
+        configImpl.name = name
+        configImpl.launchScreen = launchScreen
         return configImpl
     }
 }

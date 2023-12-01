@@ -1,8 +1,6 @@
 package ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +12,7 @@ import ui.utils.dp
 /**
  * Элемент логотипа
  * @param modifier Установка размеров
- *
+ * @param showTitle Отображение названия
  * @author Белоцерковский Марат (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
@@ -26,11 +24,11 @@ fun LogoTitle(modifier: Modifier, showTitle: Boolean) {
     Row(
         modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally)
+        horizontalArrangement = Arrangement.Center
     ) {
-        config.logo(Modifier.size(64.dp))
+        config.logo(Modifier.widthIn(max=400.dp).fillMaxHeight())
         if (showTitle) {
-            Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+            Text(text = config.name, style = MaterialTheme.typography.headlineMedium, modifier = Modifier)
         }
     }
 }

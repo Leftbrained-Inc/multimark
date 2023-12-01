@@ -9,14 +9,11 @@ import org.jetbrains.exposed.sql.transactions.transaction
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
-class Db {
-    companion object {
-        val connect by lazy {
-            val db = Database.connect("jdbc:sqlite:main.db", "org.sqlite.JDBC")
-            transaction {
-                SchemaUtils.create(PinnedFiles)
-            }
-            return@lazy db
+object Db {
+    init {
+        Database.connect("jdbc:sqlite:main.db", "org.sqlite.JDBC")
+        transaction {
+            SchemaUtils.create(PinnedFiles)
         }
     }
 }

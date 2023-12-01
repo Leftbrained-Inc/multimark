@@ -1,20 +1,18 @@
 package core.extensions
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.awt.SwingPanel
+import com.multiplatform.webview.web.WebViewState
+import dev.datlag.kcef.KCEF
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
-import java.awt.Dimension
-import javax.swing.JEditorPane
-import javax.swing.JPanel
-import javax.swing.JScrollPane
-import javax.swing.text.Document
-import javax.swing.text.html.HTMLEditorKit
+import java.io.File
+import kotlin.math.max
 
 /**
  * Конвертация Markdown в HTML
@@ -22,57 +20,59 @@ import javax.swing.text.html.HTMLEditorKit
  * @return HTML-текст
  * @author Сергей Рейнн (bulkabuka)
  */
-fun markdownToHtml(markdown: String): String {
+actual fun markdownToHtml(markdown: String): String {
     val flavour = GFMFlavourDescriptor()
     val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(markdown)
     return HtmlGenerator(markdown, parsedTree, flavour).generateHtml()
 }
 
+
+/**
+ * Предпросмотр Markdown
+ * @param html HTML-текст
+ * @see markdownToHtml
+ * @author Сергей Рейнн (bulkabuka)
+ */
 @Composable
-actual fun MarkdownPreview(html: String, editorKit: HTMLEditorKit) {
-    val jEditorPane = JEditorPane()
-    val doc: Document = editorKit.createDefaultDocument()
-    val scrollPane = JScrollPane(jEditorPane)
-    jEditorPane.setEditorKit(editorKit)
-    jEditorPane.setDocument(doc)
-    jEditorPane.text = html.trimIndent()
-    jEditorPane.isEditable = false
-    scrollPane.size = Dimension(300, 400)
-    scrollPane.isVisible = true
+actual fun WebView(state: WebViewState) {
+    var restartRequired by remember { mutableStateOf(false) }
+    var downloading by remember { mutableStateOf(0F) }
+    var initialized by remember { mutableStateOf(false) }
 
-    SwingPanel(
-        factory = {
-            val panel = JPanel()
-            panel.add(scrollPane)
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            KCEF.init(builder = {
+                installDir(File("kcef-bundle"))
+                progress {
+                    onDownloading {
+                        downloading = max(it, 0F)
+                    }
+                    onInitialized {
+                        initialized = true
+                    }
+                }
+                settings {
+                    cachePath = File("cache").absolutePath
+                }
+            }, onError = {
+                it?.printStackTrace()
+
+            }, onRestartRequired = {
+                restartRequired = true
+            })
         }
-    )
-}
-
-@Composable
-fun PreviewPreview() {
-    val editorKit = HTMLEditorKit()
-    editorKit.styleSheet.addRule(
-        "" +
-                "body { font-family: 'Roboto', sans-serif; " +
-                "font-size: 14pt; " +
-                "line-height: 1.5; " +
-
-                "}"
-    )
-    MaterialTheme {
-        Column(Modifier.fillMaxSize()) {
-            MarkdownPreview(
-                markdownToHtml(
-                    """
-                |# Hello World
-                |
-                |Some **text** with a [link](https://vk.com).
-                |
-                |> New paragraph 
-            """.trimMargin()
-                ), editorKit
-            )
-        }
-
     }
+
+    if (restartRequired) {
+        Text(text = "Restart required.")
+    } else {
+        if (initialized) {
+            com.multiplatform.webview.web.WebView(state, modifier = Modifier.fillMaxSize())
+        } else {
+            Text(text = "Downloading $downloading%")
+
+
+        }
+    }
+
 }

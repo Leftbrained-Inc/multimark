@@ -1,27 +1,32 @@
 package ui.components
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 
 /**
  * Поле ввода Markdown-текста
+ * @param onValueChange Действие при изменении значения
+ * @param text Начальный текст
  * @param textStyle Стиль текста
+ * @param modifier Modifier
  * @author Сергей Рейнн (bulkabuka)
  */
 @Composable
-fun MarkdownField(textStyle: TextStyle) {
-    val field = remember { mutableStateOf("Hello, **world**!") }
-    TextField(value = field.value,
-        onValueChange = { newText -> field.value = newText },
+fun MarkdownField(
+    onValueChange: (String) -> Unit,
+    text: String,
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+    modifier: Modifier
+) {
+    TextField(
+        value = text,
+        onValueChange = onValueChange,
         textStyle = textStyle,
         shape = RectangleShape,
         colors = OutlinedTextFieldDefaults.colors(
@@ -32,18 +37,12 @@ fun MarkdownField(textStyle: TextStyle) {
             focusedTextColor = MaterialTheme.colorScheme.onBackground,
             unfocusedTextColor = MaterialTheme.colorScheme.onBackground
         ),
-        modifier = androidx.compose.ui.Modifier.fillMaxSize(),
+        modifier = modifier,
         placeholder = {
             Text(
-                text = "Hello, **World**!",
+                text = text,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
     )
-}
-
-@Preview
-@Composable
-fun MarkdownFieldPreview() {
-    MarkdownField(MaterialTheme.typography.bodyMedium)
 }

@@ -3,7 +3,7 @@ package navigation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -15,6 +15,7 @@ import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import ui.screen.FileView
 import ui.screen.LaunchScreen
+import ui.screen.MainScreen
 
 /**
  * Основной компонент навигации
@@ -52,6 +53,7 @@ class RootNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.LaunchScreen -> node(buildContext) {
+                var selected by remember { mutableStateOf(1) }
                 LaunchScreen(backStack)
             }
 
@@ -61,6 +63,10 @@ class RootNode(
 
             NavTarget.SettingsScreen -> node(buildContext) {
                 Text("Настройки")
+            }
+
+            is NavTarget.MainScreen -> node(buildContext) {
+                MainScreen(interactionTarget.file)
             }
         }
 }

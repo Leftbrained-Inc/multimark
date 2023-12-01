@@ -2,7 +2,7 @@ package navigation
 
 import com.bumble.appyx.utils.multiplatform.Parcelable
 import com.bumble.appyx.utils.multiplatform.Parcelize
-import kotlinx.io.Source
+import kotlinx.io.files.Path
 
 
 /**
@@ -11,7 +11,7 @@ import kotlinx.io.Source
  */
 sealed class NavTarget : Parcelable {
     @Parcelize
-    class FileView(val file: Source) : NavTarget()
+    class FileView(val file: Path) : NavTarget()
 
     @Parcelize
     object LaunchScreen : NavTarget()
@@ -19,4 +19,6 @@ sealed class NavTarget : Parcelable {
     @Parcelize
     object SettingsScreen : NavTarget()
 
+    @Parcelize
+    data class MainScreen(val file: Path) : NavTarget()
 }
