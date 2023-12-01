@@ -1,6 +1,5 @@
 package unit.core
 
-import core.db.Db
 import core.db.PinnedFile
 import core.db.RecentFile
 import kotlinx.datetime.Clock
@@ -13,7 +12,6 @@ import org.junit.Test
 
 class FileDbTest {
 
-    val connect = Db.connect
 
     companion object {
         /**

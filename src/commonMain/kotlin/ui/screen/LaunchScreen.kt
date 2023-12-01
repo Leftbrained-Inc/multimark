@@ -41,54 +41,57 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
     var search by remember { mutableStateOf("") }
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
-            Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
+            Modifier.widthIn(200.dp, 600.dp).align(if (files.isNotEmpty()) Alignment.TopCenter else Alignment.Center),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            LogoTitle(Modifier.fillMaxWidth(), true)
-            Row(
-                modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
-                    .padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
-                    Text(text = "Open", style = MaterialTheme.typography.labelLarge)
-                }
-                if (showPicker) {
-                    FilePicker(true, fileExtensions = listOf("md")) { file ->
-                        if (file != null) {
-                            val path = Path(file.path)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                launchScreen.addRecentFile(path)
-                            }
-                            backStack.push(NavTarget.FileView(path))
-                        }
-                        showPicker = false
+            LogoTitle(Modifier.fillMaxWidth().weight(1f), files.isNotEmpty())
+            Box(modifier = Modifier.weight(1f)) {
+                Row(
+                    modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
+                        .padding(24.dp),
+                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
+                        Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                     }
-                }
-                SearchBar(
-                    value = search,
-                    onValueChange = { newText -> search = newText },
-                    modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
-                )
-                IconButton(onClick = {
-                    backStack.push(NavTarget.MainScreen)
-                }) {
-                    Icon(
-                        modifier = Modifier.weight(1f).size(36.dp),
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = null
+                    if (showPicker) {
+                        FilePicker(true, fileExtensions = listOf("md")) { file ->
+                            if (file != null) {
+                                val path = Path(file.path)
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    launchScreen.addRecentFile(path)
+                                }
+                                backStack.push(NavTarget.FileView(path))
+                            }
+                            showPicker = false
+                        }
+                    }
+                    SearchBar(
+                        value = search,
+                        onValueChange = { newText -> search = newText },
+                        modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
                     )
+                    IconButton(onClick = {
+                        backStack.push(NavTarget.MainScreen)
+                    }) {
+                        Icon(
+                            modifier = Modifier.weight(1f).size(36.dp),
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
             // Список недавно просмотренных
-            Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    "Last Viewed",
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-                FileList(files, modifier = Modifier.padding(top = 24.dp))
-            }
+            if (files.isNotEmpty())
+                Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Last Viewed",
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                    FileList(files, modifier = Modifier.padding(top = 24.dp))
+                }
         }
         Text(
             "Crafted with ❤\uFE0F in Leftbrained",

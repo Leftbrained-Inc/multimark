@@ -14,7 +14,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
  * @author Сергей Рейнн (bulkabuka)
  * @author Панков Вася (pank-su)
  */
-object RecentFiles : IntIdTable() {
+public object RecentFiles : IntIdTable() {
     val filePath = text("file_path").uniqueIndex()
     val fileName = text("file_name")
     val dateOfApplication =
@@ -27,4 +27,5 @@ class RecentFile(id: EntityID<Int>) : IntEntity(id) {
     var filePath by RecentFiles.filePath
     var fileName by RecentFiles.fileName
     var dateOfApplication by RecentFiles.dateOfApplication
+
 }

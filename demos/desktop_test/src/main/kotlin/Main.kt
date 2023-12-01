@@ -1,8 +1,6 @@
-import androidx.compose.foundation.Image
 import androidx.compose.ui.input.key.isAltPressed
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.res.loadSvgPainter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.Density
 import core.configuration.FilesMode
@@ -14,9 +12,9 @@ import core.shortcut.keyMap
 
 fun main() {
     config {
-        logo {
-            Image(painterResource("Good Tick.svg"), null, modifier = it)
-        }
+//        logo {
+//            Image(painterResource("Good Tick.svg"), null, modifier = it, contentScale = ContentScale.FillHeight)
+//        }
 
         scale = 1f
         fontScale = 1f
@@ -35,7 +33,8 @@ fun main() {
 
         launchScreen {
             filesMode = FilesMode.Both
-            filter {
+
+            recentFilter {
                 true
             }
         }

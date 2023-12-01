@@ -58,6 +58,7 @@ actual fun WebView(state: WebViewState) {
                 }
             }, onError = {
                 it?.printStackTrace()
+
             }, onRestartRequired = {
                 restartRequired = true
             })
@@ -76,9 +77,4 @@ actual fun WebView(state: WebViewState) {
         }
     }
 
-    DisposableEffect(Unit) {
-        onDispose {
-            KCEF.disposeBlocking()
-        }
-    }
 }

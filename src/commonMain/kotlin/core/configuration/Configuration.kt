@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import core.dsl.ConfigurationTagMaker
 import di.appModule
@@ -25,7 +26,7 @@ import ui.utils.Scale
 @ConfigurationTagMaker
 abstract class Configuration {
     var logo: @Composable (modifier: Modifier) -> Unit =
-        { Image(painterResource("logo.svg"), null, modifier = it) }
+        { Image(painterResource("logo.svg"), null, modifier = it, contentScale = ContentScale.FillHeight) }
 
     var theme: @Composable (content: @Composable () -> Unit) -> Unit = {
         MultimarkAppTheme {

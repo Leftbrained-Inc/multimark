@@ -1,6 +1,6 @@
 package models
 
-import java.util.*
+import kotlinx.datetime.LocalDateTime
 
 /**
  * Модель для карточки
@@ -8,4 +8,4 @@ import java.util.*
  * @property date Дата последнего обращения к файлу
  * @author Белоцерковский Марат (MIAPROT)
  */
-data class FileDTO(val name: String, val date: Date)
+data class FileDTO(val name: String, val date: LocalDateTime, val path: String)

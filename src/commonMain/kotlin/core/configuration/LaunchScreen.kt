@@ -3,8 +3,11 @@ package core.configuration
 import core.db.Db
 import core.db.RecentFile
 import core.db.RecentFiles
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -12,28 +15,36 @@ import kotlinx.io.files.Path
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
+sealed class LaunchScreenMode {
+    data object Default : LaunchScreenMode()
+    class Scratch : LaunchScreenMode()
+}
 
 class LaunchScreen {
-
-    init {
-        Db
-    }
-
     var filesMode = FilesMode.Both
 
-    private var filter: (RecentFile) -> Boolean = { true }
+    var mode: LaunchScreenMode = LaunchScreenMode.Default
 
-    fun filter(filter: (RecentFile) -> Boolean) {
-        this.filter = filter
+    private var _recentFilter: (RecentFile) -> Boolean = { true }
+
+    fun recentFilter(filter: (RecentFile) -> Boolean) {
+        this._recentFilter = filter
     }
 
     private val _recentFiles = MutableStateFlow<List<RecentFile>>(listOf())
 
     val recentFiles = _recentFiles.asStateFlow()
 
+    init {
+        Db
+        CoroutineScope(Dispatchers.IO).launch {
+            reloadFiles()
+        }
+    }
+
     private suspend fun reloadFiles() {
         _recentFiles.emit(transaction {
-            return@transaction RecentFile.all().toList()
+            return@transaction RecentFile.all().filter { _recentFilter(it) }.toList()
         })
     }
 

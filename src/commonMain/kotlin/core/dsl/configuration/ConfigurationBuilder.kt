@@ -46,6 +46,7 @@ class ConfigurationBuilder : Configuration() {
         configImpl.scale = scale
         configImpl.fontScale = fontScale
         configImpl.name = name
+        configImpl.launchScreen = launchScreen
         return configImpl
     }
 }
