@@ -35,7 +35,6 @@ import ui.utils.dp
  */
 @Composable
 fun LaunchScreen(backStack: BackStack<NavTarget>) {
-    //val viewModel: FilesViewModel = rememberKoinInject()
     var showPicker by remember { mutableStateOf(false) }
     val launchScreen = LocalConfiguration.current.launchScreen
     val files by launchScreen.recentFiles.collectAsState(listOf())

@@ -26,8 +26,6 @@ actual fun markdownToHtml(markdown: String): String {
     return HtmlGenerator(markdown, parsedTree, flavour).generateHtml()
 }
 
-//@Composable
-//fun remember
 
 /**
  * Предпросмотр Markdown

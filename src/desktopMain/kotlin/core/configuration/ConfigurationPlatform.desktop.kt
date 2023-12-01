@@ -39,7 +39,7 @@ actual abstract class ConfigurationPlatform actual constructor() : core.configur
             content {
                 val configuration = LocalConfiguration.current
                 Window(this::exitApplication, onKeyEvent = { keyEvent ->
-                    if (keyEvent.type == KeyEventType.KeyDown)
+                    if (keyEvent.type == KeyEventType.KeyUp)
                         configuration.keyMap.shorts.forEach {
                             if (it.condition(keyEvent)) {
                                 it.action()
