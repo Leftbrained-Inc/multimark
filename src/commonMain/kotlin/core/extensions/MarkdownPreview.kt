@@ -1,9 +1,10 @@
 package core.extensions
 
 import androidx.compose.runtime.Composable
+import com.multiplatform.webview.web.WebViewState
 
 @Composable
-expect fun MarkdownPreview(html: String)
+expect fun WebView(state: WebViewState)
 
 /**
  * Конвертация Markdown в HTML
