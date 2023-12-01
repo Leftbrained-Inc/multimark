@@ -38,6 +38,7 @@ class ConfigurationBuilder : Configuration() {
         configImpl.logo = logo
         configImpl.scale = scale
         configImpl.fontScale = fontScale
+        configImpl.name = name
         return configImpl
     }
 }

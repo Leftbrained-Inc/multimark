@@ -33,6 +33,8 @@ abstract class Configuration {
         }
     }
 
+    var name: String = "Multimark"
+
     private var _scale: Float = 1.0f
     private var _fontScale: Float = 1.0f
 

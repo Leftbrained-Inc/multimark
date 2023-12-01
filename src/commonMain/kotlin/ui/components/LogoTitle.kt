@@ -30,7 +30,7 @@ fun LogoTitle(modifier: Modifier, showTitle: Boolean) {
     ) {
         config.logo(Modifier.size(64.dp))
         if (showTitle) {
-            Text(text = "Multimark", style = MaterialTheme.typography.headlineMedium)
+            Text(text = config.name, style = MaterialTheme.typography.headlineMedium)
         }
     }
 }
