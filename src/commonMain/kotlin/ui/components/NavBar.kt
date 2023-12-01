@@ -1,14 +1,13 @@
 package ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import kotlinx.io.files.Path
 import ui.theme.MultimarkAppTheme
 
 /**
@@ -30,9 +30,15 @@ import ui.theme.MultimarkAppTheme
  * @param directory Путь к файлу
  */
 @Composable
-//TODO Заменить параметр по умолчанию
-fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
-    val pathList = directory.split("\\", "/")
+fun NavBar(path: Path, isSaved: Boolean) {
+    val pathList = buildList {
+        var parent = path
+        while (parent.parent != null){
+            add(parent.name)
+            parent = parent.parent!!
+        }
+        reverse()
+    }
     val file = pathList.last()
     val search = remember { mutableStateOf("") }
 
@@ -43,7 +49,7 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            LogoTitle(Modifier.size(80.dp), false)
+            LogoTitle(Modifier.size(64.dp), false)
             Row(
                 Modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp))
                     .background(MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(16.dp))
@@ -60,6 +66,10 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
                 Text(text = "  |  ", style = MaterialTheme.typography.bodyLarge)
                 Icon(Icons.Default.Book, null)
                 Text(text = file, style = MaterialTheme.typography.bodyLarge)
+
+                AnimatedVisibility(!isSaved){
+                    Icon(Icons.Default.Circle, null)
+                }
 
             }
             if (width > 900.dp) {
@@ -90,7 +100,7 @@ fun NavBar(directory: String = "D:\\Battle.net\\Battle.net.13521\\audio") {
 fun PreviewNavBar() {
     MultimarkAppTheme {
         Surface(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-            NavBar()
+            NavBar(Path(""), false)
         }
     }
 }

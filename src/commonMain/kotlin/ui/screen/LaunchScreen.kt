@@ -1,5 +1,6 @@
 package ui.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,8 +45,12 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             Modifier.widthIn(200.dp, 600.dp).align(if (files.isNotEmpty()) Alignment.TopCenter else Alignment.Center),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            LogoTitle(Modifier.fillMaxWidth().weight(1f), files.isNotEmpty())
-            Box(modifier = Modifier.weight(1f)) {
+            // TODO fix alignment
+            LogoTitle(
+                (if (files.isEmpty()) Modifier.weight(1f).fillMaxWidth().padding(24.dp) else Modifier.height(64.dp)),
+                files.isNotEmpty()
+            )
+            Box(modifier = if (files.isEmpty()) Modifier.weight(1f) else Modifier) {
                 Row(
                     modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
                         .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
@@ -62,7 +67,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     launchScreen.addRecentFile(path)
                                 }
-                                backStack.push(NavTarget.FileView(path))
+                                backStack.push(NavTarget.MainScreen(path))
                             }
                             showPicker = false
                         }
@@ -73,7 +78,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                         modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
                     )
                     IconButton(onClick = {
-                        backStack.push(NavTarget.MainScreen)
+
                     }) {
                         Icon(
                             modifier = Modifier.weight(1f).size(36.dp),
@@ -84,14 +89,15 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 }
             }
             // Список недавно просмотренных
-            if (files.isNotEmpty())
-                Column(modifier = Modifier.weight(6f, false), horizontalAlignment = Alignment.CenterHorizontally) {
+            AnimatedVisibility(files.isNotEmpty(), modifier = Modifier) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         "Last Viewed",
                         style = MaterialTheme.typography.headlineMedium,
                     )
                     FileList(files, modifier = Modifier.padding(top = 24.dp))
                 }
+            }
         }
         Text(
             "Crafted with ❤\uFE0F in Leftbrained",

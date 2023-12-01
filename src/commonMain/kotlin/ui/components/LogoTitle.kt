@@ -26,7 +26,7 @@ fun LogoTitle(modifier: Modifier, showTitle: Boolean) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        config.logo(Modifier.widthIn(max=400.dp).fillMaxHeight().padding(24.dp))
+        config.logo(Modifier.widthIn(max=400.dp).fillMaxHeight())
         if (showTitle) {
             Text(text = config.name, style = MaterialTheme.typography.headlineMedium, modifier = Modifier)
         }

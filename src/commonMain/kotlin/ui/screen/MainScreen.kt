@@ -1,69 +1,73 @@
 package ui.screen
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.dp
-import com.multiplatform.webview.web.rememberWebViewState
-import core.extensions.WebView
-import models.TreeDTO
+import kotlinx.io.buffered
+import kotlinx.io.files.Path
+import kotlinx.io.files.SystemFileSystem
+import kotlinx.io.readString
 import ui.components.MarkdownField
 import ui.components.NavBar
-import ui.components.Tree
+import androidx.compose.ui.input.key.*
+import kotlinx.io.files.sink
+import kotlinx.io.writeString
 
 /**
  * Экран редактирования Markdown-файла
- * @property text Текст файла
+ * @property startedText Текст файла
  * @author Сергей Рейнн (bulkabuka)
  */
 @Composable
-fun MainScreen() {
-    var text by remember { mutableStateOf("") }
+fun MainScreen(path: Path) {
+
+    var saveNow by remember {
+        mutableStateOf(false)
+    }
+
+    val contentSaved by remember(saveNow) {
+        derivedStateOf {
+            val buffer = SystemFileSystem.source(path).buffered()
+            val text = buffer.readString()
+            buffer.close()
+            text
+        }
+    }
+
+    var text by remember { mutableStateOf(contentSaved) }
+    val isSaved by remember(text, contentSaved, saveNow) {  derivedStateOf {
+        text == contentSaved
+    }}
     Surface(color = Color.White) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
-                NavBar("root/users/sara/desktop/directory/first")
+                NavBar(path, isSaved)
             }
             Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Column(
-                    Modifier.background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(10.dp))
-                        .padding(12.dp)
-                ) {
-                    Tree(
-                        tree = TreeDTO(
-                            name = "root", treeList = listOf(
-                                TreeDTO(
-                                    name = "child1", treeList = listOf(
-                                        TreeDTO(
-                                            name = "child2", treeList = listOf(
-                                                TreeDTO(name = "child3", treeList = listOf())
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ), Modifier.fillMaxHeight().width(150.dp)
-                    )
-                }
-                Column(
-                    Modifier.background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(10.dp))
-                        .padding(12.dp)
-                ) {
-                    MarkdownField(
-                        { text = it }, text, modifier = Modifier.fillMaxHeight().width(400.dp)
-                    )
-                }
-                Column(Modifier.background(Color.White, shape = RoundedCornerShape(10.dp))) {
-                    val state = rememberWebViewState("https://github.com/Leftbrained-Inc/multimark")
+                MarkdownField(
+                    { text = it
+                    }, text, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
+                        when {
+                            (it.isCtrlPressed && it.key == Key.S) -> {
+                                val sink = SystemFileSystem.sink(path).buffered()
 
-                    WebView(state)
-                }
+                                sink.writeString(text)
+                                sink.close()
+                                saveNow = true
+                                saveNow = false
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                )
             }
         }
     }
@@ -72,5 +76,5 @@ fun MainScreen() {
 @Preview
 @Composable
 fun MainScreenPPreview() {
-    MainScreen()
+    MainScreen(Path(""))
 }

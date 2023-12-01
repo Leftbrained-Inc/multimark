@@ -55,15 +55,6 @@ class RootNode(
             NavTarget.LaunchScreen -> node(buildContext) {
                 var selected by remember { mutableStateOf(1) }
                 LaunchScreen(backStack)
-                /*SettingScreen(
-                    listOf(
-                        SettingSectionDTO(mutableStateOf(false), "General", { _, _ -> }, { Text("One") }),
-                        SettingSectionDTO(mutableStateOf(true), "Second", { _, _ -> }, { Text("Two") }),
-                        SettingSectionDTO(mutableStateOf(false), "Third", { _, _ -> }, { Text("Three") }),
-                    ), selected
-                ) {
-                    selected = it
-                }*/
             }
 
             is NavTarget.FileView -> node(buildContext) {
@@ -74,8 +65,8 @@ class RootNode(
                 Text("Настройки")
             }
 
-            NavTarget.MainScreen -> node(buildContext) {
-                MainScreen()
+            is NavTarget.MainScreen -> node(buildContext) {
+                MainScreen(interactionTarget.file)
             }
         }
 }
