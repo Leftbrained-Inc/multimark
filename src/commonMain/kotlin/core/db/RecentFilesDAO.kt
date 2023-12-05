@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 /**
  * Таблица закреплённых файлов
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 public object RecentFiles : IntIdTable() {
     val filePath = text("file_path").uniqueIndex()

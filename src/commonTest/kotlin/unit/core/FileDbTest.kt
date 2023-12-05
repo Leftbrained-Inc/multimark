@@ -16,7 +16,7 @@ class FileDbTest {
     companion object {
         /**
          * Удаление таблицы после тестов
-         * @author Панков Вася (pank-su)
+         * @author Василий Панков (pank-su)
          */
         @JvmStatic
         @AfterClass
@@ -34,7 +34,7 @@ class FileDbTest {
 
     /**
      * Проверка работоспособности добавление
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     @Test
     fun addingTest() {
@@ -53,7 +53,7 @@ class FileDbTest {
 
     /**
      * Проверка работоспособности удаления
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     @Test
     fun deleteFromDbTest() {
@@ -75,7 +75,7 @@ class FileDbTest {
 
     /**
      * Проверка работоспособности обновления
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     @Test
     fun updateFromDbTest() {

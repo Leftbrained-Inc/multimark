@@ -11,7 +11,7 @@ import core.configuration.LaunchScreen
  *
  * Необходим для того чтобы функции и переменные не перемещивались в конфигурации у разработчика
  *
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class ConfigurationBuilder : Configuration() {
 

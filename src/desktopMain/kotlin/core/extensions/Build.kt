@@ -6,7 +6,7 @@ import core.shortcut.keyMap
 
 /**
  * Добавление нативных дополнений при сборке
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 fun ConfigurationBuilder.build(): ConfigurationImpl {
     val configuration = this.build()

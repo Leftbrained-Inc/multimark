@@ -7,7 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,9 +28,10 @@ import ui.theme.MultimarkAppTheme
 
 /**
  * Панель навигации (Navbar)
- * @author Белоцерковский Марат (MIAPROT)
+ * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @param directory Путь к файлу
+ * @param path Путь к файлу
+ * @param isSaved Сохранен ли файл
  */
 @Composable
 fun NavBar(path: Path, isSaved: Boolean) {

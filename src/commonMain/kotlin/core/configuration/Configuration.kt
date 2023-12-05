@@ -21,7 +21,7 @@ import ui.utils.Scale
  * @property theme тема приложения
  * @property scale информация о начальном масштабе интерфейсе (1f = 100 %, 1.5f = 250 %)
  * @property fontScale информация о начальном масштабе шрифта интерфейса (1f = 100 %, 1.5f = 250 %)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @ConfigurationTagMaker
 abstract class Configuration {
@@ -66,7 +66,7 @@ abstract class Configuration {
     /**
      * Функция запуска приложения с нативными и ненативными компонентами, инициализирующая конфигурацию
      * @param nativeContent нативный контент
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     @Composable
     internal fun content(nativeContent: @Composable (@Composable (@Composable () -> Unit) -> Unit) -> Unit) {

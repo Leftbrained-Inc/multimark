@@ -34,7 +34,7 @@ sealed class LaunchScreenMode {
  * - [FilesMode.Recent] - Только последние файла
  *
  *
- * @author pank-su (Панков Вася)
+ * @author pank-su (Василий Панков)
  */
 class LaunchScreen {
     var filesMode = FilesMode.Both

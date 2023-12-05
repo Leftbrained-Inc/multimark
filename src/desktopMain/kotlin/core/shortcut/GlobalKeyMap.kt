@@ -19,7 +19,7 @@ private var globalKeyMap = GlobalKeyMap()
 /**
  * Глобальные горячие клавиши
  *
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class GlobalKeyMap : KeyMap {
 
@@ -58,7 +58,7 @@ class GlobalKeyMap : KeyMap {
 /**
  * Добавление keyMap в конфигурацию
  *
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 var Configuration.keyMap: GlobalKeyMap
     get() = globalKeyMap
@@ -69,7 +69,7 @@ var Configuration.keyMap: GlobalKeyMap
 /**
  * Добавление keyMap в сборщик конифгурации
  *
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 fun ConfigurationBuilder.keyMap(init: GlobalKeyMap.() -> Unit) {
     val globalKeyMap = GlobalKeyMap()

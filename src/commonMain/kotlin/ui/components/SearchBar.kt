@@ -14,9 +14,9 @@ import ui.utils.dp
  * @param modifier Установка размеров
  * @param value Значение поисковой строки
  * @param onValueChange Действие при изменинии значения
- * @author Белоцерковский Марат (MIAPROT)
+ * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @Composable
 fun SearchBar(value: String, onValueChange: (String) -> Unit, modifier: Modifier) {

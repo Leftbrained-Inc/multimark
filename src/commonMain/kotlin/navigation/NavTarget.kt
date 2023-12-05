@@ -7,7 +7,7 @@ import kotlinx.io.files.Path
 
 /**
  * Будущий показатель всех возможных назначений в навигации
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 sealed class NavTarget : Parcelable {
     @Parcelize

@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 /**
  * Таблица закреплённых файлов
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 object PinnedFiles : IntIdTable() {
     val file = reference("file", RecentFiles)
@@ -21,7 +21,7 @@ object PinnedFiles : IntIdTable() {
 
 /**
  * Entity для работы с закреплёнными файлами в БД
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class PinnedFile(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<PinnedFile>(PinnedFiles)

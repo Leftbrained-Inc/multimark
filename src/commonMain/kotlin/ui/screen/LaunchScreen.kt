@@ -29,9 +29,9 @@ import ui.utils.dp
 /**
  * Стартовый экран
  * @param backStack Стек навигации
- * @author Белоцерковский Марат (MIAPROT)
+ * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @Composable
 fun LaunchScreen(backStack: BackStack<NavTarget>) {
@@ -44,7 +44,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             Modifier.widthIn(200.dp, 600.dp).align(if (files.isNotEmpty()) Alignment.TopCenter else Alignment.Center),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            // TODO fix alignment
+            // TODO исправить выравнивание
             LogoTitle(
                 (if (files.isEmpty()) Modifier.weight(1f).fillMaxWidth().padding(24.dp) else Modifier.height(64.dp)),
                 files.isNotEmpty()

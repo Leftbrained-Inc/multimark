@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +15,14 @@ import androidx.compose.ui.unit.dp
 import models.SettingSectionDTO
 import ui.components.SettingSection
 
+/**
+ * Экран настроек приложения
+ * @param sections Список секций настроек
+ * @param selected Выбранная секция
+ * @param onSectionSelected Обработчик выбора секции
+ * @see SettingSectionDTO
+ * @author Сергей Рейнн (bulkabuka)
+ */
 @Composable
 fun SettingScreen(
     sections: List<SettingSectionDTO>,
@@ -51,3 +59,4 @@ fun SettingScreen(
         }
     }
 }
+// TODO Доработать настройки и пустить в продакшн
