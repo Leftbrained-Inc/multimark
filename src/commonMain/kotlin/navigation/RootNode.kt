@@ -19,7 +19,7 @@ import ui.screen.MainScreen
 
 /**
  * Основной компонент навигации
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class RootNode(
     buildContext: BuildContext,
@@ -37,7 +37,7 @@ class RootNode(
 
     /**
      * Отображение экрана
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     @Composable
     override fun View(modifier: Modifier) {
@@ -48,7 +48,7 @@ class RootNode(
 
     /**
      * Сопоставление путей к экранам
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {

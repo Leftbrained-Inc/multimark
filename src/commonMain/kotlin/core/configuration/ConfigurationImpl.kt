@@ -4,7 +4,7 @@ import androidx.compose.runtime.compositionLocalOf
 
 /**
  * Конфигурация со всеми функциями (нативными и нет)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class ConfigurationImpl : ConfigurationPlatform()
 

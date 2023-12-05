@@ -13,9 +13,9 @@ import ui.utils.dp
  * Элемент логотипа
  * @param modifier Установка размеров
  * @param showTitle Отображение названия
- * @author Белоцерковский Марат (MIAPROT)
+ * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @Composable
 fun LogoTitle(modifier: Modifier, showTitle: Boolean) {

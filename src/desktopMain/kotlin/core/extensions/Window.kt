@@ -14,7 +14,7 @@ private var window = Window()
  * Настройки окна
  * @property icon иконка
  * @property title названия окна
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @ConfigurationTagMaker
 data class Window(
@@ -24,7 +24,7 @@ data class Window(
 
 /**
  * Добавление переменной для конфигурации
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 var Configuration.window: Window
     get() = core.extensions.window
@@ -44,7 +44,7 @@ var Configuration.window: Window
  *      }
  * }
  * ```
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 fun ConfigurationBuilder.window(init: Window.() -> Unit) {
     val window = Window()

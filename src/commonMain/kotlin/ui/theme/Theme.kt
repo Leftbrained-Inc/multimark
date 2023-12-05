@@ -82,7 +82,7 @@ fun MultimarkAppTheme(
         else -> LightColorScheme
     }
 
-    // при изменения размера экрана, все шрифты умножаются на произведения fontScale и scale
+    // При изменении размера экрана все шрифты умножаются на произведения `fontScale` и `scale`
     LaunchedEffect(Scale.scale) {
         val fontScaleWithScale = Scale.scale * Scale.fontScale
         val newType = type.copy(

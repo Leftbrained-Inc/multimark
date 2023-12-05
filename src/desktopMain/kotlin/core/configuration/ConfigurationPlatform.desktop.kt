@@ -25,13 +25,13 @@ val events: Channel<Events> = Channel()
 
 /**
  * Нативная реализация
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 actual abstract class ConfigurationPlatform actual constructor() : core.configuration.Configuration() {
 
     /**
      * Отображение экрана и навигации
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     actual open fun render() {
         application {

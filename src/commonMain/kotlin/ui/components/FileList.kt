@@ -25,7 +25,7 @@ import ui.utils.dp
  * @param modifier Установка размеров
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 @Composable
 fun FileList(fileList: List<RecentFile>, modifier: Modifier) {

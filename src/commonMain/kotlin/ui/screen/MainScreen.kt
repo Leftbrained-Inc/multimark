@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
@@ -14,15 +15,13 @@ import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
+import kotlinx.io.writeString
 import ui.components.MarkdownField
 import ui.components.NavBar
-import androidx.compose.ui.input.key.*
-import kotlinx.io.files.sink
-import kotlinx.io.writeString
 
 /**
  * Экран редактирования Markdown-файла
- * @property startedText Текст файла
+ * @param path Путь к файлу
  * @author Сергей Рейнн (bulkabuka)
  */
 @Composable

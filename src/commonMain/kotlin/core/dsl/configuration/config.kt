@@ -2,6 +2,6 @@ package core.dsl.configuration
 
 /**
  * DSL конфигурации
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 expect fun config(init: ConfigurationBuilder.() -> Unit)

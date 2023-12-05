@@ -3,7 +3,7 @@ package core.dsl.configuration
 /**
  * DSL-функция создания конфигурации
  * @param init блок инициализации конфигурации
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 actual fun config(init: ConfigurationBuilder.() -> Unit) {
     val builder = ConfigurationBuilder()

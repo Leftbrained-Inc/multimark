@@ -10,7 +10,7 @@ import core.extensions.KeyMap.Companion.metaKey
  * Интерфейс для KeyMap
  * @property metaKey мета-клавиша, которая часта используется для shortcuts
  * @property shorts горячие клавиш
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 interface KeyMap {
     companion object {
@@ -24,7 +24,7 @@ interface KeyMap {
 
     /**
      * Получение всех горячих клавиш
-     * @author Панков Вася (pank-su)
+     * @author Василий Панков (pank-su)
      */
     fun getAllShorts(): List<Shortcut>
 }

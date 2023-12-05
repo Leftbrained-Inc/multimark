@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
  * @property scale масштабирование экрана
  * @property fontScale масштабирование шрифта
  *
- * @author Панков Вася (pank-su)
+ * @author Василий Панков (pank-su)
  */
 class Scale{
     companion object{
