@@ -1,8 +1,13 @@
-package ui.screen
+package ui.screen.launchscreen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -10,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import com.bumble.appyx.components.backstack.BackStack
@@ -33,23 +39,48 @@ import ui.utils.dp
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LaunchScreen(backStack: BackStack<NavTarget>) {
     var showPicker by remember { mutableStateOf(false) }
     val launchScreen = LocalConfiguration.current.launchScreen
     val files by launchScreen.recentFiles.collectAsState(listOf())
+    val state by remember(files) {
+        derivedStateOf {
+            if (files.isEmpty()) LaunchScreenState.NoFiles else LaunchScreenState.HasFiles
+        }
+    }
+    val transition = updateTransition(state, label = "transition")
+
     var search by remember { mutableStateOf("") }
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        val height by remember(this.maxHeight) {
+            derivedStateOf { this.maxHeight }
+        }
         Column(
-            Modifier.widthIn(200.dp, 600.dp).align(if (files.isNotEmpty()) Alignment.TopCenter else Alignment.Center),
+            Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
             verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
         ) {
-            // TODO исправить выравнивание
+            val logoTitleHeight by transition.animateDp(
+                transitionSpec = { tween(durationMillis = 1000) },
+                label = "Height for logotitle"
+            ) { state ->
+                when (state) {
+                    LaunchScreenState.NoFiles -> height / 2
+                    LaunchScreenState.HasFiles -> 64.dp
+                }
+            }
             LogoTitle(
-                (if (files.isEmpty()) Modifier.weight(1f).fillMaxWidth().padding(24.dp) else Modifier.height(64.dp)),
-                files.isNotEmpty()
+                Modifier.fillMaxWidth().height(logoTitleHeight),
+                transition
             )
-            Box(modifier = if (files.isEmpty()) Modifier.weight(1f) else Modifier) {
+            val boxHeight by transition.animateDp(label = "Box Height") {
+                when (state) {
+                    LaunchScreenState.NoFiles -> height / 2
+                    LaunchScreenState.HasFiles -> 103.dp
+                }
+            }
+            Box(modifier = Modifier.height(boxHeight)) {
                 Row(
                     modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
                         .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
@@ -88,7 +119,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 }
             }
             // Список недавно просмотренных
-            AnimatedVisibility(files.isNotEmpty(), modifier = Modifier) {
+            transition.AnimatedVisibility({ it == LaunchScreenState.HasFiles }) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         "Last Viewed",
@@ -97,10 +128,13 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     FileList(files, modifier = Modifier.padding(top = 24.dp))
                 }
             }
+
         }
         Text(
             "Crafted with ❤\uFE0F in Leftbrained",
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp),
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp).clip(
+                CircleShape
+            ).background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)).padding(3.dp),
             fontWeight = FontWeight(500),
         )
     }

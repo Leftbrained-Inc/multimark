@@ -14,7 +14,7 @@ import com.bumble.appyx.navigation.node.Node
 import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import ui.screen.FileView
-import ui.screen.LaunchScreen
+import ui.screen.launchscreen.LaunchScreen
 import ui.screen.MainScreen
 
 /**
@@ -53,7 +53,6 @@ class RootNode(
     override fun resolve(interactionTarget: NavTarget, buildContext: BuildContext): Node =
         when (interactionTarget) {
             NavTarget.LaunchScreen -> node(buildContext) {
-                var selected by remember { mutableStateOf(1) }
                 LaunchScreen(backStack)
             }
 
