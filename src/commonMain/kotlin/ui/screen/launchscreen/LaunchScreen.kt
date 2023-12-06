@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -72,54 +73,51 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             }
             LogoTitle(
                 Modifier.fillMaxWidth().height(logoTitleHeight),
-                transition
+                transition,
+                logoTitleHeight
             )
-            val boxHeight by transition.animateDp(label = "Box Height") {
-                when (state) {
-                    LaunchScreenState.NoFiles -> height / 2
-                    LaunchScreenState.HasFiles -> 103.dp
+            Row(
+                modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
+                    .padding(24.dp),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
+                Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
+                    Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                 }
-            }
-            Box(modifier = Modifier.height(boxHeight)) {
-                Row(
-                    modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
-                        .padding(24.dp),
-                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
-                ) {
-                    Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
-                        Text(text = "Open", style = MaterialTheme.typography.labelLarge)
-                    }
-                    if (showPicker) {
-                        FilePicker(true, fileExtensions = listOf("md")) { file ->
-                            if (file != null) {
-                                val path = Path(file.path)
-                                CoroutineScope(Dispatchers.IO).launch {
-                                    launchScreen.addRecentFile(path)
-                                }
-                                backStack.push(NavTarget.MainScreen(path))
+                if (showPicker) {
+                    FilePicker(true, fileExtensions = listOf("md")) { file ->
+                        if (file != null) {
+                            val path = Path(file.path)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                launchScreen.addRecentFile(path)
                             }
-                            showPicker = false
+                            backStack.push(NavTarget.MainScreen(path))
                         }
-                    }
-                    SearchBar(
-                        value = search,
-                        onValueChange = { newText -> search = newText },
-                        modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
-                    )
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(
-                            modifier = Modifier.weight(1f).size(36.dp),
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = null
-                        )
+                        showPicker = false
                     }
                 }
+                SearchBar(
+                    value = search,
+                    onValueChange = { newText -> search = newText },
+                    modifier = Modifier.weight(9f).fillMaxSize().height(50.dp),
+                )
+                IconButton(onClick = {
+
+                }) {
+                    Icon(
+                        modifier = Modifier.weight(1f).size(36.dp),
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null
+                    )
+                }
             }
+
             // Список недавно просмотренных
-            transition.AnimatedVisibility({ it == LaunchScreenState.HasFiles }) {
+            transition.AnimatedVisibility(
+                { it == LaunchScreenState.HasFiles },
+                enter = fadeIn(tween(durationMillis = 1000, delayMillis = 1000))
+            ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         "Last Viewed",
