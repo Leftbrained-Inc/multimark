@@ -25,6 +25,7 @@ import com.darkrockstudios.libraries.mpfilepicker.FilePicker
 import core.configuration.LocalConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.io.files.Path
 import navigation.NavTarget
@@ -46,11 +47,13 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
     var showPicker by remember { mutableStateOf(false) }
     val launchScreen = LocalConfiguration.current.launchScreen
     val files by launchScreen.recentFiles.collectAsState(listOf())
+
     val state by remember(files) {
         derivedStateOf {
             if (files.isEmpty()) LaunchScreenState.NoFiles else LaunchScreenState.HasFiles
         }
     }
+
     val transition = updateTransition(state, label = "transition")
 
     var search by remember { mutableStateOf("") }
@@ -66,9 +69,10 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 transitionSpec = { tween(durationMillis = 1000) },
                 label = "Height for logotitle"
             ) { state ->
-                when (state) {
-                    LaunchScreenState.NoFiles -> height / 2
-                    LaunchScreenState.HasFiles -> 64.dp
+                when {
+                   state == LaunchScreenState.NoFiles && launchScreen.isFirstLoad -> height / 2
+                   state == LaunchScreenState.HasFiles -> 64.dp
+                    else -> 64.dp
                 }
             }
             LogoTitle(
@@ -135,5 +139,9 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             ).background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)).padding(3.dp),
             fontWeight = FontWeight(500),
         )
+        LaunchedEffect(Unit){
+            delay(1000)
+            launchScreen.isFirstLoad = false
+        }
     }
 }
