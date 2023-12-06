@@ -56,9 +56,9 @@ class LaunchScreen {
     private val _recentFiles = MutableStateFlow<List<RecentFile>>(listOf())
 
 
-    val recentFiles = _recentFiles.asStateFlow()
+    internal val recentFiles = _recentFiles.asStateFlow()
 
-    var isFirstLoad by mutableStateOf(true)
+    internal var isFirstLoad by mutableStateOf(true)
 
     init {
         Db
