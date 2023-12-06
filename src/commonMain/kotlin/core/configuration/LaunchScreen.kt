@@ -1,5 +1,8 @@
 package core.configuration
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import core.db.Db
 import core.db.RecentFile
 import core.db.RecentFiles
@@ -53,7 +56,9 @@ class LaunchScreen {
     private val _recentFiles = MutableStateFlow<List<RecentFile>>(listOf())
 
 
-    val recentFiles = _recentFiles.asStateFlow()
+    internal val recentFiles = _recentFiles.asStateFlow()
+
+    internal var isFirstLoad by mutableStateOf(true)
 
     init {
         Db
