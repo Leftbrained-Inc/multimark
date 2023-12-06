@@ -22,9 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.ColorFilter
 import kotlinx.io.files.Path
 import ui.theme.MultimarkAppTheme
+import ui.utils.dp
 
 /**
  * Панель навигации (Navbar)
@@ -37,7 +38,7 @@ import ui.theme.MultimarkAppTheme
 fun NavBar(path: Path, isSaved: Boolean) {
     val pathList = buildList {
         var parent = path
-        while (parent.parent != null){
+        while (parent.parent != null) {
             add(parent.name)
             parent = parent.parent!!
         }
@@ -56,7 +57,7 @@ fun NavBar(path: Path, isSaved: Boolean) {
             LogoTitle(Modifier.size(64.dp), false)
             Row(
                 Modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(16.dp))
                     .fillMaxHeight()
                     .weight(10f).padding(vertical = 8.dp, horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -71,7 +72,7 @@ fun NavBar(path: Path, isSaved: Boolean) {
                 Icon(Icons.Default.Book, null)
                 Text(text = file, style = MaterialTheme.typography.bodyLarge)
 
-                AnimatedVisibility(!isSaved){
+                AnimatedVisibility(!isSaved) {
                     Icon(Icons.Default.Circle, null)
                 }
 
@@ -85,12 +86,15 @@ fun NavBar(path: Path, isSaved: Boolean) {
                 ) {
                     SearchBar(search.value, { search.value = it }, Modifier.weight(4f))
                     Image(
-                        Icons.Default.Settings,
-                        contentDescription = "Settings gear", modifier = Modifier.size(30.dp),
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Settings",
+                        modifier = Modifier.size(30.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
                     )
                     Image(
                         Icons.Default.Palette,
                         contentDescription = "Preview customization palette", modifier = Modifier.size(30.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
                     )
                 }
             }

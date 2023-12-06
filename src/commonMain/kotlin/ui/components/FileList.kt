@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.ColorFilter
 import core.db.RecentFile
 import ui.utils.dp
 
@@ -52,12 +53,17 @@ fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
                         Image(
                             Icons.Outlined.Description,
                             contentDescription = null, modifier = Modifier.size(30.dp),
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.outline)
                         )
-                        Text(text = file.fileName, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = file.fileName, style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.outline
+                        )
                         Text(
                             text = file.dateOfApplication.toString(),
                             modifier = Modifier.padding(top = 8.dp),
-                            style = MaterialTheme.typography.labelSmall
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.outline
                         )
                     }
                 }

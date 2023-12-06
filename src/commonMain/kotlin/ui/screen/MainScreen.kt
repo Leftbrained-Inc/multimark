@@ -2,10 +2,10 @@ package ui.screen
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
@@ -44,7 +44,7 @@ fun MainScreen(path: Path) {
     val isSaved by remember(text, contentSaved, saveNow) {  derivedStateOf {
         text == contentSaved
     }}
-    Surface(color = Color.White) {
+    Surface(color = MaterialTheme.colorScheme.background) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
                 NavBar(path, isSaved)
