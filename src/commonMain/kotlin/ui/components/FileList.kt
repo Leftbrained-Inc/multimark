@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Description
@@ -49,15 +50,20 @@ fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
                         )
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Image(
+                        Icon(
                             Icons.Outlined.Description,
                             contentDescription = null, modifier = Modifier.size(30.dp),
+                            tint = MaterialTheme.colorScheme.outline
                         )
-                        Text(text = file.fileName, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = file.fileName, style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.outline
+                        )
                         Text(
                             text = file.dateOfApplication.toString(),
                             modifier = Modifier.padding(top = 8.dp),
-                            style = MaterialTheme.typography.labelSmall
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.outline
                         )
                     }
                 }

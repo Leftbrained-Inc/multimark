@@ -57,7 +57,9 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
     val transition = updateTransition(state, label = "transition")
 
     var search by remember { mutableStateOf("") }
-    BoxWithConstraints(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp)
+    ) {
         val height by remember(this.maxHeight) {
             derivedStateOf { this.maxHeight }
         }
@@ -70,8 +72,8 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 label = "Height for logotitle"
             ) { state ->
                 when {
-                   state == LaunchScreenState.NoFiles && launchScreen.isFirstLoad -> height / 2
-                   state == LaunchScreenState.HasFiles -> 64.dp
+                    state == LaunchScreenState.NoFiles && launchScreen.isFirstLoad -> height / 2
+                    state == LaunchScreenState.HasFiles -> 64.dp
                     else -> 64.dp
                 }
             }
@@ -136,10 +138,10 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             "Crafted with ❤\uFE0F in Leftbrained",
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp).clip(
                 CircleShape
-            ).background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)).padding(3.dp),
+            ).background(MaterialTheme.colorScheme.surfaceVariant).padding(6.dp),
             fontWeight = FontWeight(500),
         )
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             delay(1000)
             launchScreen.isFirstLoad = false
         }
