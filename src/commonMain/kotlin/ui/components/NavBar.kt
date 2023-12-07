@@ -2,7 +2,6 @@ package ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.ColorFilter
 import kotlinx.io.files.Path
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
@@ -85,16 +83,16 @@ fun NavBar(path: Path, isSaved: Boolean) {
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     SearchBar(search.value, { search.value = it }, Modifier.weight(4f))
-                    Image(
+                    Icon(
                         imageVector = Icons.Default.Settings,
                         contentDescription = "Settings",
                         modifier = Modifier.size(30.dp),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer
                     )
-                    Image(
+                    Icon(
                         Icons.Default.Palette,
                         contentDescription = "Preview customization palette", modifier = Modifier.size(30.dp),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
+                        tint = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 }
             }

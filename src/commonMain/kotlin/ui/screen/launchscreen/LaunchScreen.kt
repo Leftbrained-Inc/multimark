@@ -138,7 +138,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             "Crafted with ❤\uFE0F in Leftbrained",
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp).clip(
                 CircleShape
-            ).padding(3.dp),
+            ).background(MaterialTheme.colorScheme.surfaceVariant).padding(6.dp),
             fontWeight = FontWeight(500),
         )
         LaunchedEffect(Unit) {
