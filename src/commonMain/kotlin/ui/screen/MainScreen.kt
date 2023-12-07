@@ -18,6 +18,7 @@ import kotlinx.io.readString
 import kotlinx.io.writeString
 import ui.components.MarkdownField
 import ui.components.NavBar
+import ui.components.TabRow
 
 /**
  * Экран редактирования Markdown-файла
@@ -41,17 +42,20 @@ fun MainScreen(path: Path) {
     }
 
     var text by remember { mutableStateOf(contentSaved) }
-    val isSaved by remember(text, contentSaved, saveNow) {  derivedStateOf {
-        text == contentSaved
-    }}
+    val isSaved by remember(text, contentSaved, saveNow) {
+        derivedStateOf {
+            text == contentSaved
+        }
+    }
     Surface(color = MaterialTheme.colorScheme.background) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
-                NavBar(path, isSaved)
+                NavBar()
             }
             Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 MarkdownField(
-                    { text = it
+                    {
+                        text = it
                     }, text, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
                         when {
                             (it.isCtrlPressed && it.key == Key.S) -> {
@@ -63,6 +67,7 @@ fun MainScreen(path: Path) {
                                 saveNow = false
                                 true
                             }
+
                             else -> false
                         }
                     }
