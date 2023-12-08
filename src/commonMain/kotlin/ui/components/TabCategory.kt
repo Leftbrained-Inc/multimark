@@ -7,26 +7,27 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
-import kotlinx.io.buffered
 import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
-import kotlinx.io.readString
-import kotlinx.io.writeString
+import org.koin.compose.koinInject
+import org.koin.core.parameter.parametersOf
+import viewmodel.FileSaveViewModel
 
-sealed class TabCategory(val name: String, val screen: @Composable () -> Unit = { }) {
+sealed class TabCategory(val name: String, val screen: @Composable (TabCategory) -> Unit = { }) {
+    var isSaved by mutableStateOf(true)
 
     data class Edit(val path: Path) : TabCategory(path.name, {
-        var text by remember { mutableStateOf(SystemFileSystem.source(path).buffered().readString()) }
+
+        val viewModel: FileSaveViewModel = koinInject<FileSaveViewModel> { parametersOf(path) }
+        LaunchedEffect(viewModel.isSaved) {
+            (it as Edit).isSaved = viewModel.isSaved
+        }
         MarkdownField(
             {
-                text = it
-            }, text, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
+                viewModel.text = it
+            }, viewModel.text, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
                 when {
                     (it.isCtrlPressed && it.key == Key.S) -> {
-                        val sink = SystemFileSystem.sink(path).buffered()
-
-                        sink.writeString(text)
-                        sink.close()
+                        viewModel.saveFile()
                         true
                     }
 

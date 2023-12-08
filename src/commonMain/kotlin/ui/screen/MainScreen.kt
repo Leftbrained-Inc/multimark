@@ -5,23 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.dp
-import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
-import ui.components.MarkdownField
-import kotlinx.io.files.SystemFileSystem
-import kotlinx.io.readString
-import org.koin.compose.koinInject
 import ui.components.NavBar
-import viewmodel.FileSaveViewModel
 import viewmodel.TabViewmodel
 
 /**
@@ -32,7 +25,8 @@ import viewmodel.TabViewmodel
 @Composable
 fun MainScreen(path: Path) {
 
-    val viewModel: FileSaveViewModel = koinInject<FileSaveViewModel> { parametersOf(path) }
+    val tabViewmodel: TabViewmodel = koinInject()
+    val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
 
 
     Surface(color = Color.White) {
@@ -41,7 +35,8 @@ fun MainScreen(path: Path) {
                 NavBar()
             }
             Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                tabViewmodel.tabs[selectedTabIndex.value].screen()
+                val tab = tabViewmodel.tabs[selectedTabIndex]
+                tab.screen(tab)
             }
         }
     }

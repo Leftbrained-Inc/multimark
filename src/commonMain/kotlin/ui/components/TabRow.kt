@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.HorizontalScrollbar
@@ -9,11 +10,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +43,7 @@ fun TabRow(modifier: Modifier) {
                 Spacer(modifier = Modifier.width(24.dp))
             }
             items(tabViewmodel.tabs.size) {
+                val tab = tabViewmodel.tabs[it]
                 val coroutineScope = rememberCoroutineScope()
                 InputChip(
                     selected = it == selectedTabIndex,
@@ -51,16 +52,26 @@ fun TabRow(modifier: Modifier) {
                             tabViewmodel.select(it)
                         }
                     },
-                    label = { Text(tabViewmodel.tabs[it].name, textAlign = TextAlign.Center) },
+                    label = { Text(tab.name, textAlign = TextAlign.Center) },
                     colors = InputChipDefaults.inputChipColors(
                         containerColor = MaterialTheme.colorScheme.onPrimary,
                         labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         selectedContainerColor = MaterialTheme.colorScheme.primary,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                        trailingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        selectedTrailingIconColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     border = InputChipDefaults.inputChipBorder(
                         borderWidth = 0.dp, borderColor = Color.Transparent, selectedBorderColor = Color.Transparent
                     ),
+                    trailingIcon = {
+                        AnimatedVisibility(!tab.isSaved) {
+                            Icon(
+                                Icons.Default.Circle,
+                                null
+                            )
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth().widthIn(max = 200.dp).animateItemPlacement()
                 )
             }

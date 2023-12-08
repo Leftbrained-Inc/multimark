@@ -1,12 +1,12 @@
 package di
 
 import org.koin.dsl.module
-import viewmodel.TabViewmodel
 import viewmodel.FileSaveViewModel
+import viewmodel.TabViewmodel
 
 fun appModule() = module {
     single { TabViewmodel() }
-    factory {params ->
+    factory { params ->
         FileSaveViewModel(params.get())
     }
 }

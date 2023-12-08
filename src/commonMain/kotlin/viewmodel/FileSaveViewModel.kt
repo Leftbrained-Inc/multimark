@@ -1,6 +1,9 @@
 package viewmodel
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -20,7 +23,9 @@ class FileSaveViewModel(val path: Path) {
     private var contentText by mutableStateOf("")
 
     var text by mutableStateOf("")
-    val isSaved by derivedStateOf { contentText == text }
+    val isSaved by derivedStateOf {
+        contentText == text
+    }
 
     /**
      * Чтение файла
