@@ -26,8 +26,6 @@ fun MainScreen(path: Path) {
     val viewModel: FileSaveViewModel = koinInject<FileSaveViewModel> { parametersOf(path) }
 
 
-
-
     Surface(color = Color.White) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
