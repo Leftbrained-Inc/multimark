@@ -11,10 +11,7 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import kotlinx.io.files.Path
+import org.koin.compose.koinInject
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
+import viewmodel.TabViewmodel
 
 @Composable
 fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
@@ -69,6 +68,7 @@ fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
  */
 @Composable
 fun NavBar() {
+    val tabViewmodel: TabViewmodel = koinInject()
 
     val search = remember { mutableStateOf("") }
 
@@ -80,7 +80,15 @@ fun NavBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             LogoTitle(Modifier.size(64.dp), false)
-            TabRow(List(10) { "Tab $it" }, modifier = Modifier.weight(10f))
+            TabRow(modifier = Modifier.weight(10f))
+            Button(
+                colors = ButtonDefaults.outlinedButtonColors(),
+                onClick = {
+                    tabViewmodel.tabs.add(TabCategory.Empty)
+                }
+            ) {
+                Text("+")
+            }
             AnimatedVisibility(width > 900.dp, Modifier.weight(6f)) {
                 Row(
                     modifier = Modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp)).fillMaxHeight()

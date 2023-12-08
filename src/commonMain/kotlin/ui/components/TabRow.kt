@@ -10,24 +10,25 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
-
-enum class Test {
-    One
-}
+import viewmodel.TabViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun TabRow(tabs: List<String>, modifier: Modifier) {
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
+fun TabRow(modifier: Modifier) {
+    val tabViewmodel: TabViewmodel = koinInject()
+    val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
     val state = rememberLazyListState()
     Box(
         modifier.height(80.dp).background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
@@ -41,11 +42,16 @@ fun TabRow(tabs: List<String>, modifier: Modifier) {
             item {
                 Spacer(modifier = Modifier.width(24.dp))
             }
-            items(tabs.size) {
+            items(tabViewmodel.tabs.size) {
+                val coroutineScope = rememberCoroutineScope()
                 InputChip(
-                    selected = it == selectedIndex,
-                    onClick = { selectedIndex = it },
-                    label = { Text(tabs[it], textAlign = TextAlign.Center) },
+                    selected = it == selectedTabIndex,
+                    onClick = {
+                        coroutineScope.launch {
+                            tabViewmodel.select(it)
+                        }
+                    },
+                    label = { Text(tabViewmodel.tabs[it].name, textAlign = TextAlign.Center) },
                     colors = InputChipDefaults.inputChipColors(
                         containerColor = MaterialTheme.colorScheme.onPrimary,
                         labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -72,7 +78,7 @@ fun TabRow(tabs: List<String>, modifier: Modifier) {
 fun TabRowPreview() {
     MultimarkAppTheme {
         Surface {
-            TabRow(List(3) { "Tab $it" }, Modifier)
+            TabRow(Modifier.fillMaxWidth())
         }
     }
 }
