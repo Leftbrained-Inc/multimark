@@ -5,6 +5,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ui.components.TabCategory
 
+/**
+ * viewModel вкладок
+ * @author Сергей Рейнн (bulkabuka)
+ * @param tabs Вкладки
+ */
+
 class TabViewmodel {
     val tabs = mutableStateListOf<TabCategory>()
     private var _selectedTabIndex = MutableStateFlow(0)

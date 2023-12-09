@@ -12,18 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.io.files.Path
 import org.koin.compose.koinInject
 import ui.components.NavBar
 import viewmodel.TabViewmodel
 
 /**
  * Экран редактирования Markdown-файла
- * @param path Путь к файлу
  * @author Сергей Рейнн (bulkabuka)
  */
 @Composable
-fun MainScreen(path: Path) {
+fun MainScreen() {
 
     val tabViewmodel: TabViewmodel = koinInject()
     val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
@@ -45,5 +43,5 @@ fun MainScreen(path: Path) {
 @Preview
 @Composable
 fun MainScreenPPreview() {
-    MainScreen(Path(""))
+    MainScreen()
 }

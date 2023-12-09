@@ -97,7 +97,7 @@ kotlin {
 
                 implementation(libs.kotlinx.coroutines.core)
 
-                api("io.github.kevinnzou:compose-webview-multiplatform:1.7.4")
+                api(libs.webview)
 
                 implementation(libs.logger)
 

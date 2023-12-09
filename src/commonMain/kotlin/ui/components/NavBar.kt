@@ -24,6 +24,15 @@ import ui.theme.MultimarkAppTheme
 import ui.utils.dp
 import viewmodel.TabViewmodel
 
+
+/**
+ * Путь файла (FilePath)
+ * @author Марат Белоцерковский (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Василий Панков (pank-su)
+ * @param pathList список путей
+ * @param parent Отцовский путь
+ */
 @Composable
 fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
     val pathList = buildList {
@@ -63,8 +72,7 @@ fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
  * Панель навигации (Navbar)
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @param path Путь к файлу
- * @param isSaved Сохранен ли файл
+ * @author Василий Панков (pank-su)
  */
 @Composable
 fun NavBar() {

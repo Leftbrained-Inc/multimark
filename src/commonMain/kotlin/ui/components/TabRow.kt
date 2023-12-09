@@ -24,6 +24,16 @@ import ui.theme.MultimarkAppTheme
 import ui.utils.dp
 import viewmodel.TabViewmodel
 
+/**
+ * Путь файла (FilePath)
+ * @author Алексей Челноков (shizik-tech)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Василий Панков (pank-su)
+ * @param tabViewmodel viewModel класса
+ * @param selectedTabIndex выбранный индекс вкладки
+ * @param state статус
+ * @param tab вкладка
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TabRow(modifier: Modifier) {
