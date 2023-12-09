@@ -11,10 +11,7 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,18 +19,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import kotlinx.io.files.Path
+import org.koin.compose.koinInject
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
+import viewmodel.TabViewmodel
+
 
 /**
- * Панель навигации (Navbar)
+ * Путь файла (FilePath)
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
- * @param path Путь к файлу
- * @param isSaved Сохранен ли файл
+ * @author Василий Панков (pank-su)
+ * @param pathList список путей
+ * @param parent Отцовский путь
  */
 @Composable
-fun NavBar(path: Path, isSaved: Boolean) {
+fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
     val pathList = buildList {
         var parent = path
         while (parent.parent != null) {
@@ -43,6 +44,40 @@ fun NavBar(path: Path, isSaved: Boolean) {
         reverse()
     }
     val file = pathList.last()
+    Row(
+        modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(16.dp))
+            .fillMaxHeight() //.weight(10f)
+            .padding(vertical = 8.dp, horizontal = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Icon(Icons.Outlined.Folder, null)
+        Text(
+            text = pathList.subList(0, pathList.lastIndex).joinToString("  |  "),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(text = "  |  ", style = MaterialTheme.typography.bodyLarge)
+        Icon(Icons.Default.Book, null)
+        Text(text = file, style = MaterialTheme.typography.bodyLarge)
+
+        AnimatedVisibility(!isSaved) {
+            Icon(Icons.Default.Circle, null)
+        }
+
+    }
+}
+
+/**
+ * Панель навигации (Navbar)
+ * @author Марат Белоцерковский (MIAPROT)
+ * @author Сергей Рейнн (bulkabuka)
+ * @author Василий Панков (pank-su)
+ */
+@Composable
+fun NavBar() {
+    val tabViewmodel: TabViewmodel = koinInject()
+
     val search = remember { mutableStateOf("") }
 
     BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -53,31 +88,18 @@ fun NavBar(path: Path, isSaved: Boolean) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             LogoTitle(Modifier.size(64.dp), false)
-            Row(
-                Modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(16.dp))
-                    .fillMaxHeight()
-                    .weight(10f).padding(vertical = 8.dp, horizontal = 24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Icon(Icons.Outlined.Folder, null)
-                Text(
-                    text = pathList.subList(0, pathList.lastIndex).joinToString("  |  "),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(text = "  |  ", style = MaterialTheme.typography.bodyLarge)
-                Icon(Icons.Default.Book, null)
-                Text(text = file, style = MaterialTheme.typography.bodyLarge)
-
-                AnimatedVisibility(!isSaved) {
-                    Icon(Icons.Default.Circle, null)
+            TabRow(modifier = Modifier.weight(10f))
+            Button(
+                colors = ButtonDefaults.outlinedButtonColors(),
+                onClick = {
+                    tabViewmodel.tabs.add(TabCategory.Empty)
                 }
-
+            ) {
+                Text("+")
             }
-            if (width > 900.dp) {
+            AnimatedVisibility(width > 900.dp, Modifier.weight(6f)) {
                 Row(
-                    modifier = Modifier.weight(6f).shadow(4.dp, shape = RoundedCornerShape(16.dp)).fillMaxHeight()
+                    modifier = Modifier.shadow(4.dp, shape = RoundedCornerShape(16.dp)).fillMaxHeight()
                         .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
                         .padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -106,7 +128,7 @@ fun NavBar(path: Path, isSaved: Boolean) {
 fun PreviewNavBar() {
     MultimarkAppTheme {
         Surface(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-            NavBar(Path(""), false)
+            NavBar()
         }
     }
 }

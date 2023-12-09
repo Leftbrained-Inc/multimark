@@ -29,10 +29,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.io.files.Path
 import navigation.NavTarget
+import org.koin.compose.koinInject
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
+import ui.components.TabCategory
 import ui.utils.dp
+import viewmodel.TabViewmodel
 
 /**
  * Стартовый экран
@@ -92,12 +95,14 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                 }
                 if (showPicker) {
+                    val tabViewmodel: TabViewmodel = koinInject()
                     FilePicker(true, fileExtensions = listOf("md")) { file ->
                         if (file != null) {
                             val path = Path(file.path)
                             CoroutineScope(Dispatchers.IO).launch {
                                 launchScreen.addRecentFile(path)
                             }
+                            tabViewmodel.tabs.add(TabCategory.Edit(path))
                             backStack.push(NavTarget.MainScreen(path))
                         }
                         showPicker = false
