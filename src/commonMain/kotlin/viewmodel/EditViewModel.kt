@@ -5,11 +5,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
 import kotlinx.io.writeString
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * ViewModel функции сохронения изменений
@@ -27,6 +32,7 @@ class EditViewModel(val path: Path) {
         contentText == textFieldValue.text
     }
     var textFieldValue by mutableStateOf(TextFieldValue(""))
+
     /**
      * Чтение файла
      */
@@ -35,6 +41,7 @@ class EditViewModel(val path: Path) {
         textFieldValue = TextFieldValue(buffer.readString())
         contentText = textFieldValue.text
         buffer.close()
+        reserveFile()
     }
 
     /**
@@ -45,6 +52,18 @@ class EditViewModel(val path: Path) {
         sink.writeString(textFieldValue.text)
         sink.close()
         contentText = textFieldValue.text
+    }
+
+    fun reserveFile() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val reserve = Path(path.parent ?: Path(""), "." + path.name)
+            while (true) {
+                delay(1.minutes)
+                val sink = SystemFileSystem.sink(reserve).buffered()
+                sink.writeString(textFieldValue.text)
+                sink.close()
+            }
+        }
     }
 
 }
