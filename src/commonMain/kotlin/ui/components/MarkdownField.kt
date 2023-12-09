@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.TextFieldValue
 
 /**
  * Поле ввода Markdown-текста
@@ -19,8 +20,8 @@ import androidx.compose.ui.text.TextStyle
  */
 @Composable
 fun MarkdownField(
-    onValueChange: (String) -> Unit,
-    text: String,
+    onValueChange: (TextFieldValue) -> Unit,
+    text: TextFieldValue,
     textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
     modifier: Modifier
 ) {
@@ -40,7 +41,7 @@ fun MarkdownField(
         modifier = modifier,
         placeholder = {
             Text(
-                text = text,
+                text = "Введите ваш текст...",
                 style = MaterialTheme.typography.bodyMedium
             )
         }

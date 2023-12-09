@@ -8,34 +8,31 @@ import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import kotlinx.io.files.Path
-import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
-import viewmodel.FileSaveViewModel
+import viewmodel.EditViewModel
 
-sealed class TabCategory(val name: String, val screen: @Composable (TabCategory) -> Unit = { }) {
-    var isSaved by mutableStateOf(true)
+sealed class TabCategory(val name: String, var screen: @Composable (TabCategory) -> Unit = { }) {
 
-    data class Edit(val path: Path) : TabCategory(path.name, {
-
-        val viewModel: FileSaveViewModel = koinInject<FileSaveViewModel> { parametersOf(path) }
-        LaunchedEffect(viewModel.isSaved) {
-            (it as Edit).isSaved = viewModel.isSaved
-        }
-        MarkdownField(
-            {
-                viewModel.text = it
-            }, viewModel.text, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
-                when {
-                    (it.isCtrlPressed && it.key == Key.S) -> {
-                        viewModel.saveFile()
-                        true
-                    }
-
-                    else -> false
+    data class Edit(val path: Path, private val viewModel: EditViewModel = EditViewModel(path)) :
+        TabCategory(path.name){
+            val isSaved by derivedStateOf { viewModel.isSaved }
+            init {
+                screen = {
+                    MarkdownField(
+                        {
+                            viewModel.textFieldValue = it
+                        }, viewModel.textFieldValue, modifier = Modifier.fillMaxSize().onPreviewKeyEvent {
+                            when {
+                                (it.isCtrlPressed && it.key == Key.S) -> {
+                                    viewModel.saveFile()
+                                    true
+                                }
+                                else -> false
+                            }
+                        }
+                    )
                 }
             }
-        )
-    })
+        }
 
     data class Tree(val path: Path) : TabCategory("Tree")
     data class View(val path: Path) : TabCategory("View")

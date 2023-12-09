@@ -4,6 +4,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.TextFieldValue
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -18,22 +19,21 @@ import kotlinx.io.writeString
  * @author Алексей Челноков (shizik-tech)
  */
 
-class FileSaveViewModel(val path: Path) {
+class EditViewModel(val path: Path) {
 
     private var contentText by mutableStateOf("")
 
-    var text by mutableStateOf("")
     val isSaved by derivedStateOf {
-        contentText == text
+        contentText == textFieldValue.text
     }
-
+    var textFieldValue by mutableStateOf(TextFieldValue(""))
     /**
      * Чтение файла
      */
     init {
         val buffer = SystemFileSystem.source(path).buffered()
-        text = buffer.readString()
-        contentText = text
+        textFieldValue = TextFieldValue(buffer.readString())
+        contentText = textFieldValue.text
         buffer.close()
     }
 
@@ -42,10 +42,9 @@ class FileSaveViewModel(val path: Path) {
      * */
     fun saveFile() {
         val sink = SystemFileSystem.sink(path).buffered()
-
-        sink.writeString(text)
+        sink.writeString(textFieldValue.text)
         sink.close()
-        contentText = text
+        contentText = textFieldValue.text
     }
 
 }

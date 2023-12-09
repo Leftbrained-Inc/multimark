@@ -65,7 +65,7 @@ fun TabRow(modifier: Modifier) {
                         borderWidth = 0.dp, borderColor = Color.Transparent, selectedBorderColor = Color.Transparent
                     ),
                     trailingIcon = {
-                        AnimatedVisibility(!tab.isSaved) {
+                        AnimatedVisibility(tab is TabCategory.Edit && !tab.isSaved) {
                             Icon(
                                 Icons.Default.Circle,
                                 null
