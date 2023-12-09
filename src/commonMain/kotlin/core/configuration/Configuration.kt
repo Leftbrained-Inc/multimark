@@ -1,10 +1,8 @@
 package core.configuration
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -12,7 +10,6 @@ import core.dsl.ConfigurationTagMaker
 import di.appModule
 import org.koin.compose.KoinApplication
 import ui.theme.MultimarkAppTheme
-import ui.utils.Scale
 
 
 /**
@@ -75,14 +72,8 @@ abstract class Configuration {
 
             KoinApplication(application = { modules(appModule()) }) {
                 nativeContent { content ->
-                    LaunchedEffect(config.scale) {
-                        Scale.scale = config.scale
-                        Scale.fontScale = config.fontScale
-                    }
-                    AnimatedContent(Scale.scale) {
-                        config.theme {
-                            content()
-                        }
+                    config.theme {
+                        content()
                     }
                 }
             }
