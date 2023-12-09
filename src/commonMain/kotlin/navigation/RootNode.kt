@@ -75,7 +75,7 @@ class RootNode(
             }
 
             is NavTarget.MainScreen -> node(buildContext) {
-                MainScreen(interactionTarget.file)
+                MainScreen()
             }
         }
 }
