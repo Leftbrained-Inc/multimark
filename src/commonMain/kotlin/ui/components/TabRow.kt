@@ -25,12 +25,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
+import core.configuration.LocalConfiguration
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
 import viewmodel.TabViewmodel
+import viewmodel.onDragEnd
 
 /**
  * Путь файла (FilePath)
@@ -59,35 +62,43 @@ fun TabRow(modifier: Modifier) {
             items(tabViewmodel.tabs.size) { tabId ->
                 val tab = tabViewmodel.tabs[tabId]
                 val coroutineScope = rememberCoroutineScope()
-                Tab(
-                    tab,
-                    tabId == selectedTabIndex,
-                    onClick = {
-                        coroutineScope.launch {
-                            tabViewmodel.select(tabId)
-                        }
-                    },
-                    Modifier.fillMaxWidth().widthIn(max = 200.dp).animateItemPlacement().pointerInput(Unit) {
-                        detectDragGestures(
-                            onDragStart = {
-                                tab.dragTabState.isDrag = true
-                            },
-                            onDragEnd = {
-                                tab.dragTabState.isDrag = false
-                                tab.dragTabState.offset = Offset.Zero
-                            },
-                            onDragCancel = {
-                                tab.dragTabState.isDrag = false
-                                tab.dragTabState.offset = Offset.Zero
-                            }) { change, dragAmount ->
-                            change.consume()
-                            tab.dragTabState.offset += dragAmount
-                        }
-                    }.onGloballyPositioned {
-                        tab.dragTabState.position = Pair(it.positionInWindow().x, it.positionInWindow().y)
-                        tab.size = it.size
+                val configuration = LocalConfiguration.current
+                val density = LocalDensity.current
+                Box (modifier = Modifier.fillMaxWidth().widthIn(max = 200.dp).pointerInput(Unit) {
+                    detectDragGestures(
+                        onDragStart = {
+                            tab.dragTabState.isDrag = true
+                        },
+                        onDragEnd = {
+                            tab.dragTabState.isDrag = false
+                            tab.dragTabState.offset = Offset.Zero
+                            tabViewmodel.onDragEnd(tab, configuration, density)
+                        },
+                        onDragCancel = {
+                            tab.dragTabState.isDrag = false
+                            tab.dragTabState.offset = Offset.Zero
+                        }) { change, dragAmount ->
+                        change.consume()
+                        tab.dragTabState.offset += dragAmount
                     }
-                )
+                }){
+                    AnimatedVisibility(!tab.dragTabState.isDrag, modifier = Modifier.animateItemPlacement()) {
+                        Tab(
+                            tab,
+                            tabId == selectedTabIndex,
+                            onClick = {
+                                coroutineScope.launch {
+                                    tabViewmodel.select(tabId)
+                                }
+                            },
+                            Modifier.onGloballyPositioned {
+                                if (tab.dragTabState.isDrag) return@onGloballyPositioned
+                                tab.dragTabState.position = Pair(it.positionInWindow().x, it.positionInWindow().y)
+                                tab.size = it.size
+                            }
+                        )
+                    }
+                }
             }
         }
         HorizontalScrollbar(

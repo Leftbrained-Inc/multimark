@@ -10,6 +10,7 @@ import androidx.compose.ui.window.WindowState
 import core.configuration.Configuration
 import core.dsl.ConfigurationTagMaker
 import core.dsl.configuration.ConfigurationBuilder
+import ui.components.TabCategory
 
 private var window = Window()
 
@@ -35,6 +36,33 @@ var Configuration.window: Window
     set(value) {
         core.extensions.window = value
     }
+
+/**
+ * Утилита которая проверяет, находится ли что-то за пределами окна
+ *
+ * @author Василий Панков (pank-su)
+ */
+fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean {
+    val windowState = state
+
+    val xPx = with(density) { windowState.position.x.toPx() }
+    val yPx = with(density) { windowState.position.y.toPx() }
+    val widthPx = with(density) { windowState.size.width.toPx() + xPx }
+    val heightPx = with(density) { windowState.size.height.toPx() + yPx }
+
+    println("$position $xPx $yPx $widthPx $heightPx ")
+
+    return position.first + xPx < xPx || position.first + xPx > widthPx || position.second + yPx > heightPx || position.second + yPx < yPx
+}
+
+/**
+ * Действие если таб вне экрана
+ *
+ * @author Василий Панков (pank-su)
+ */
+fun TabCategory.onOutWindow(){
+    TODO("ТАБ ВНЕ ОКНА")
+}
 
 /**
  * Установка настроек окна (иконки и названия)

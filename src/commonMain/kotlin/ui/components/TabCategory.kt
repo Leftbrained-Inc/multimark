@@ -12,6 +12,7 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.IntSize
 import kotlinx.io.files.Path
 import viewmodel.EditViewModel
+import kotlin.random.Random
 
 /**
  * Категории вкладок
@@ -60,7 +61,7 @@ sealed class TabCategory(val name: String, var screen: @Composable (TabCategory)
     /**
      * Пустая вкладка для тестирования
      */
-    class Empty : TabCategory("Empty")
+    class Empty : TabCategory("Empty ${Random.nextInt()}")
 
 
     val dragTabState: DragTabState = DragTabState()
