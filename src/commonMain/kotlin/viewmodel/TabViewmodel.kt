@@ -8,7 +8,7 @@ import ui.components.TabCategory
 /**
  * viewModel вкладок
  * @author Сергей Рейнн (bulkabuka)
- * @param tabs Вкладки
+ * @property tabs Вкладки
  */
 
 class TabViewmodel {

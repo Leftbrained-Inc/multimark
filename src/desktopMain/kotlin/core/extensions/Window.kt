@@ -4,6 +4,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.WindowState
 import core.configuration.Configuration
 import core.dsl.ConfigurationTagMaker
 import core.dsl.configuration.ConfigurationBuilder
@@ -19,7 +22,8 @@ private var window = Window()
 @ConfigurationTagMaker
 data class Window(
     var icon: Painter = useResource("logo.svg") { loadSvgPainter(it, Density(100f)) },
-    var title: String = "Multimark"
+    var title: String = "Multimark",
+    val state: WindowState = WindowState(size = DpSize(800.dp, 658.dp))
 )
 
 /**
