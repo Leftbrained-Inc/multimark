@@ -60,7 +60,7 @@ sealed class TabCategory(val name: String, var screen: @Composable (TabCategory)
     /**
      * Пустая вкладка для тестирования
      */
-    data object Empty : TabCategory("Empty")
+    class Empty : TabCategory("Empty")
 
 
     val dragTabState: DragTabState = DragTabState()

@@ -92,7 +92,7 @@ fun NavBar() {
             Button(
                 colors = ButtonDefaults.outlinedButtonColors(),
                 onClick = {
-                    tabViewmodel.tabs.add(TabCategory.Empty)
+                    tabViewmodel.tabs.add(TabCategory.Empty())
                 }
             ) {
                 Text("+")
