@@ -70,9 +70,9 @@ fun TabRow(modifier: Modifier) {
                             tab.dragTabState.isDrag = true
                         },
                         onDragEnd = {
+                            tabViewmodel.onDragEnd(tab, configuration, density)
                             tab.dragTabState.isDrag = false
                             tab.dragTabState.offset = Offset.Zero
-                            tabViewmodel.onDragEnd(tab, configuration, density)
                         },
                         onDragCancel = {
                             tab.dragTabState.isDrag = false

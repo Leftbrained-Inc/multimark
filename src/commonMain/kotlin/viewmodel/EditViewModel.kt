@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.minutes
 
 /**
  * ViewModel функции сохронения изменений
- * @property text переменная в которую заносится  текст
+ * @property textFieldValue переменная в которую заносится текст
  * @property contentText переменная в которую заносится изменённый текст
  * @property isSaved переменная проверки на совподение сохронённого текста
  * @author Алексей Челноков (shizik-tech)

@@ -18,6 +18,7 @@ actual fun TabViewmodel.onDragEnd(
         tab.onOutWindow()
         return
     }
+    println(dragTabState.offset)
     if (dragTabState.offset.y < this.minimumOffsetToMoveOutNav.y){
         this.calculateNewPosition(tab)
         return
