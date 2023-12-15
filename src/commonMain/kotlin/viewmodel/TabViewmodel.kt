@@ -28,11 +28,15 @@ class TabViewmodel {
         _selectedTabIndex.emit(tabIndex)
     }
 
-    fun calculateNewPosition(tab: TabCategory) {
-        TODO("РАСЧИТАТЬ НОВОЕ ПОЛОЖЕНИЕ ТАБА")
+    /**
+     * Рассчитывает новое положение вкладки.
+     * @param tab Вкладка, для которой рассчитывается новое положение.
+     * @param currentPosition Текущее положение вкладки.
+     * @param delta Величина перемещения вкладки.
+     */
+    fun calculateNewPosition(tab: TabCategory, currentPosition: Offset, delta: Offset) {
+        val newPosition = Offset(currentPosition.x + delta.x, currentPosition.y + delta.y)
     }
-
-
 }
 
 expect fun TabViewmodel.onDragEnd(tab: TabCategory, configuration: Configuration, density: Density)
