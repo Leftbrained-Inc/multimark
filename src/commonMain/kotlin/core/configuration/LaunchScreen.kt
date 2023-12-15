@@ -20,24 +20,21 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 sealed class LaunchScreenMode {
     data object Default : LaunchScreenMode()
-    class Scratch : LaunchScreenMode()
+    data object Scratch : LaunchScreenMode()
 }
 
 
 /**
  * Начальный экран
+ * @property mode Режим начального экрана
+ * - [LaunchScreenMode.Default] - Обычный стартовый экран с возможностью открыть файл и посмотреть последние открытые
+ * - TODO [LaunchScreenMode.Scratch] - Режим заметок, открывается пустое поле для редактирования, которое можно редактрировать
  *
- * @property mode режим начального экрана
- * - [LaunchScreenMode.Default] - обычный стартовый экран с возможностью открыть файл и посмотреть последние открытые
- * - TODO [LaunchScreenMode.Scratch] - режим заметок, открывается пустое поле для редактирования, которое можно редактрировать
- *
- * @property filesMode режим просмотра файлов в обычном режиме
- * - [FilesMode.Both] - закреплённые и недавние
+ * @property filesMode Режим просмотра файлов в обычном режиме
+ * - [FilesMode.Both] - Закреплённые и недавние
  * - [FilesMode.Pinned] - Только закреплённые
  * - [FilesMode.Recent] - Только последние файла
- *
- *
- * @author pank-su (Василий Панков)
+ * @author Василий Панков (pank-su)
  */
 class LaunchScreen {
     var filesMode = FilesMode.Both
@@ -78,7 +75,6 @@ class LaunchScreen {
 
     /**
      * Добавление недавнего файла
-     *
      * @param path путь к файлу
      */
     suspend fun addRecentFile(path: Path) {

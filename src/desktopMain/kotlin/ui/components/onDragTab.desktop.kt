@@ -21,16 +21,22 @@ import core.configuration.LocalConfiguration
 import core.extensions.window
 import ui.utils.dp
 
+/**
+ * Функция для отображения вкладки во время перетаскивания
+ * @param draggedTab Перетаскиваемая вкладка
+ * @see TabCategory
+ * @author Василий Панков (pank-su)
+ */
 @Composable
 actual fun onDragTab(draggedTab: TabCategory) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
     val defaultWindowPosition = WindowPosition(configuration.window.state.position.x +
-            with(density) { draggedTab.dragTabState.position.first.toDp() - 225.dp} ,
+            with(density) { draggedTab.dragTabState.position.first.toDp() - 225.dp },
         configuration.window.state.position.y + with(density) { draggedTab.dragTabState.position.second.toDp() })
     val windowState = rememberWindowState(
         WindowPlacement.Floating,
-        size =  DpSize(height = 450.dp, width = 500.dp),
+        size = DpSize(height = 450.dp, width = 500.dp),
         position = defaultWindowPosition
     )
     LaunchedEffect(draggedTab.dragTabState.offset) {
@@ -55,7 +61,7 @@ actual fun onDragTab(draggedTab: TabCategory) {
             Spacer(Modifier.height(12.dp))
             Box(modifier = Modifier.clip(RoundedCornerShape(12.dp)).graphicsLayer {
                 alpha = 0.8f
-            }.background(MaterialTheme.colorScheme.background).fillMaxWidth().height(400.dp)){
+            }.background(MaterialTheme.colorScheme.background).fillMaxWidth().height(400.dp)) {
                 draggedTab.screen(draggedTab)
             }
         }

@@ -36,12 +36,13 @@ import viewmodel.TabViewmodel
 import viewmodel.onDragEnd
 
 /**
- * Путь файла (FilePath)
+ * Строка с вкладками для переключения между экранами редактора
  * @author Алексей Челноков (shizik-tech)
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
+ * @param modifier Modifier
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabRow(modifier: Modifier) {
     val tabViewmodel: TabViewmodel = koinInject()

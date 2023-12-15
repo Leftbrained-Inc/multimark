@@ -18,14 +18,14 @@ import kotlin.random.Random
  * Категории вкладок
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
- * @param name название вкладки
- * @param screen открытый экран
+ * @param name Название вкладки
+ * @param screen Открытый экран
  * */
 sealed class TabCategory(val name: String, var screen: @Composable (TabCategory) -> Unit = { }) {
     /**
      * Вкладка редактирования файла
-     * @param path путь файла
-     * @param viewModel viemodel класса редактора
+     * @param path Путь к файлу
+     * @param viewModel ViewModel класса редактора
      * */
     data class Edit(val path: Path, private val viewModel: EditViewModel = EditViewModel(path)) :
         TabCategory(path.name) {
