@@ -26,12 +26,13 @@ import viewmodel.TabViewmodel
 
 
 /**
- * Путь файла (FilePath)
+ * Путь к файлу (FilePath)
  * @author Марат Белоцерковский (MIAPROT)
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
- * @param pathList список путей
- * @param parent Отцовский путь
+ * @param path путь к файлу
+ * @param isSaved флаг сохранения файла
+ * @param modifier Modifier
  */
 @Composable
 fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {

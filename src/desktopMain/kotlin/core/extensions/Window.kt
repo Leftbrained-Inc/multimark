@@ -16,8 +16,8 @@ private var window = Window()
 
 /**
  * Настройки окна
- * @property icon иконка
- * @property title названия окна
+ * @property icon Иконка
+ * @property title Название окна
  * @author Василий Панков (pank-su)
  */
 @ConfigurationTagMaker
@@ -39,7 +39,6 @@ var Configuration.window: Window
 
 /**
  * Утилита которая проверяет, находится ли что-то за пределами окна
- *
  * @author Василий Панков (pank-su)
  */
 fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean {
@@ -57,11 +56,11 @@ fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean 
 
 /**
  * Действие если таб вне экрана
- *
  * @author Василий Панков (pank-su)
  */
 fun TabCategory.onOutWindow(){
-    TODO("ТАБ ВНЕ ОКНА")
+    // Create new window
+
 }
 
 /**

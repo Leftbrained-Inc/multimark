@@ -9,19 +9,19 @@ import kotlinx.coroutines.flow.asStateFlow
 import ui.components.TabCategory
 
 /**
- * viewModel вкладок
+ * ViewModel вкладок
  * @property tabs Вкладки
+ * @property selectedTabIndex Индекс выбранной вкладки
  * @see TabCategory
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
  */
-
 class TabViewmodel {
     val tabs = mutableStateListOf<TabCategory>()
     private var _selectedTabIndex = MutableStateFlow(0)
     var selectedTabIndex = _selectedTabIndex.asStateFlow()
 
-    // Минимальный offset чтобы выйти из навигации
+    // Минимальный сдвиг чтобы выйти из навигации
     val minimumOffsetToMoveOutNav = Offset(0f, 10f)
 
     suspend fun select(tabIndex: Int) {

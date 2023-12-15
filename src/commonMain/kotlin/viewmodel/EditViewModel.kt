@@ -17,13 +17,13 @@ import kotlinx.io.writeString
 import kotlin.time.Duration.Companion.minutes
 
 /**
- * ViewModel функции сохронения изменений
- * @property textFieldValue переменная в которую заносится текст
- * @property contentText переменная в которую заносится изменённый текст
- * @property isSaved переменная проверки на совподение сохронённого текста
+ * Класс ViewModel для редактирования файла
+ * @property textFieldValue Значение текстового поля
+ * @property contentText Сохраненный текст
+ * @property isSaved Флаг сохранения
  * @author Алексей Челноков (shizik-tech)
+ * @author Василий Панков (pank-su)
  */
-
 class EditViewModel(val path: Path) {
 
     private var contentText by mutableStateOf("")
@@ -45,8 +45,8 @@ class EditViewModel(val path: Path) {
     }
 
     /**
-     * Функция сохранения
-     * */
+     * Функция сохранения файла
+     */
     fun saveFile() {
         val sink = SystemFileSystem.sink(path).buffered()
         sink.writeString(textFieldValue.text)
@@ -54,6 +54,9 @@ class EditViewModel(val path: Path) {
         contentText = textFieldValue.text
     }
 
+    /**
+     * Функция резервного сохранения файла
+     */
     fun reserveFile() {
         CoroutineScope(Dispatchers.IO).launch {
             val reserve = Path(path.parent ?: Path(""), "." + path.name)
