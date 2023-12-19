@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
 import core.configuration.Configuration
+import core.configuration.ConfigurationImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ui.components.TabCategory
@@ -44,4 +45,4 @@ class TabViewmodel {
     }
 }
 
-expect fun TabViewmodel.onDragEnd(tab: TabCategory, configuration: Configuration, density: Density)
+expect fun TabViewmodel.onDragEnd(tab: TabCategory, configuration: ConfigurationImpl, density: Density)

@@ -8,8 +8,12 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import core.configuration.Configuration
+import core.configuration.ConfigurationImpl
 import core.dsl.ConfigurationTagMaker
 import core.dsl.configuration.ConfigurationBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ui.components.TabCategory
 
 private var window = Window()
@@ -58,8 +62,11 @@ fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean 
  * Действие если таб вне экрана
  * @author Василий Панков (pank-su)
  */
-fun TabCategory.onOutWindow(){
-    // Create new window
+fun TabCategory.onOutWindow(configuration: ConfigurationImpl) {
+    val windowState = WindowState(window.state.placement, false, window.state.position, window.state.size)
+    configuration.windows.add(
+        windowState
+    )
 
 }
 

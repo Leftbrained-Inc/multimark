@@ -3,6 +3,7 @@ package viewmodel
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
 import core.configuration.Configuration
+import core.configuration.ConfigurationImpl
 import core.extensions.isOutWindow
 import core.extensions.onOutWindow
 import core.extensions.window
@@ -13,14 +14,14 @@ import ui.components.TabCategory
  */
 actual fun TabViewmodel.onDragEnd(
     tab: TabCategory,
-    configuration: Configuration,
+    configuration: ConfigurationImpl,
     density: Density
 ) {
     val dragTabState = tab.dragTabState
     val positionNow =
         Pair(dragTabState.position.first + dragTabState.offset.x, dragTabState.position.second + dragTabState.offset.y)
     if (configuration.window.isOutWindow(positionNow, density)) {
-        tab.onOutWindow()
+        tab.onOutWindow(configuration)
         tab.dragTabState.offset = Offset.Zero
         return
     }
