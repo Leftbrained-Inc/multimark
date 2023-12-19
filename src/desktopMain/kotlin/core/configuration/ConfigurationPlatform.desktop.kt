@@ -37,7 +37,6 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                 Window(
                     this::exitApplication,
                     state = configuration.window.state,
-                    undecorated = true,
                     onKeyEvent = { keyEvent ->
                         if (keyEvent.type == KeyEventType.KeyUp)
                             configuration.keyMap.shorts.forEach {

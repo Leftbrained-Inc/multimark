@@ -1,5 +1,6 @@
 package viewmodel
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
 import core.configuration.Configuration
 import core.extensions.isOutWindow
@@ -20,11 +21,13 @@ actual fun TabViewmodel.onDragEnd(
         Pair(dragTabState.position.first + dragTabState.offset.x, dragTabState.position.second + dragTabState.offset.y)
     if (configuration.window.isOutWindow(positionNow, density)) {
         tab.onOutWindow()
+        tab.dragTabState.offset = Offset.Zero
         return
     }
     println(dragTabState.offset)
     if (dragTabState.offset.y < this.minimumOffsetToMoveOutNav.y) {
         this.calculateNewPosition(tab)
+        tab.dragTabState.offset = Offset.Zero
         return
     }
 

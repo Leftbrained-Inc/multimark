@@ -20,6 +20,7 @@ import androidx.compose.ui.window.rememberWindowState
 import core.configuration.LocalConfiguration
 import core.extensions.window
 import ui.utils.dp
+import ui.utils.dps
 
 /**
  * Функция для отображения вкладки во время перетаскивания
@@ -33,7 +34,7 @@ actual fun onDragTab(draggedTab: TabCategory) {
     val configuration = LocalConfiguration.current
     val defaultWindowPosition = WindowPosition(configuration.window.state.position.x +
             with(density) { draggedTab.dragTabState.position.first.toDp() - 225.dp },
-        configuration.window.state.position.y + with(density) { draggedTab.dragTabState.position.second.toDp() })
+        configuration.window.state.position.y + with(density) { draggedTab.dragTabState.position.second.toDp() } + 25.dps)
     val windowState = rememberWindowState(
         WindowPlacement.Floating,
         size = DpSize(height = 450.dp, width = 500.dp),

@@ -14,10 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -61,7 +58,7 @@ fun TabRow(modifier: Modifier) {
                 Spacer(modifier = Modifier.width(24.dp))
             }
             items(tabViewmodel.tabs.size) { tabId ->
-                val tab = tabViewmodel.tabs[tabId]
+                val tab by remember{ derivedStateOf {   tabViewmodel.tabs[tabId]}}
                 val coroutineScope = rememberCoroutineScope()
                 val configuration = LocalConfiguration.current
                 val density = LocalDensity.current
@@ -71,8 +68,8 @@ fun TabRow(modifier: Modifier) {
                             tab.dragTabState.isDrag = true
                         },
                         onDragEnd = {
-                            tabViewmodel.onDragEnd(tab, configuration, density)
                             tab.dragTabState.isDrag = false
+                            tabViewmodel.onDragEnd(tab, configuration, density)
                             tab.dragTabState.offset = Offset.Zero
                         },
                         onDragCancel = {

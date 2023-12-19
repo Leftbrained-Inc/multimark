@@ -31,11 +31,16 @@ class TabViewmodel {
     /**
      * Рассчитывает новое положение вкладки.
      * @param tab Вкладка, для которой рассчитывается новое положение.
-     * @param currentPosition Текущее положение вкладки.
-     * @param delta Величина перемещения вкладки.
      */
-    fun calculateNewPosition(tab: TabCategory, currentPosition: Offset, delta: Offset) {
-        val newPosition = Offset(currentPosition.x + delta.x, currentPosition.y + delta.y)
+    fun calculateNewPosition(tab: TabCategory) {
+        var nearTabIndex =
+            tabs.indexOfLast { tab.dragTabState.position.first + tab.dragTabState.offset.x > it.dragTabState.position.first }
+        if (nearTabIndex == -1) {
+            nearTabIndex = 0
+        }
+        tabs.remove(tab)
+        tabs.add(nearTabIndex, tab)
+
     }
 }
 
