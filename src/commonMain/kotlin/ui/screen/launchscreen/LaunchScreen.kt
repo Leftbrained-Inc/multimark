@@ -67,8 +67,9 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
             derivedStateOf { this.maxHeight }
         }
         Column(
-            Modifier.widthIn(200.dp, 600.dp).align(Alignment.TopCenter),
-            verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically)
+            Modifier.align(Alignment.TopCenter),
+            verticalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val logoTitleHeight by transition.animateDp(
                 transitionSpec = { tween(durationMillis = 1000) },
@@ -86,7 +87,8 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 logoTitleHeight
             )
             Row(
-                modifier = Modifier.height(100.dp).fillMaxWidth().shadow(4.dp, RoundedCornerShape(16.dp))
+                modifier = Modifier.height(100.dp).widthIn(200.dp, 600.dp).fillMaxWidth()
+                    .shadow(4.dp, RoundedCornerShape(16.dp))
                     .background(MaterialTheme.colorScheme.tertiaryContainer, shape = RoundedCornerShape(16.dp))
                     .padding(24.dp),
                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(24.dp)
@@ -94,20 +96,20 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 Button(onClick = { showPicker = !showPicker }, Modifier.width(120.dp).height(40.dp)) {
                     Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                 }
-                if (showPicker) {
-                    val tabViewmodel: TabViewmodel = koinInject()
-                    FilePicker(true, fileExtensions = listOf("md")) { file ->
-                        if (file != null) {
-                            val path = Path(file.path)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                launchScreen.addRecentFile(path)
-                            }
-                            tabViewmodel.tabs.add(TabCategory.Edit(path))
-                            backStack.push(NavTarget.MainScreen(path))
+
+                val tabViewModel: TabViewmodel = koinInject()
+                FilePicker(showPicker, fileExtensions = listOf("md", "*")) { file ->
+                    if (file != null) {
+                        val path = Path(file.path)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            launchScreen.addRecentFile(path)
                         }
-                        showPicker = false
+                        tabViewModel.tabs.add(TabCategory.Edit(path))
+                        backStack.push(NavTarget.MainScreen(path))
                     }
+                    showPicker = false
                 }
+
                 SearchBar(
                     value = search,
                     onValueChange = { newText -> search = newText },
@@ -148,7 +150,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
         )
         LaunchedEffect(Unit) {
             delay(1000)
-            launchScreen.isFirstLoad = false
+            launchScreen.isFirstLoad = false || state == LaunchScreenState.NoFiles
         }
     }
 }
