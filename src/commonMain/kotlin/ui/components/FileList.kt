@@ -16,8 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.push
 import core.db.RecentFile
+import navigation.NavTarget
+import org.koin.compose.koinInject
 import ui.utils.dp
+import viewmodel.TabViewmodel
 
 /**
  * Компонент списка файлов
@@ -30,9 +35,14 @@ import ui.utils.dp
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
+fun FileList(fileList: List<RecentFile>, modifier: Modifier, backStack: BackStack<NavTarget>) {
 
     val state = rememberLazyGridState()
+
+
+    val tabViewmodel: TabViewmodel = koinInject()
+
+
 
     Box(modifier = modifier) {
         LazyVerticalGrid(
@@ -48,6 +58,13 @@ fun FileList(fileList: List<RecentFile>, modifier: Modifier) {
                         .border(
                             BorderStroke(1.dp, MaterialTheme.colorScheme.outline), RoundedCornerShape(12.dp)
                         )
+
+                        .clickable {
+                            val path = kotlinx.io.files.Path(file.filePath)
+                            tabViewmodel.tabs.add(TabCategory.Edit(path))
+                            backStack.push(NavTarget.MainScreen(path))
+                        }
+
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Icon(
