@@ -41,7 +41,9 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                 val configuration = LocalConfiguration.current
                 for (window in windows) {
                     Window(
-                        this::exitApplication,
+                        {if(windows.size == 1)
+                        exitApplication()
+                        else windows.remove(window)},
                         state = window,
                         onKeyEvent = { keyEvent ->
                             if (keyEvent.type == KeyEventType.KeyUp)

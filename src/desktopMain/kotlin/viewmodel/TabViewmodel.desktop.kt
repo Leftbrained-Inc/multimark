@@ -21,8 +21,9 @@ actual fun TabViewmodel.onDragEnd(
     val positionNow =
         Pair(dragTabState.position.first + dragTabState.offset.x, dragTabState.position.second + dragTabState.offset.y)
     if (configuration.window.isOutWindow(positionNow, density)) {
-        tab.onOutWindow(configuration)
+        tab.onOutWindow(configuration, density)
         tab.dragTabState.offset = Offset.Zero
+        tabs.remove(tab)
         return
     }
     println(dragTabState.offset)

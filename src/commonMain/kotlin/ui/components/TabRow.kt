@@ -58,43 +58,46 @@ fun TabRow(modifier: Modifier) {
                 Spacer(modifier = Modifier.width(24.dp))
             }
             items(tabViewmodel.tabs.size) { tabId ->
-                val tab by remember{ derivedStateOf {   tabViewmodel.tabs[tabId]}}
+                val tab by remember { derivedStateOf { tabViewmodel.tabs.getOrNull(tabId) } }
                 val coroutineScope = rememberCoroutineScope()
                 val configuration = LocalConfiguration.current
                 val density = LocalDensity.current
-                Box (modifier = Modifier.fillMaxWidth().widthIn(max = 200.dp).pointerInput(Unit) {
+                Box(modifier = Modifier.fillMaxWidth().widthIn(max = 200.dp).pointerInput(Unit) {
+
                     detectDragGestures(
                         onDragStart = {
-                            tab.dragTabState.isDrag = true
+                            tab?.dragTabState?.isDrag = true
                         },
                         onDragEnd = {
-                            tab.dragTabState.isDrag = false
-                            tabViewmodel.onDragEnd(tab, configuration, density)
-                            tab.dragTabState.offset = Offset.Zero
+                            tab?.dragTabState?.isDrag = false
+                            tabViewmodel.onDragEnd(tab!!, configuration, density)
+                            tab?.dragTabState?.offset = Offset.Zero
                         },
                         onDragCancel = {
-                            tab.dragTabState.isDrag = false
-                            tab.dragTabState.offset = Offset.Zero
+                            tab?.dragTabState?.isDrag = false
+                            tab?.dragTabState?.offset = Offset.Zero
                         }) { change, dragAmount ->
                         change.consume()
-                        tab.dragTabState.offset += dragAmount
+                        if (tab != null)
+                            tab!!.dragTabState.offset += dragAmount
                     }
-                }){
-                    AnimatedVisibility(!tab.dragTabState.isDrag, modifier = Modifier.animateItemPlacement()) {
-                        Tab(
-                            tab,
-                            tabId == selectedTabIndex,
-                            onClick = {
-                                coroutineScope.launch {
-                                    tabViewmodel.select(tabId)
+                }) {
+                    AnimatedVisibility(tab?.dragTabState?.isDrag == false, modifier = Modifier.animateItemPlacement()) {
+                        if (tab != null)
+                            Tab(
+                                tab!!,
+                                tabId == selectedTabIndex,
+                                onClick = {
+                                    coroutineScope.launch {
+                                        tabViewmodel.select(tabId)
+                                    }
+                                },
+                                Modifier.onGloballyPositioned {
+                                    if (tab?.dragTabState?.isDrag == true) return@onGloballyPositioned
+                                    tab!!.dragTabState.position = Pair(it.positionInWindow().x, it.positionInWindow().y)
+                                    tab!!.size = it.size
                                 }
-                            },
-                            Modifier.onGloballyPositioned {
-                                if (tab.dragTabState.isDrag) return@onGloballyPositioned
-                                tab.dragTabState.position = Pair(it.positionInWindow().x, it.positionInWindow().y)
-                                tab.size = it.size
-                            }
-                        )
+                            )
                     }
                 }
             }
