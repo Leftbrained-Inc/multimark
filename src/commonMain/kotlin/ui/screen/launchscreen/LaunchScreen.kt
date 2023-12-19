@@ -134,7 +134,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                         "Last Viewed",
                         style = MaterialTheme.typography.headlineMedium,
                     )
-                    FileList(files, modifier = Modifier.padding(top = 24.dp))
+                    FileList(files, modifier = Modifier.padding(top = 24.dp),backStack)
                 }
             }
 
