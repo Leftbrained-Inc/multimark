@@ -10,6 +10,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
+import core.configuration.windows
 import core.dsl.ConfigurationTagMaker
 import core.dsl.configuration.ConfigurationBuilder
 import ui.components.TabCategory
@@ -51,7 +52,7 @@ fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean 
     val widthPx = with(density) { windowState.size.width.toPx() + xPx }
     val heightPx = with(density) { windowState.size.height.toPx() + yPx }
 
-    println("$position $xPx $yPx $widthPx $heightPx ")
+    // TODO проверять во всех окнах
 
     return position.first + xPx < xPx || position.first + xPx > widthPx || position.second + yPx > heightPx || position.second + yPx < yPx
 }
@@ -64,10 +65,9 @@ fun TabCategory.onOutWindow(configuration: ConfigurationImpl, density: Density) 
     val position = WindowPosition(with(density) { (dragTabState.position.first + dragTabState.offset.x).toDp() },
         with(density) { (dragTabState.position.second + dragTabState.offset.y).toDp() })
     val windowState = WindowState(window.state.placement, false, position, window.state.size)
-    configuration.windows.add(
+    windows.add(
         windowState
     )
-
 }
 
 /**

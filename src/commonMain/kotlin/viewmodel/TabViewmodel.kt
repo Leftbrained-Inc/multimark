@@ -3,10 +3,12 @@ package viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
-import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import ui.components.TabCategory
 
 /**
@@ -35,13 +37,18 @@ class TabViewmodel {
      */
     fun calculateNewPosition(tab: TabCategory) {
         var nearTabIndex =
-            tabs.indexOfLast { tab.dragTabState.position.first + tab.dragTabState.offset.x > it.dragTabState.position.first }
+            tabs.indexOfLast { tab.dragTabState.position.first + tab.dragTabState.offset.x > it.dragTabState.position.first && tab !== it }
         if (nearTabIndex == -1) {
             nearTabIndex = 0
         }
+        val selectedTab = tabs[selectedTabIndex.value]
         tabs.remove(tab)
         tabs.add(nearTabIndex, tab)
-
+        CoroutineScope(Dispatchers.Default).launch {
+            select(
+                tabs.indexOf(selectedTab)
+            )
+        }
     }
 }
 

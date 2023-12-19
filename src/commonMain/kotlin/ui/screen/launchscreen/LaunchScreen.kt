@@ -131,12 +131,15 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                 { it == LaunchScreenState.HasFiles },
                 enter = fadeIn(tween(durationMillis = 1000, delayMillis = 1000))
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.widthIn(200.dp, 600.dp).fillMaxWidth()
+                ) {
                     Text(
                         "Last Viewed",
                         style = MaterialTheme.typography.headlineMedium,
                     )
-                    FileList(files, modifier = Modifier.padding(top = 24.dp),backStack)
+                    FileList(files, modifier = Modifier.padding(top = 24.dp), backStack)
                 }
             }
 

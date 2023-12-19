@@ -21,6 +21,8 @@ sealed class Events {
 
 val events: Channel<Events> = Channel()
 
+val windows = mutableStateListOf<WindowState>()
+
 
 /**
  * Нативная реализация
@@ -28,22 +30,23 @@ val events: Channel<Events> = Channel()
  */
 actual abstract class ConfigurationPlatform actual constructor() : Configuration() {
 
-    val windows = mutableStateListOf<WindowState>(this.window.state)
-
 
     /**
      * Отображение экрана и навигации
      * @author Василий Панков (pank-su)
      */
     actual open fun render() {
+        windows.add(window.state)
         application {
             content {
                 val configuration = LocalConfiguration.current
                 for (window in windows) {
                     Window(
-                        {if(windows.size == 1)
-                        exitApplication()
-                        else windows.remove(window)},
+                        {
+                            if (windows.size == 1)
+                                exitApplication()
+                            else windows.remove(window)
+                        },
                         state = window,
                         onKeyEvent = { keyEvent ->
                             if (keyEvent.type == KeyEventType.KeyUp)
@@ -71,7 +74,6 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                         }
                     }
                 }
-
             }
         }
     }
