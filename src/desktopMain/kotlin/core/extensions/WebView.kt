@@ -26,12 +26,12 @@ actual fun markdownToHtml(markdown: String): String {
     return HtmlGenerator(markdown, parsedTree, flavour).generateHtml()
 }
 
-
 /**
  * Предпросмотр Markdown
- * @param html HTML-текст
- * @see markdownToHtml
+ * @param state Состояние WebView
+ * @see WebViewState
  * @author Сергей Рейнн (bulkabuka)
+ * @author Василий Панков (pank-su)
  */
 @Composable
 actual fun WebView(state: WebViewState) {
@@ -62,7 +62,6 @@ actual fun WebView(state: WebViewState) {
             })
         }
     }
-
     if (restartRequired) {
         Text(text = "Restart required.")
     } else {
@@ -70,9 +69,6 @@ actual fun WebView(state: WebViewState) {
             com.multiplatform.webview.web.WebView(state, modifier = Modifier.fillMaxSize())
         } else {
             Text(text = "Downloading $downloading%")
-
-
         }
     }
-
 }

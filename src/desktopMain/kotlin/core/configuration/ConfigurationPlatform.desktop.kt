@@ -1,12 +1,11 @@
 package core.configuration
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
 import com.bumble.appyx.navigation.integration.DesktopNodeHost
 import core.extensions.window
 import core.shortcut.keyMap
@@ -22,40 +21,56 @@ sealed class Events {
 
 val events: Channel<Events> = Channel()
 
+val windows = mutableStateListOf<WindowState>()
+
 
 /**
  * Нативная реализация
  * @author Василий Панков (pank-su)
  */
-actual abstract class ConfigurationPlatform actual constructor() : core.configuration.Configuration() {
+actual abstract class ConfigurationPlatform actual constructor() : Configuration() {
+
 
     /**
      * Отображение экрана и навигации
      * @author Василий Панков (pank-su)
      */
     actual open fun render() {
+        windows.add(window.state)
         application {
-            val windowState = rememberWindowState(size = DpSize(480.dp, 658.dp))
             content {
                 val configuration = LocalConfiguration.current
-                Window(this::exitApplication, onKeyEvent = { keyEvent ->
-                    if (keyEvent.type == KeyEventType.KeyUp)
-                        configuration.keyMap.shorts.forEach {
-                            if (it.condition(keyEvent)) {
-                                it.action()
-                                return@Window true
+                for (window in windows) {
+                    Window(
+                        {
+                            if (windows.size == 1)
+                                exitApplication()
+                            else windows.remove(window)
+                        },
+                        state = window,
+                        onKeyEvent = { keyEvent ->
+                            if (keyEvent.type == KeyEventType.KeyUp)
+                                configuration.keyMap.shorts.forEach {
+                                    if (it.condition(keyEvent)) {
+                                        it.action()
+                                        return@Window true
+                                    }
+                                }
+                            false
+
+                        },
+                        icon = configuration.window.icon,
+                        title = configuration.window.title
+                    ) {
+                        it {
+                            DesktopNodeHost(
+                                windowState = configuration.window.state,
+                                onBackPressedEvents = events.receiveAsFlow().mapNotNull {
+                                    if (it is Events.OnBackPressed) Unit else null
+                                }
+                            ) { buildContext ->
+                                RootNode(buildContext)
                             }
-                        }
-                    false
-                }, icon = configuration.window.icon, title = configuration.window.title) {
-                    it {
-                        DesktopNodeHost(
-                            windowState = windowState,
-                            onBackPressedEvents = events.receiveAsFlow().mapNotNull {
-                                if (it is Events.OnBackPressed) Unit else null
-                            }
-                        ) { buildContext ->
-                            RootNode(buildContext)
                         }
                     }
                 }

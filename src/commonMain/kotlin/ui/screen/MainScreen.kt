@@ -6,14 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import ui.components.NavBar
+import ui.components.onDragTab
 import viewmodel.TabViewmodel
 
 /**
@@ -22,18 +21,24 @@ import viewmodel.TabViewmodel
  */
 @Composable
 fun MainScreen() {
+    val tabViewModel: TabViewmodel = koinInject()
+    val selectedTabIndex by tabViewModel.selectedTabIndex.collectAsState()
+    val draggedTab by remember {
+        derivedStateOf {
+            tabViewModel.tabs.firstOrNull { it.dragTabState.isDrag }
+        }
+    }
 
-    val tabViewmodel: TabViewmodel = koinInject()
-    val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
-
-
+    if (draggedTab != null) {
+        onDragTab(draggedTab!!)
+    }
     Surface(color = Color.White) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
                 NavBar()
             }
             Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                val tab = tabViewmodel.tabs[selectedTabIndex]
+                val tab = tabViewModel.tabs[selectedTabIndex]
                 tab.screen(tab)
             }
         }
