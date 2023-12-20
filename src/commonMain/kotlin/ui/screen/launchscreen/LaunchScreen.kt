@@ -35,7 +35,7 @@ import ui.components.LogoTitle
 import ui.components.SearchBar
 import ui.components.tabs.TabCategory
 import ui.utils.dp
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 
 /**
  * Стартовый экран
@@ -97,7 +97,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                     Text(text = "Open", style = MaterialTheme.typography.labelLarge)
                 }
 
-                val tabViewModel: TabViewmodel = koinInject()
+                val tabViewModel: TabViewModel = koinInject()
                 FilePicker(showPicker, fileExtensions = listOf("md", "*")) { file ->
                     if (file != null) {
                         val path = Path(file.path)
@@ -105,7 +105,7 @@ fun LaunchScreen(backStack: BackStack<NavTarget>) {
                             launchScreen.addRecentFile(path)
                         }
                         tabViewModel.tabs.add(TabCategory.Edit(path))
-                        backStack.push(NavTarget.MainScreen(path))
+                        backStack.push(NavTarget.MainScreen)
                     }
                     showPicker = false
                 }

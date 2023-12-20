@@ -1,7 +1,6 @@
 package ui.components.tabs
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.HorizontalScrollbar
 import androidx.compose.foundation.background
@@ -27,9 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import core.configuration.LocalConfiguration
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
-import ui.theme.MultimarkAppTheme
 import ui.utils.dp
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 import viewmodel.onDragEnd
 
 /**
@@ -42,7 +40,7 @@ import viewmodel.onDragEnd
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabRow(modifier: Modifier) {
-    val tabViewmodel: TabViewmodel = koinInject()
+    val tabViewmodel: TabViewModel = koinInject()
     val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
     val state = rememberLazyListState()
     Box(
@@ -140,14 +138,4 @@ fun Tab(tab: TabCategory, selected: Boolean, onClick: () -> Unit, modifier: Modi
         },
         modifier = modifier
     )
-}
-
-@Preview
-@Composable
-fun TabRowPreview() {
-    MultimarkAppTheme {
-        Surface {
-            TabRow(Modifier.fillMaxWidth())
-        }
-    }
 }

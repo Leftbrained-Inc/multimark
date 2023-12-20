@@ -23,7 +23,7 @@ import navigation.NavTarget
 import org.koin.compose.koinInject
 import ui.components.tabs.TabCategory
 import ui.utils.dp
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 
 /**
  * Компонент списка файлов
@@ -41,7 +41,7 @@ fun FileList(fileList: List<RecentFile>, modifier: Modifier, backStack: BackStac
     val state = rememberLazyGridState()
 
 
-    val tabViewmodel: TabViewmodel = koinInject()
+    val tabViewmodel: TabViewModel = koinInject()
 
 
 
@@ -63,7 +63,7 @@ fun FileList(fileList: List<RecentFile>, modifier: Modifier, backStack: BackStac
                         .clickable {
                             val path = kotlinx.io.files.Path(file.filePath)
                             tabViewmodel.tabs.add(TabCategory.Edit(path))
-                            backStack.push(NavTarget.MainScreen(path))
+                            backStack.push(NavTarget.MainScreen)
                         }
 
                 ) {

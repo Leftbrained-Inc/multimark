@@ -7,7 +7,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPosition
-import androidx.compose.ui.window.WindowState
 import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
 import core.configuration.windows
@@ -27,7 +26,7 @@ private var window = Window()
 data class Window(
     var icon: Painter = useResource("logo.svg") { loadSvgPainter(it, Density(100f)) },
     var title: String = "Multimark",
-    val state: WindowState = WindowState(size = DpSize(800.dp, 658.dp))
+    val state: MultimarkWindowStateImpl = MultimarkWindowState(size = DpSize(800.dp, 658.dp))
 )
 
 /**
@@ -64,7 +63,7 @@ fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean 
 fun TabCategory.onOutWindow(configuration: ConfigurationImpl, density: Density) {
     val position = WindowPosition(with(density) { (dragTabState.position.first + dragTabState.offset.x).toDp() },
         with(density) { (dragTabState.position.second + dragTabState.offset.y).toDp() })
-    val windowState = WindowState(window.state.placement, false, position, window.state.size)
+    val windowState = MultimarkWindowState(listOf(this), false, window.state.placement, position, window.state.size)
     windows.add(
         windowState
     )

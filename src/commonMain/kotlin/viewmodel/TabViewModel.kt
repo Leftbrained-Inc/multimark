@@ -19,7 +19,7 @@ import ui.components.tabs.TabCategory
  * @author Сергей Рейнн (bulkabuka)
  * @author Василий Панков (pank-su)
  */
-class TabViewmodel {
+class TabViewModel {
     val tabs = mutableStateListOf<TabCategory>()
     private var _selectedTabIndex = MutableStateFlow(0)
     var selectedTabIndex = _selectedTabIndex.asStateFlow()
@@ -52,4 +52,4 @@ class TabViewmodel {
     }
 }
 
-expect fun TabViewmodel.onDragEnd(tab: TabCategory, configuration: ConfigurationImpl, density: Density)
+expect fun TabViewModel.onDragEnd(tab: TabCategory, configuration: ConfigurationImpl, density: Density)

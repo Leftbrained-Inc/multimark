@@ -1,8 +1,8 @@
 package di
 
 import org.koin.dsl.module
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 
 fun appModule() = module {
-    single { TabViewmodel() }
+    single { TabViewModel() }
 }
