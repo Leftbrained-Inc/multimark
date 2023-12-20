@@ -2,6 +2,7 @@ package core.extensions
 
 import core.configuration.ConfigurationImpl
 import core.dsl.configuration.ConfigurationBuilder
+import core.extensions.window.window
 import core.shortcut.keyMap
 
 /**

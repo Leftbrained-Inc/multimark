@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import kotlinx.io.files.Path
 import org.koin.compose.koinInject
+import ui.components.tabs.TabCategory
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
 import viewmodel.TabViewmodel
@@ -89,7 +90,7 @@ fun NavBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             LogoTitle(Modifier.size(64.dp), false)
-            TabRow(modifier = Modifier.weight(10f))
+            ui.components.tabs.TabRow(modifier = Modifier.weight(10f))
             Button(
                 colors = ButtonDefaults.outlinedButtonColors(),
                 onClick = {

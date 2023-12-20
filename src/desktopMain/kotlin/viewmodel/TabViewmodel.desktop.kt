@@ -2,12 +2,11 @@ package viewmodel
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
-import core.configuration.Configuration
 import core.configuration.ConfigurationImpl
-import core.extensions.isOutWindow
-import core.extensions.onOutWindow
-import core.extensions.window
-import ui.components.TabCategory
+import core.extensions.window.isOutWindow
+import core.extensions.window.onOutWindow
+import core.extensions.window.window
+import ui.components.tabs.TabCategory
 
 /**
  * @author Василий Панков (pank-su)

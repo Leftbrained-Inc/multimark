@@ -33,7 +33,7 @@ import org.koin.compose.koinInject
 import ui.components.FileList
 import ui.components.LogoTitle
 import ui.components.SearchBar
-import ui.components.TabCategory
+import ui.components.tabs.TabCategory
 import ui.utils.dp
 import viewmodel.TabViewmodel
 
