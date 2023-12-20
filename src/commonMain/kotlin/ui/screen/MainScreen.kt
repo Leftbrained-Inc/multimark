@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import ui.components.NavBar
 import ui.components.onDragTab
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 
 /**
  * Экран редактирования Markdown-файла
@@ -21,7 +21,7 @@ import viewmodel.TabViewmodel
  */
 @Composable
 fun MainScreen() {
-    val tabViewModel: TabViewmodel = koinInject()
+    val tabViewModel: TabViewModel = koinInject()
     val selectedTabIndex by tabViewModel.selectedTabIndex.collectAsState()
     val draggedTab by remember {
         derivedStateOf {

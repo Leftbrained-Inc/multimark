@@ -27,9 +27,10 @@ import ui.utils.Scale
  */
 class RootNode(
     buildContext: BuildContext,
+    private val initialTarget: NavTarget = NavTarget.LaunchScreen,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
-            initialTarget = NavTarget.LaunchScreen,
+            initialTarget = initialTarget,
             savedStateMap = buildContext.savedStateMap,
         ),
         visualisation = { BackStackFader(it) }
@@ -75,7 +76,7 @@ class RootNode(
                 Text("Настройки")
             }
 
-            is NavTarget.MainScreen -> node(buildContext) {
+            NavTarget.MainScreen -> node(buildContext) {
                 MainScreen()
             }
         }

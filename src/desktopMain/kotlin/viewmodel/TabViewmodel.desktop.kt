@@ -11,7 +11,7 @@ import ui.components.tabs.TabCategory
 /**
  * @author Василий Панков (pank-su)
  */
-actual fun TabViewmodel.onDragEnd(
+actual fun TabViewModel.onDragEnd(
     tab: TabCategory,
     configuration: ConfigurationImpl,
     density: Density
@@ -25,7 +25,6 @@ actual fun TabViewmodel.onDragEnd(
         tabs.remove(tab)
         return
     }
-    println(dragTabState.offset)
     if (dragTabState.offset.y < this.minimumOffsetToMoveOutNav.y) {
         this.calculateNewPosition(tab)
         tab.dragTabState.offset = Offset.Zero

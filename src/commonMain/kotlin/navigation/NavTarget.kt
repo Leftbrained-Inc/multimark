@@ -20,5 +20,5 @@ sealed class NavTarget : Parcelable {
     object SettingsScreen : NavTarget()
 
     @Parcelize
-    data class MainScreen(val file: Path) : NavTarget()
+    object MainScreen : NavTarget()
 }

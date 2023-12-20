@@ -23,7 +23,7 @@ import org.koin.compose.koinInject
 import ui.components.tabs.TabCategory
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 
 
 /**
@@ -78,7 +78,7 @@ fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
  */
 @Composable
 fun NavBar() {
-    val tabViewmodel: TabViewmodel = koinInject()
+    val tabViewmodel: TabViewModel = koinInject()
 
     val search = remember { mutableStateOf("") }
 

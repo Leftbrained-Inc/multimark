@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import ui.theme.MultimarkAppTheme
 import ui.utils.dp
-import viewmodel.TabViewmodel
+import viewmodel.TabViewModel
 import viewmodel.onDragEnd
 
 /**
@@ -42,7 +42,7 @@ import viewmodel.onDragEnd
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabRow(modifier: Modifier) {
-    val tabViewmodel: TabViewmodel = koinInject()
+    val tabViewmodel: TabViewModel = koinInject()
     val selectedTabIndex by tabViewmodel.selectedTabIndex.collectAsState()
     val state = rememberLazyListState()
     Box(
