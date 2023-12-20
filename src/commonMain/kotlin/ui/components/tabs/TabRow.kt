@@ -1,17 +1,15 @@
 package ui.components.tabs
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.HorizontalScrollbar
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -90,6 +88,9 @@ fun TabRow(modifier: Modifier) {
                                         tabViewmodel.select(tabId)
                                     }
                                 },
+                                onDeleteClick = {
+                                      tabViewmodel.tabs.remove(tab)
+                                },
                                 Modifier.onGloballyPositioned {
                                     if (tab?.dragTabState?.isDrag == true) return@onGloballyPositioned
                                     tab!!.dragTabState.position = Pair(it.positionInWindow().x, it.positionInWindow().y)
@@ -111,7 +112,7 @@ fun TabRow(modifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Tab(tab: TabCategory, selected: Boolean, onClick: () -> Unit, modifier: Modifier) {
+fun Tab(tab: TabCategory, selected: Boolean, onClick: () -> Unit, onDeleteClick: () -> Unit, modifier: Modifier) {
     InputChip(
         selected = selected,
         onClick =
@@ -123,13 +124,15 @@ fun Tab(tab: TabCategory, selected: Boolean, onClick: () -> Unit, modifier: Modi
             selectedContainerColor = MaterialTheme.colorScheme.primary,
             selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
             trailingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            selectedTrailingIconColor = MaterialTheme.colorScheme.onPrimary
+            selectedTrailingIconColor = MaterialTheme.colorScheme.onPrimary,
+            selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+            leadingIconColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
         border = InputChipDefaults.inputChipBorder(
             borderWidth = 0.dp, borderColor = Color.Transparent, selectedBorderColor = Color.Transparent
         ),
-        trailingIcon = {
-            AnimatedVisibility(tab is TabCategory.Edit && !tab.isSaved) {
+        leadingIcon = { Icon(Icons.Default.Close,null, modifier = Modifier.clickable{onDeleteClick()}) },
+        trailingIcon = { AnimatedVisibility(tab is TabCategory.Edit && !tab.isSaved) {
                 Icon(
                     Icons.Default.Circle,
                     null

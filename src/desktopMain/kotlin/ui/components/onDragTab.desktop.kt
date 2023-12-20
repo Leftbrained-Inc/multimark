@@ -58,6 +58,7 @@ actual fun onDragTab(draggedTab: TabCategory) {
                 draggedTab,
                 true,
                 onClick = {},
+                onDeleteClick = {},
                 modifier = Modifier.width(with(density) { draggedTab.size.toSize().toDpSize() }.width)
             )
             Spacer(Modifier.height(12.dp))
