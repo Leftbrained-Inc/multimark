@@ -2,27 +2,33 @@
 
 ```kt
 fun main() {
-    application {
-        val painter = painterResource("Good Tick.svg")
-        config {
-            logo {
-                Image(painterResource("Good Tick.svg"), null, modifier = it)
-            }
+    config {
+        logo {
+            Image(painterResource("Good Tick.svg"), null, modifier = it, contentScale = ContentScale.FillHeight)
+        }
 
-            scale = 1f
-            fontScale = 1f
+        scale = 1f
+        fontScale = 1f
 
-            window {
-                icon = painter
-                title = "Test"
+        window {
+            icon = useResource("Good Tick.svg") { loadSvgPainter(it, Density(100f)) }
+            title = "Test"
+        }
+
+        keyMap {
+            KeyMap.metaKey = { it.isCtrlPressed }
+            testShortcut = Shortcut({ keyEvent -> keyEvent.isAltPressed }) {
+                println("Test")
             }
-            keyMap {
-                KeyMap.metaKey = { it.isCtrlPressed }
-                testShortcut = Shortcut({ keyEvent -> keyEvent.isAltPressed }) {
-                    println("Test")
-                }
+        }
+
+        launchScreen {
+            filesMode = FilesMode.Both
+
+            recentFilter {
+                true
             }
-        }.render(::exitApplication)
+        }
     }
 }
 ```
