@@ -67,11 +67,12 @@ abstract class Configuration {
      */
     @Composable
     internal fun content(nativeContent: @Composable (@Composable (@Composable () -> Unit) -> Unit) -> Unit) {
+        // Общее для всех окон
         CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
             val config = LocalConfiguration.current
-
-            KoinApplication(application = { modules(appModule()) }) {
-                nativeContent { content ->
+            nativeContent { content ->
+                // В каждом окне
+                KoinApplication(application = { modules(appModule()) }) {
                     config.theme {
                         content()
                     }

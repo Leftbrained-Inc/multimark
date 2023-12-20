@@ -17,8 +17,9 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import core.configuration.LocalConfiguration
-import core.extensions.window
+import core.configuration.LocalWindowState
+import ui.components.tabs.Tab
+import ui.components.tabs.TabCategory
 import ui.utils.dp
 import ui.utils.dps
 
@@ -31,14 +32,14 @@ import ui.utils.dps
 @Composable
 actual fun onDragTab(draggedTab: TabCategory) {
     val density = LocalDensity.current
-    val configuration = LocalConfiguration.current
-    val defaultWindowPosition = WindowPosition(configuration.window.state.position.x +
-            with(density) { draggedTab.dragTabState.position.first.toDp() - 225.dp },
-        configuration.window.state.position.y + with(density) { draggedTab.dragTabState.position.second.toDp() } + 25.dps)
+    val window = LocalWindowState.current
+    // позиция окна в самом начале
+    val defaultWindowPosition =
+        WindowPosition(window.position.x + with(density) { draggedTab.dragTabState.position.first.toDp() - 225.dp },
+            window.position.y + with(density) { draggedTab.dragTabState.position.second.toDp() } + 25.dps)
+    // новое состояние для нового окна
     val windowState = rememberWindowState(
-        WindowPlacement.Floating,
-        size = DpSize(height = 450.dp, width = 500.dp),
-        position = defaultWindowPosition
+        WindowPlacement.Floating, size = DpSize(height = 450.dp, width = 500.dp), position = defaultWindowPosition
     )
     LaunchedEffect(draggedTab.dragTabState.offset) {
         windowState.position =

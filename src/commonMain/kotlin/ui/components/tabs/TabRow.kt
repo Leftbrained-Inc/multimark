@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.tabs
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.desktop.ui.tooling.preview.Preview

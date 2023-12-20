@@ -21,6 +21,7 @@ import com.bumble.appyx.components.backstack.operation.push
 import core.db.RecentFile
 import navigation.NavTarget
 import org.koin.compose.koinInject
+import ui.components.tabs.TabCategory
 import ui.utils.dp
 import viewmodel.TabViewmodel
 

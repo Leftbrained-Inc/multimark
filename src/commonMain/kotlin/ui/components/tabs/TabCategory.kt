@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.tabs
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -11,6 +11,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.IntSize
 import kotlinx.io.files.Path
+import ui.components.MarkdownField
 import viewmodel.EditViewModel
 import kotlin.random.Random
 

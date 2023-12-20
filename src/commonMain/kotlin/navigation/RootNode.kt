@@ -4,7 +4,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.components.backstack.BackStack
 import com.bumble.appyx.components.backstack.BackStackModel
@@ -16,8 +17,8 @@ import com.bumble.appyx.navigation.node.ParentNode
 import com.bumble.appyx.navigation.node.node
 import core.configuration.LocalConfiguration
 import ui.screen.FileView
-import ui.screen.launchscreen.LaunchScreen
 import ui.screen.MainScreen
+import ui.screen.launchscreen.LaunchScreen
 import ui.utils.Scale
 
 /**

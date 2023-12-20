@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.tabs
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

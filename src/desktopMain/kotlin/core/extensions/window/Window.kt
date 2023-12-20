@@ -1,4 +1,4 @@
-package core.extensions
+package core.extensions.window
 
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.loadSvgPainter
@@ -13,7 +13,7 @@ import core.configuration.ConfigurationImpl
 import core.configuration.windows
 import core.dsl.ConfigurationTagMaker
 import core.dsl.configuration.ConfigurationBuilder
-import ui.components.TabCategory
+import ui.components.tabs.TabCategory
 
 private var window = Window()
 
@@ -35,9 +35,9 @@ data class Window(
  * @author Василий Панков (pank-su)
  */
 var Configuration.window: Window
-    get() = core.extensions.window
+    get() = core.extensions.window.window
     set(value) {
-        core.extensions.window = value
+        core.extensions.window.window = value
     }
 
 /**
