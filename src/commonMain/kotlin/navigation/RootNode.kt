@@ -77,7 +77,7 @@ class RootNode(
             }
 
             NavTarget.MainScreen -> node(buildContext) {
-                MainScreen()
+                MainScreen(backStack)
             }
         }
 }
