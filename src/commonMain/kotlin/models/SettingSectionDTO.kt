@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.Color
  * @author Сергей Рейнн (bulkabuka)
  */
 data class SettingSectionDTO(
-    var isSelected: MutableState<Boolean> = mutableStateOf(false),
     val name: String,
     val icon: @Composable (Modifier, Color) -> Unit,
-    val content: @Composable () -> Unit
+    val content: @Composable () -> Unit,
+    var isSelected: MutableState<Boolean> = mutableStateOf(false)
 )
