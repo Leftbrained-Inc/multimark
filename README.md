@@ -83,3 +83,5 @@ graph TD
   N --> M
   M --> L
 ```
+
+Тест GitHub Bot
