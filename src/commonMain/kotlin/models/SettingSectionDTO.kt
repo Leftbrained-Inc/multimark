@@ -13,10 +13,11 @@ import androidx.compose.ui.graphics.Color
  * @param icon Иконка секции
  * @param content Содержимое секции
  * @author Сергей Рейнн (bulkabuka)
+ * @author Марат Белоцерковский (MIAPROT)
  */
 data class SettingSectionDTO(
-    var isSelected: MutableState<Boolean> = mutableStateOf(false),
     val name: String,
     val icon: @Composable (Modifier, Color) -> Unit,
-    val content: @Composable () -> Unit
+    val content: @Composable () -> Unit,
+    var isSelected: MutableState<Boolean> = mutableStateOf(false)
 )

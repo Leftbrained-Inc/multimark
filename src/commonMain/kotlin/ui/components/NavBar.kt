@@ -18,7 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.operation.push
 import kotlinx.io.files.Path
+import navigation.NavTarget
 import org.koin.compose.koinInject
 import ui.components.tabs.TabCategory
 import ui.theme.MultimarkAppTheme
@@ -77,7 +80,7 @@ fun FilePath(path: Path, isSaved: Boolean, modifier: Modifier) {
  * @author Василий Панков (pank-su)
  */
 @Composable
-fun NavBar() {
+fun NavBar(backStack: BackStack<NavTarget>) {
     val tabViewmodel: TabViewModel = koinInject()
 
     val search = remember { mutableStateOf("") }
@@ -107,12 +110,16 @@ fun NavBar() {
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     SearchBar(search.value, { search.value = it }, Modifier.weight(4f))
-                    Icon(
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier.size(30.dp),
-                        tint = MaterialTheme.colorScheme.onTertiaryContainer
-                    )
+                    IconButton(onClick = {
+                        backStack.push(NavTarget.SettingsScreen())
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Settings",
+                            modifier = Modifier.size(30.dp),
+                            tint = MaterialTheme.colorScheme.onTertiaryContainer
+                        )
+                    }
                     Icon(
                         Icons.Default.Palette,
                         contentDescription = "Preview customization palette", modifier = Modifier.size(30.dp),
@@ -130,7 +137,6 @@ fun NavBar() {
 fun PreviewNavBar() {
     MultimarkAppTheme {
         Surface(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-            NavBar()
         }
     }
 }
