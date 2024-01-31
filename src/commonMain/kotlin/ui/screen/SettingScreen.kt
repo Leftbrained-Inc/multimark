@@ -27,7 +27,7 @@ import ui.components.SettingSection
  * @param selected Выбранная секция
  * @param onSectionSelected Обработчик выбора секции
  * @see SettingSectionDTO
- * @author Гамуйло Сергей (bulkabuka)
+ * @author Сергей Рейнн (bulkabuka)
  * @author Белоцерковский Марат (MIAPROT)
  */
 @Composable
