@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
  * @param icon Иконка секции
  * @param content Содержимое секции
  * @author Сергей Рейнн (bulkabuka)
+ * @author Марат Белоцерковский (MIAPROT)
  */
 data class SettingSectionDTO(
     val name: String,
