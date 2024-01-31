@@ -18,6 +18,7 @@ import com.bumble.appyx.navigation.node.node
 import core.configuration.LocalConfiguration
 import ui.screen.FileView
 import ui.screen.MainScreen
+import ui.screen.SettingScreen
 import ui.screen.launchscreen.LaunchScreen
 import ui.utils.Scale
 
@@ -72,8 +73,8 @@ class RootNode(
                 FileView(interactionTarget.file)
             }
 
-            NavTarget.SettingsScreen -> node(buildContext) {
-                Text("Настройки")
+            is NavTarget.SettingsScreen -> node(buildContext) {
+                SettingScreen(interactionTarget.settingsList, 1, {})
             }
 
             NavTarget.MainScreen -> node(buildContext) {

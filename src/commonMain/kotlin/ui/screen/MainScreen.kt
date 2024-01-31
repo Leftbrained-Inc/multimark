@@ -39,7 +39,7 @@ fun MainScreen(backStack: BackStack<NavTarget>) {
     Surface(color = Color.White) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.padding(12.dp)) {
-                NavBar()
+                NavBar(backStack)
             }
             Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
 
