@@ -3,7 +3,6 @@ package navigation
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -28,10 +27,9 @@ import ui.utils.Scale
  */
 class RootNode(
     buildContext: BuildContext,
-    private val initialTarget: NavTarget = NavTarget.LaunchScreen,
     private val backStack: BackStack<NavTarget> = BackStack(
         model = BackStackModel(
-            initialTarget = initialTarget,
+            initialTarget = NavTarget.LaunchScreen,
             savedStateMap = buildContext.savedStateMap,
         ),
         visualisation = { BackStackFader(it) }
