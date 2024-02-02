@@ -33,6 +33,7 @@ fun MainScreen(backStack: BackStack<NavTarget>) {
         }
     }
 
+    // если таб перетаскивают
     if (draggedTab != null) {
         onDragTab(draggedTab!!)
     }

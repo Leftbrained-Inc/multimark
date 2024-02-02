@@ -1,7 +1,6 @@
 package core.configuration
 
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.input.key.KeyEventType
@@ -9,6 +8,10 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import com.bumble.appyx.components.backstack.BackStack
+import com.bumble.appyx.components.backstack.BackStackModel
+import com.bumble.appyx.components.backstack.operation.push
+import com.bumble.appyx.components.backstack.ui.fader.BackStackFader
 import com.bumble.appyx.navigation.integration.DesktopNodeHost
 import core.extensions.window.MultimarkWindowStateImpl
 import core.extensions.window.window
@@ -57,6 +60,7 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                 for (window in windows) {
                     Window(
                         {
+                            // Если окно последнее то закрыть приложение
                             if (windows.size == 1)
                                 exitApplication()
                             else windows.remove(window)
@@ -77,11 +81,10 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                         title = configuration.window.title
                     ) {
                         CompositionLocalProvider(LocalWindowState provides window) {
-                            it {
+                            it(window.koinApplication) {
                                 val tabsViewModel = koinInject<TabViewModel>()
-                                LaunchedEffect(Unit){
-                                    tabsViewModel.tabs.addAll(window.tabs)
-                                }
+
+
                                 // Appyx navigation
                                 DesktopNodeHost(
                                     windowState = configuration.window.state,
@@ -89,8 +92,23 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
                                         if (it is Events.OnBackPressed) Unit else null
                                     }
                                 ) { buildContext ->
+                                    val backStack: BackStack<NavTarget> =
+                                        BackStack(
+                                            model = BackStackModel(
+                                                initialTarget = NavTarget.LaunchScreen,
+                                                savedStateMap = buildContext.savedStateMap,
+                                            ),
+                                            visualisation = { BackStackFader(it) }
+                                        )
 
-                                    RootNode(buildContext, initialTarget = if (window.tabs.isEmpty()) NavTarget.LaunchScreen else NavTarget.MainScreen)
+
+                                    tabsViewModel.tabs.addAll(window.tabs)
+                                    if (!tabsViewModel.tabs.isEmpty()) backStack.push(NavTarget.MainScreen)
+
+                                    RootNode(
+                                        buildContext,
+                                        backStack = backStack
+                                    )
                                 }
                             }
                         }
@@ -100,3 +118,4 @@ actual abstract class ConfigurationPlatform actual constructor() : Configuration
         }
     }
 }
+

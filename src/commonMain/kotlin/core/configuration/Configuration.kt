@@ -3,12 +3,13 @@ package core.configuration
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import core.dsl.ConfigurationTagMaker
-import di.appModule
-import org.koin.compose.KoinApplication
+import org.koin.compose.KoinContext
+import org.koin.core.KoinApplication
 import ui.theme.MultimarkAppTheme
 
 
@@ -66,19 +67,24 @@ abstract class Configuration {
      * @author Василий Панков (pank-su)
      */
     @Composable
-    internal fun content(nativeContent: @Composable (@Composable (@Composable () -> Unit) -> Unit) -> Unit) {
+    internal fun content(nativeContent: @Composable (@Composable (koinApplication: KoinApplication, @Composable () -> Unit) -> Unit) -> Unit) {
         // Общее для всех окон
         CompositionLocalProvider(LocalConfiguration provides this as ConfigurationImpl) {
             val config = LocalConfiguration.current
-            nativeContent { content ->
+
+            nativeContent { koinApp, content ->
+                LaunchedEffect(null) {
+                    println(koinApp)
+                }
                 // В каждом окне
-                KoinApplication(application = { modules(appModule()) }) {
+                KoinContext(context = koinApp.koin) {
                     config.theme {
                         content()
                     }
                 }
             }
-
         }
+
     }
 }
+

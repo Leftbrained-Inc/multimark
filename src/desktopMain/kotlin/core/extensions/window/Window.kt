@@ -63,7 +63,14 @@ fun Window.isOutWindow(position: Pair<Float, Float>, density: Density): Boolean 
 fun TabCategory.onOutWindow(configuration: ConfigurationImpl, density: Density) {
     val position = WindowPosition(with(density) { (dragTabState.position.first + dragTabState.offset.x).toDp() },
         with(density) { (dragTabState.position.second + dragTabState.offset.y).toDp() })
-    val windowState = MultimarkWindowState(listOf(this), false, window.state.placement, position, window.state.size)
+    val windowState = MultimarkWindowState(
+
+        tabs = listOf(this),
+        isMinimized = false,
+        placement = window.state.placement,
+        position = position,
+        size = window.state.size
+    )
     windows.add(
         windowState
     )
