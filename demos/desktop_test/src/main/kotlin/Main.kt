@@ -19,7 +19,7 @@ fun main() {
         launchScreen {
             filesMode = FilesMode.Both
             recentFilter {
-                true
+                it.fileName.contains("md")
             }
         }
     }
